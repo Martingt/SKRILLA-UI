@@ -1,6 +1,5 @@
 import * as React from 'react'
 import '../resources/styles/styles.scss'
-
 export default class extends React.Component<any, any> {
   constructor(props) {
     super(props);
@@ -8,22 +7,25 @@ export default class extends React.Component<any, any> {
 
   render() {
     return(
-      <div>       
-        <div className="logo">
-            
+      <div className="container">    
+        <div className="logo">  
+          <img src="/skrilla.png"></img>
         </div>
         <div className="login">
-            <form>
-                <label>
-                    Email:
+            <form >
+                <label className="form-cont" >
+                    <p className="text-cont">Email</p>
                     <input type="text" name="email"></input>
                 </label>
-                <label>
-                    Password:
+                <label className="form-cont">
+                    <p className="text-cont">Password</p>
                     <input type="password" name="password"></input>
                 </label>
-                <input type="submit" value="Log in"></input>
+                <label className="subm-cont">
+                    <input type="submit" value="Log In" ></input>
+                </label>
             </form>
+            <p className="forg-pass">Forgot your password?</p>
         </div>
       </div>
     )
