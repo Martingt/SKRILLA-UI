@@ -1,6 +1,7 @@
 import * as React from 'react'
 import {mount} from 'enzyme'
 import IndexPage from '../pages/index'
+import fetch from 'cross-fetch';
 
 describe('Pages', () => {
   describe('Index', () => {
@@ -32,4 +33,36 @@ describe('Pages', () => {
       
     })
   })  
+})
+
+describe('Authentication', () => {
+  it('has a token after successfully logged in', function() {
+
+    const getResponseStatusAfterLoggedIn = async () => {
+      const response = await fetch('http://localhost:59418/connect/token', {
+        body: JSON.stringify({
+          client_id: 'skrilla',
+          client_secret: 'secret',
+          grant_type: 'password',
+          Scope: 'skrilla',
+          username: 'm.garcia.tejeda@gmail.com',
+          password: 'password',
+        }),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+      });
+      
+      //return response.status;
+      if (response.status !== 400) {
+        const content = await response.json();
+        console.log(content)
+        return response.status;
+      }
+    };
+    let responseStatus = getResponseStatusAfterLoggedIn();
+    expect(responseStatus).toBe(200)
+  })
 })
