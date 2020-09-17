@@ -22,8 +22,16 @@ export default class AuthService {
       }).then(res => {
         this.setToken(res.access_token)
       }).then(res => {
-        this.setProfile(res)
-        return Promise.resolve(res)
+        const requestOptions = {
+            method: 'GET',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': res.access_token 
+            },
+        };
+        fetch(`${this.api}/consumptions`)
+        .then(response => response.json())
+        .then(data => this.setState({ totalReactPackages: data.total }));
       })
     }
   
