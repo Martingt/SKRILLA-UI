@@ -2,8 +2,30 @@
 *{
     margin: 0;
 }
-.container {
+.loginBody {
     display: flex;
+}
+.mainContainer {
+  display:flex;
+  flex:1;
+  justify-content: center;
+  font-family: 'Quicksand';
+
+}
+.containerTitle {
+  padding:10px
+}
+.consumption {
+  font-family: 'Quicksand';
+  font-size:1.2rem;
+  display: flex;
+}
+
+.consumptionItem {
+  padding:5px;
+}
+.mainContainerContent {
+  min-width:800px;
 }
 .logo {
     width: 50vw;
@@ -17,7 +39,7 @@
     height: 100vh;
     width: 50vw;
     margin-top: 28vh;
-    
+
 }
 .form-cont {
     height: 10vh;
@@ -34,7 +56,7 @@
     justify-content: center;
 }
 .text-cont {
-    font-family: 'Quicksand', sans-serif; 
+    font-family: 'Quicksand', sans-serif;
 }
 input[type=text],input[type=password] {
     border: none;

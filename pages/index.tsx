@@ -4,13 +4,15 @@ import '../resources/styles/styles.scss'
 import AuthService from '../utils/AuthService'
 import { Redirect } from "react-router-dom";
 
-
 const auth = new AuthService('http://localhost:6001/connect')
 
 export default class Login extends React.Component<any, any> {
   constructor(props) {
-    super(props)
-    this.state = {value: ''};
+    super(props);
+    this.state =
+    {value: '', token:null,
+    data: [{id:null, title:null, amount:null, personId:0}]
+    };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -23,17 +25,51 @@ export default class Login extends React.Component<any, any> {
     this.setState({value: e.target.value});
   }
   handleSubmit (e) {
-    e.preventDefault()
+    e.preventDefault();
     auth.login(this.refs.email.value, this.refs.password.value)
-      .then(res => console.log("login exitoso"))
-      .catch(e => console.log(e)) 
+      .then(res => {
+          this.setState({token: res});
+          console.log(res);
+      })
+      .catch(e => console.log(e))
   }
-  
-  
+
+  fetchConsumptions(){
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer " + this.state.token);
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+
+    fetch("https://localhost:5001/consumptions", requestOptions)
+      .then(response => response.json())
+      .then(result => { this.setState({...this.state, data: result }); })
+      .catch(error => console.log('error', error));
+  }
+
   render() {
-    return(
-      <div className="container">    
-        <div className="logo">  
+    let page = null;
+    if(this.state.token !== null){
+      this.fetchConsumptions();
+      page = <div className="mainContainer">
+        <div className="mainContainerContent">
+        <h1 className="containerTitle">Consumos</h1>
+        <hr />
+        <div className="consumption">
+          <span className="consumptionItem">{this.state.data[0].id}</span>
+          <span className="consumptionItem">{this.state.data[0].title}</span>
+          <span className="consumptionItem">{this.state.data[0].amount}</span>
+        </div>
+        </div>
+      </div>
+    }
+    else
+    {
+      page = <div className="loginBody">
+        <div className="logo">
           <img src="/skrilla.png"></img>
         </div>
         <div className="login">
@@ -53,6 +89,8 @@ export default class Login extends React.Component<any, any> {
             <p className="forg-pass">Forgot your password?</p>
         </div>
       </div>
-    )
+    }
+
+    return page;
   }
 }
