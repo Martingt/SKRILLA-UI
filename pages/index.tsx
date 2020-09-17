@@ -10,7 +10,7 @@ export default class Login extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state =
-    {value: '', token:null,
+    {value: '', token:null, error:0,
     data: [{id:null, title:null, amount:null, personId:0}]
     };
     this.handleChange = this.handleChange.bind(this);
@@ -28,8 +28,12 @@ export default class Login extends React.Component<any, any> {
     e.preventDefault();
     auth.login(this.refs.email.value, this.refs.password.value)
       .then(res => {
+        if (res != undefined)
           this.setState({token: res});
-          console.log(res);
+        else
+          this.setState({error: 1})
+        console.log(res);
+
       })
       .catch(e => console.log(e))
   }
@@ -51,6 +55,7 @@ export default class Login extends React.Component<any, any> {
   }
 
   render() {
+    let error = (this.state.error == 1)? <p className="forg-pass">Wrong username or password</p>:null;
     let page = null;
     if(this.state.token !== null){
       this.fetchConsumptions();
@@ -86,6 +91,7 @@ export default class Login extends React.Component<any, any> {
                     <input type="submit" value="Log In" ></input>
                 </label>
             </form>
+            {error}
             <p className="forg-pass">Forgot your password?</p>
         </div>
       </div>
