@@ -1,6 +1,9 @@
+
 import * as React from 'react'
 import '../resources/styles/styles.scss'
 import AuthService from '../utils/AuthService'
+import { Redirect } from "react-router-dom";
+
 
 const auth = new AuthService('http://localhost:6001/connect')
 
@@ -11,10 +14,9 @@ export default class Login extends React.Component<any, any> {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-
   componentDidMount () {
     if (auth.loggedIn()) {
-      this.props.url.replaceTo('/homescreen')
+      return <Redirect to="/homescreen"/>
     }
   }
   handleChange(e) {
@@ -23,13 +25,11 @@ export default class Login extends React.Component<any, any> {
   handleSubmit (e) {
     e.preventDefault()
     auth.login(this.refs.email.value, this.refs.password.value)
-      .then(res => {
-        console.log(res)
-        this.props.url.replaceTo('/homescreen')
-      })
+      .then(res => console.log("login exitoso"))
       .catch(e => console.log(e)) 
   }
-
+  
+  
   render() {
     return(
       <div className="container">    

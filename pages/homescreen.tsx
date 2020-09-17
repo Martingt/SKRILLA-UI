@@ -1,7 +1,7 @@
 import React from 'react'
 import withAuth from  '../utils/withAuth'
 
-class Dashboard extends Component {
+class HomeScreen extends React.Component<any, any> {
    render() {
      const user = this.props.auth.getProfile()
      return (   
@@ -10,4 +10,4 @@ class Dashboard extends Component {
    }
 }
 
-export default withAuth(Dashboard) 
+export default withAuth(HomeScreen) 

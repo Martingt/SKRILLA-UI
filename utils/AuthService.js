@@ -1,7 +1,7 @@
 export default class AuthService {
     constructor(domain) {
-      this.domain = domain || 'http://localhost:60001/connect'
-      this.api = 'http://localhost:50001'
+      this.domain = domain || 'http://localhost:6001/connect'
+      this.api = 'https://localhost:5001'
       this.fetch = this.fetch.bind(this)
       this.login = this.login.bind(this)
       this.getProfile = this.getProfile.bind(this)
@@ -9,16 +9,33 @@ export default class AuthService {
   
     login(email, password) {
       // Get a token
-      return this.fetch(`${this.domain}/token`, {
+      var myHeaders = new Headers();
+      myHeaders.append("Accept", "application/json");
+      myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+      var urlencoded = new URLSearchParams();
+      urlencoded.append("client_id", "skrilla");
+      urlencoded.append("client_secret", "secret");
+      urlencoded.append("grant_type", "password");
+      urlencoded.append("scope", "skrilla");
+      urlencoded.append("username", email);
+      urlencoded.append("password", password);
+
+      var requestOptions = {
         method: 'POST',
-        body: JSON.stringify({
-            "client_id": "skrilla",
-            "client_secret": "secret",
-            "grant_type": "password",
-            "scope": "skrilla",
-            "username": email,
-            "password": password
-        })
+        headers: myHeaders,
+        body: urlencoded,
+        redirect: 'follow'
+      };
+
+      return this.fetch("http://localhost:6001/connect/token", requestOptions)
+        /*.then(result => this.setToken(result.access_token))*/
+        .then(result => this.setToken(result['access_token']))
+        .catch(error => console.log('error', error));
+      /*
+      return this.fetch("http://localhost:6001/connect/token", {
+        method: 'POST',
+        body: formBody
       }).then(res => {
         this.setToken(res.access_token)
       }).then(res => {
@@ -26,19 +43,20 @@ export default class AuthService {
             method: 'GET',
             headers: { 
                 'Content-Type': 'application/json',
-                'Authorization': res.access_token 
+                'Authorization': 'Bearer'+res.access_token 
             },
         };
         fetch(`${this.api}/consumptions`)
         .then(response => response.json())
         .then(data => this.setState({ totalReactPackages: data.total }));
       })
+      */
     }
   
     loggedIn(){
       // Checks if there is a saved token and it's still valid
       const token = this.getToken()
-      return !!token && !isTokenExpired(token) // handwaiving here
+      return !!token
     }
   
     setProfile(profile){
