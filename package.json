@@ -11,6 +11,7 @@
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.0",
     "@types/next": "^9.0.0",
     "@types/react-dom": "^16.9.8",
     "@zeit/next-sass": "^1.0.1",

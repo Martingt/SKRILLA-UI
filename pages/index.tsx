@@ -3,7 +3,8 @@ import * as React from 'react'
 import '../resources/styles/styles.scss'
 import AuthService from '../utils/AuthService'
 import { Redirect } from "react-router-dom";
-
+import ConsumptionList from '../components/ConsumptionList';
+import {skrillaIcon } from '../resources/images/skrilla-icon.png';
 const auth = new AuthService('http://localhost:6001/connect')
 
 export default class Login extends React.Component<any, any> {
@@ -12,21 +13,22 @@ export default class Login extends React.Component<any, any> {
     this.state = {
       value: '',
       token:null,
-      error:0,
-      data: [{id:null, title:null, amount:null, personId:0}]
+      name: "",
+      password:"",
+      error:0
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this)
+     this.handleChange = this.handleChange.bind(this);
+      this.handleSubmit = this.handleSubmit.bind(this);
   }
   componentDidMount () {
     this.setState({token: this.getAuthToken()});
   }
   handleChange(e) {
-    this.setState({value: e.target.value});
+    this.setState({[e.target.name]: e.target.value});
   }
   handleSubmit (e) {
     e.preventDefault();
-    auth.login(this.refs.email.value, this.refs.password.value)
+    auth.login(this.state.email, this.state.password)
       .then(res => {
         if (res != undefined)
           this.setState({token: res});
@@ -37,6 +39,7 @@ export default class Login extends React.Component<any, any> {
       })
       .catch(e => console.log(e))
   }
+
   getAuthToken(){
     let token = null;
     if (document.cookie.split(';').some((item) => item.trim().startsWith('token='))) {
@@ -48,36 +51,22 @@ export default class Login extends React.Component<any, any> {
     return token;
   }
 
-  fetchConsumptions(){
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer " + this.state.token);
 
-    var requestOptions = {
-      method: 'GET',
-      headers: myHeaders,
-      redirect: 'follow'
-    };
-
-    fetch("https://localhost:5001/consumptions", requestOptions)
-      .then(response => response.json())
-      .then(result => { this.setState({...this.state, data: result }); })
-      .catch(error => console.log('error', error));
-  }
 
   render() {
     let error = (this.state.error == 1)? <p className="forg-pass">Wrong username or password</p>:null;
     let page = null;
     if(this.state.token !== null){
-      this.fetchConsumptions();
       page = <div className="mainContainer">
         <div className="mainContainerContent">
-        <h1 className="containerTitle">Consumos</h1>
-        <hr />
-        <div className="consumption">
-          <span className="consumptionItem">{this.state.data[0].id}</span>
-          <span className="consumptionItem">{this.state.data[0].title}</span>
-          <span className="consumptionItem">{this.state.data[0].amount}</span>
+        <div className="containerTopBar">
+        <div class="topBarLeft">
+          <img src="/images/skrilla-icon.png" className="skrillaTopBarLogo"/>
+          <h1 className="containerTopBarTitle">Consumos</h1>
+          </div>
+          <div style={{color:"#bbb"}}>Logout</div>
         </div>
+        <ConsumptionList />
         </div>
       </div>
     }
@@ -85,17 +74,19 @@ export default class Login extends React.Component<any, any> {
     {
       page = <div className="loginBody">
         <div className="logo">
-          <img src="/skrilla.png"></img>
+          <img src="/images/skrilla-logo-large.png"></img>
         </div>
         <div className="login">
             <form onSubmit={this.handleSubmit} >
                 <label className="form-cont" >
                     <p className="text-cont">Email</p>
-                    <input type="text" name="email" ref="email"></input>
+                    <input type="text" name="email"
+                    onChange={this.handleChange}></input>
                 </label>
                 <label className="form-cont">
                     <p className="text-cont">Password</p>
-                    <input type="password" name="password" ref="password"></input>
+                    <input type="password" name="password"
+                    onChange={this.handleChange}></input>
                 </label>
                 <label className="subm-cont">
                     <input type="submit" value="Log In" ></input>
