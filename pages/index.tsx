@@ -112,16 +112,16 @@ export default class Login extends React.Component<any, any> {
             <form onSubmit={this.handleSubmit} >
                 <label className="form-cont" >
                     <p className="text-cont">Email</p>
-                    <input type="text" name="email"
+                    <input className="signIn" type="text" name="email"
                     onChange={this.handleChange}></input>
                 </label>
                 <label className="form-cont">
                     <p className="text-cont">Password</p>
-                    <input type="password" name="password"
+                    <input className="signIn"  type="password" name="password"
                     onChange={this.handleChange}></input>
                 </label>
                 <label className="subm-cont">
-                    <input type="submit" value="Log In" ></input>
+                    <input className="signIn" type="submit" value="Log In" ></input>
                 </label>
             </form>
             {error}

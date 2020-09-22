@@ -124,22 +124,22 @@
 }
 .text-cont {
     font-family: 'Quicksand', sans-serif;
-}/*
-input[type=text],input[type=password] {
+}
+input[type=text].signIn,input[type=password].signIn {
     border: none;
     border-bottom: 0.5px solid black;
     width: 100%;
     padding: 8px 55px;
     margin-top: 9%;
 }
-input[type=submit] {
+input[type=submit].signIn {
     background-color: #35BCC8;
     color: white;
     border: none;
     padding: 5px 80px;
     border-radius: 4px;
     font-size: 20px;
-}*/
+}
 .forg-pass {
     font-size: 12px;
     display: flex;
