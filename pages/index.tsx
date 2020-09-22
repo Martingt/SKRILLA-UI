@@ -9,17 +9,17 @@ const auth = new AuthService('http://localhost:6001/connect')
 export default class Login extends React.Component<any, any> {
   constructor(props) {
     super(props);
-    this.state =
-    {value: '', token:null, error:0,
-    data: [{id:null, title:null, amount:null, personId:0}]
+    this.state = {
+      value: '',
+      token:null,
+      error:0,
+      data: [{id:null, title:null, amount:null, personId:0}]
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this)
   }
   componentDidMount () {
-    if (auth.loggedIn()) {
-      return <Redirect to="/homescreen"/>
-    }
+    this.setState({token: this.getAuthToken()});
   }
   handleChange(e) {
     this.setState({value: e.target.value});
@@ -36,6 +36,16 @@ export default class Login extends React.Component<any, any> {
 
       })
       .catch(e => console.log(e))
+  }
+  getAuthToken(){
+    let token = null;
+    if (document.cookie.split(';').some((item) => item.trim().startsWith('token='))) {
+      token = document.cookie
+        .split("; ")
+        .find(row => row.startsWith("token"))
+        .split("=")[1];
+      }
+    return token;
   }
 
   fetchConsumptions(){

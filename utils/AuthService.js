@@ -31,28 +31,11 @@ export default class AuthService {
       return this.fetch("http://localhost:6001/connect/token", requestOptions)
         /*.then(result => this.setToken(result.access_token))*/
         .then(result => {
-          this.setToken(result['access_token']); 
-        return result['access_token'];})
+          this.setToken(result['access_token']);
+          return result['access_token'];
+        })
         .catch(error => console.log('error', error));
-      /*
-      return this.fetch("http://localhost:6001/connect/token", {
-        method: 'POST',
-        body: formBody
-      }).then(res => {
-        this.setToken(res.access_token)
-      }).then(res => {
-        const requestOptions = {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer'+res.access_token
-            },
-        };
-        fetch(`${this.api}/consumptions`)
-        .then(response => response.json())
-        .then(data => this.setState({ totalReactPackages: data.total }));
-      })
-      */
+
     }
 
     loggedIn(){
@@ -67,25 +50,27 @@ export default class AuthService {
     }
 
     getProfile(){
-      // Retrieves the profile data from localStorage
-      const profile = localStorage.getItem('profile')
-      return profile ? JSON.parse(localStorage.profile) : {}
+      return {}
     }
 
     setToken(idToken){
-      // Saves user token to localStorage
-      localStorage.setItem('id_token', idToken)
+      document.cookie = "token=" + idToken;
+      console.log(document.cookie);
     }
 
     getToken(){
-      // Retrieves the user token from localStorage
-      return localStorage.getItem('id_token')
+      let token = null;
+      if (document.cookie.split(';').some((item) => item.trim().startsWith('token='))) {
+        token = document.cookie
+          .split("; ")
+          .find(row => row.startsWith("token"))
+          .split("=")[1];
+        }
+      return token;
     }
 
     logout(){
-      // Clear user token and profile data from localStorage
-      localStorage.removeItem('id_token');
-      localStorage.removeItem('profile');
+      document.cookie = "doSomethingOnlyOnce=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     }
 
     _checkStatus(response) {
