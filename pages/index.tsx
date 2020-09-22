@@ -5,7 +5,16 @@ import AuthService from '../utils/AuthService'
 import { Redirect } from "react-router-dom";
 import ConsumptionList from '../components/ConsumptionList';
 import {skrillaIcon } from '../resources/images/skrilla-icon.png';
+import Toolbar from '../components/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import AddButton from '@material-ui/icons/Add';
 const auth = new AuthService('http://localhost:6001/connect')
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
+import TextField from '@material-ui/core/TextField';
+import AddConsumptionForm from '../components/AddConsumptionForm';
+
 
 export default class Login extends React.Component<any, any> {
   constructor(props) {
@@ -15,11 +24,17 @@ export default class Login extends React.Component<any, any> {
       token:null,
       name: "",
       password:"",
-      error:0
+      error:0,
+      consumptionItemCreation:false
     };
      this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
   }
+
+   handleAddConsumption = () => {
+    this.setState({ consumptionItemCreation: !this.state.consumptionItemCreation});
+  };
+
   componentDidMount () {
     this.setState({token: this.getAuthToken()});
   }
@@ -60,13 +75,30 @@ export default class Login extends React.Component<any, any> {
       page = <div className="mainContainer">
         <div className="mainContainerContent">
         <div className="containerTopBar">
-        <div class="topBarLeft">
+        <div className="topBarLeft">
           <img src="/images/skrilla-icon.png" className="skrillaTopBarLogo"/>
           <h1 className="containerTopBarTitle">Consumos</h1>
           </div>
           <div style={{color:"#bbb"}}>Logout</div>
         </div>
+        <div className="containerToolbar">
+          <IconButton color="primary" onClick={this.handleAddConsumption} >
+            <AddButton />
+          </IconButton>
+        </div>
         <ConsumptionList />
+          <Modal
+            aria-labelledby="Agregar Consumo"
+            open={this.state.consumptionItemCreation}
+            onClose={this.handleAddConsumption}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            className="addContsumptionModal"
+            BackdropProps={{ timeout: 500 }}>
+            <Fade in={this.state.consumptionItemCreation}>
+              <AddConsumptionForm />
+            </Fade>
+          </Modal>
         </div>
       </div>
     }

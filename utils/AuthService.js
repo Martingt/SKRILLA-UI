@@ -54,8 +54,13 @@ export default class AuthService {
     }
 
     setToken(idToken){
-      document.cookie = "token=" + idToken;
+      var d = new Date();
+      d.setTime(d.getTime() + (60*60*1000));
+      var expires = "expires="+ d.toUTCString();
+
+      document.cookie = "token=" + idToken  + ";" + expires ;
       console.log(document.cookie);
+
     }
 
     getToken(){
