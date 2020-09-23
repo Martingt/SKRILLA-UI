@@ -96,7 +96,7 @@ export default class Login extends React.Component<any, any> {
             className="addContsumptionModal"
             BackdropProps={{ timeout: 500 }}>
             <Fade in={this.state.consumptionItemCreation}>
-              <AddConsumptionForm />
+              <AddConsumptionForm onCancel={this.handleAddConsumption}/>
             </Fade>
           </Modal>
         </div>

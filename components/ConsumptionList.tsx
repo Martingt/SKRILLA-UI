@@ -64,7 +64,7 @@ export default class ConsumptionList extends React.Component<any, any>  {
               <TableRow>
                 <TableCell align="left">Fecha</TableCell>
                 <TableCell align="left">Titulo</TableCell>
-                <TableCell align="left">Precio</TableCell>
+                <TableCell align="left">Costo</TableCell>
                 <TableCell align="left">Categoria</TableCell>
               </TableRow>
             </TableHead>
