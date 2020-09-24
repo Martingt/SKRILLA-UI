@@ -2,17 +2,13 @@
 import * as React from 'react'
 import '../resources/styles/styles.scss'
 import AuthService from '../utils/AuthService'
-import { Redirect } from "react-router-dom";
 import ConsumptionList from '../components/ConsumptionList';
-import {skrillaIcon } from '../resources/images/skrilla-icon.png';
-import Toolbar from '../components/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import AddButton from '@material-ui/icons/Add';
-const auth = new AuthService('http://localhost:6001/connect')
+const auth = new AuthService()
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import TextField from '@material-ui/core/TextField';
 import AddConsumptionForm from '../components/AddConsumptionForm';
 
 
@@ -28,7 +24,7 @@ export default class Login extends React.Component<any, any> {
       consumptionItemCreation:false
     };
      this.handleChange = this.handleChange.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this);
+     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
    handleAddConsumption = () => {

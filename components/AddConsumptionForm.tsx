@@ -6,7 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AddButton from '@material-ui/icons/Add';
 import ClearButton from '@material-ui/icons/Clear';
 
-export default class AddConsumptionForm extends React.Component <Any,Any>{
+export default class AddConsumptionForm extends React.Component<any,any>{
   constructor(props){
     super(props);
     this.state = {
@@ -73,7 +73,7 @@ export default class AddConsumptionForm extends React.Component <Any,Any>{
       <h2 id="transition-modal-title" className="addConsumptionFormTitle">Agregar consumo</h2>
       <form className="addContsumptionForm">
         <div className="addConsumptionFormItem">
-          <TextField name="title" s autoComplete="off"
+          <TextField name="title" autoComplete="off"
           className="addConsumptionField"
           InputProps= {{ style: { fontSize:"0.9rem"}}}
           label="Titulo"/>
@@ -117,7 +117,7 @@ export default class AddConsumptionForm extends React.Component <Any,Any>{
               <AddButton />
             </IconButton>
             </div>
-            : <div><TextField name="category" s autoComplete="off"
+            : <div><TextField name="category" autoComplete="off"
             InputProps= {{ style: { fontSize:"0.9rem"}}}
             label="Nueva categoria"/>
             <IconButton color="primary" onClick={this.toggleNewCategory} >
