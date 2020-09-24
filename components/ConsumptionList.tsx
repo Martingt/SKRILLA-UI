@@ -1,11 +1,5 @@
-
-
 import * as React from 'react'
 import '../resources/styles/styles.scss'
-import AuthService from '../utils/AuthService'
-import { Redirect } from "react-router-dom";
-
-import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -31,7 +25,7 @@ export default class ConsumptionList extends React.Component<any, any>  {
     var myHeaders = new Headers();
     myHeaders.append("Authorization", "Bearer " + this.getAuthToken());
 
-    var requestOptions = {
+    let requestOptions: RequestInit = {
       method: 'GET',
       headers: myHeaders,
       redirect: 'follow'

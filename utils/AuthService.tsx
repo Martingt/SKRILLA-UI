@@ -1,7 +1,5 @@
 export default class AuthService {
-    constructor(domain) {
-      this.domain = domain || 'http://localhost:6001/connect'
-      this.api = 'https://localhost:5001'
+    constructor() {
       this.fetch = this.fetch.bind(this)
       this.login = this.login.bind(this)
       this.getProfile = this.getProfile.bind(this)
@@ -83,7 +81,6 @@ export default class AuthService {
         return response
       } else {
         var error = new Error(response.statusText)
-        error.response = response
         throw error
       }
     }
