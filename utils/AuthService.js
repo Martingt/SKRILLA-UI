@@ -59,7 +59,6 @@ export default class AuthService {
       var expires = "expires="+ d.toUTCString();
 
       document.cookie = "token=" + idToken  + ";" + expires ;
-      console.log(document.cookie);
 
     }
 

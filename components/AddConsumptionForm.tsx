@@ -30,11 +30,10 @@ export default class AddConsumptionForm extends React.Component <Any,Any>{
          title: this.state.title,
          amount: this.state.amount,
          category: this.state.category,
-         date: this.state.date,
-         newCategory: false
+         date: this.state.date
       };
 
-      if (payload.title == null || payload.title == ""){
+      /*if (payload.title == null || payload.title == ""){
         errorMessages.push("Se debe especificar un titulo no vacio. ");
 
         this.setState({
@@ -51,7 +50,7 @@ export default class AddConsumptionForm extends React.Component <Any,Any>{
           errorMessage: errorMessages
         });
         return;
-      }
+      }*/
 
 
       let result = postConsumption(payload).then(res => {
@@ -73,21 +72,23 @@ export default class AddConsumptionForm extends React.Component <Any,Any>{
       <h2 id="transition-modal-title" className="addConsumptionFormTitle">Agregar consumo</h2>
       <form className="addContsumptionForm">
         <div className="addConsumptionFormItem">
-          <TextField name="title" s autoComplete="off"
+          <TextField name="title"  autoComplete="off"
           className="addConsumptionField"
           InputProps= {{ style: { fontSize:"0.9rem"}}}
-          label="Titulo"/>
+          label="Titulo"
+          name="title"
+          onChange={this.handleChange}/>
         </div>
         <div className="addConsumptionFormItem">
-          <TextField name="amount" label="Costo" className="addConsumptionInput addConsumptionAmountField"/>
+          <TextField name="amount" label="Costo" name="label" className="addConsumptionInput addConsumptionAmountField"/>
           <TextField
               id="date"
+              name="date"
               label="Fecha"
               type="date"
-              defaultValue="2017-05-24"
-              InputLabelProps={{
-                shrink: true
-              }}
+              defaultValue="2020-05-24"
+              onChange={this.handleChange}
+              InputLabelProps={{shrink: true}}
               InputProps= {{ style: { fontSize:"0.9rem", marginLeft:'10px'} }}
             />
         </div>
@@ -117,9 +118,12 @@ export default class AddConsumptionForm extends React.Component <Any,Any>{
               <AddButton />
             </IconButton>
             </div>
-            : <div><TextField name="category" s autoComplete="off"
-            InputProps= {{ style: { fontSize:"0.9rem"}}}
-            label="Nueva categoria"/>
+            : <div>
+              <TextField name="category"
+                autoComplete="off"
+                InputProps= {{ style: { fontSize:"0.9rem"}}}
+                label="Nueva categoria"
+                onChange={this.handleChange}/>
             <IconButton color="primary" onClick={this.toggleNewCategory} >
               <ClearButton />
             </IconButton></div>}
@@ -135,7 +139,6 @@ export default class AddConsumptionForm extends React.Component <Any,Any>{
 }
 
 async function postConsumption(data) {
-    // Default options are marked with *
     let token = (new AuthService).getToken();
 
     const response = await fetch("https://localhost:5001/consumptions", {
@@ -146,11 +149,10 @@ async function postConsumption(data) {
       headers: {
         'Content-Type': 'application/json',
         'Authentication': 'Bearer' + token
-        // 'Content-Type': 'application/x-www-form-urlencoded',
       },
       redirect: 'follow',
       referrerPolicy: 'no-referrer',
-      body: JSON.stringify(data) // body data type must match "Content-Type" header
+      body: JSON.stringify(data)
     });
-    return response.json(); // parses JSON response into native JavaScript objects
+    return response.json();
 }
