@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap');
+*{
+    margin: 0;
+}
+.loginBody {
+    display: flex;
+}
+.mainContainer {
+  display:flex;
+  flex:1;
+  justify-content: center;
+  font-family: 'Quicksand';
+
+}
+.containerToolbar {
+  display:flex;
+  flex:1;
+}
+.containerTopBarTitle {
+  padding:10px;
+}
+
+.addContsumptionFormContainer {
+    background-color: white;
+    font-family: 'Quicksand';
+    padding:10px;
+}
+.addConsumptionFormTitle {
+  padding:10px;
+}
+.addContsumptionForm {
+  flex:1;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.addConsumptionFormItem {
+  padding-top:10px;
+  padding-bottom:10px;
+  padding-right:20px;
+  padding-left:20px;
+  min-width:300px;
+  flex:1;
+  display:flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.addConsumptionField {
+  width:100%;
+}
+.addContsumptionFormContainer:focus {
+    outline: none;
+}
+.addContsumptionModal {
+  display:flex;
+  align-items:center;
+  justify-content: center;
+  border:0px;
+}
+.addContsumptionModal:focus {
+  outline:none;
+}
+.consumption {
+  font-family: 'Quicksand';
+  font-size:1.2rem;
+  display: flex;
+}
+.containerTopBar {
+  display: flex;
+  flex-direction:row;
+  flex:1;
+  justify-content: space-between;
+  padding-bottom:15px;
+  padding-top:15px;
+  align-items: center;
+}
+.consumptionCreationErrors {
+  color:red;
+  padding:15px;
+  font-size:0.8rem;
+}
+.topBarLeft {
+  display:flex;
+  flex:1;
+  align-items: center;
+}
+.consumptionItem {
+  padding:5px;
+}
+.mainContainerContent {
+  min-width:800px;
+}
+.skrillaTopBarLogo {
+  height:60px;
+  width:60px;
+  border-radius: 60px;
+    opacity:0.5;
+}
+.skrillaTopBarLogo:hover {
+  opacity:0.7;
+}
+.logo {
+    width: 50vw;
+    height: 100vh;
+    background-color: #207178;
+    display: flex;
+    align-items: center;
+}
+.login {
+    font-family: sans-serif;
+    height: 100vh;
+    width: 50vw;
+    margin-top: 28vh;
+
+}
+.form-cont {
+    height: 10vh;
+    display: inline-block;
+    align-items: vertical;
+    justify-content: center;
+    margin-left: 23%;
+    margin-bottom: 5vh;
+}
+.subm-cont {
+    display: flex;
+    align-items: center;
+    margin-top: 5vh;
+    justify-content: center;
+}
+.text-cont {
+    font-family: 'Quicksand', sans-serif;
+}
+input[type=text].signIn,input[type=password].signIn {
+    border: none;
+    border-bottom: 0.5px solid black;
+    width: 100%;
+    padding: 8px 55px;
+    margin-top: 9%;
+}
+input[type=submit].signIn {
+    background-color: #35BCC8;
+    color: white;
+    border: none;
+    padding: 5px 80px;
+    border-radius: 4px;
+    font-size: 20px;
+}
+.forg-pass {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    margin-top: 8vh;
+    justify-content: center;
+    font-family: 'Quicksand';
+}
+img {
+    height: 45vw;
+    width: 45vw;
+}
+.logout {
+  color: black
+}
