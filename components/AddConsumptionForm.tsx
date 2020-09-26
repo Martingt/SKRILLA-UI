@@ -130,6 +130,10 @@ export default class AddConsumptionForm extends React.Component<any,any>{
           className="addConsumptionField"
           InputProps= {{ style: { fontSize:"0.9rem"}}}
           label="Titulo"
+<<<<<<< HEAD
+=======
+          name="title"
+>>>>>>> 16e2dc340eda61ba25bd873f76fcbfa9bfe3b436
           error={this.state.titleControl.error}
           helperText={this.state.titleControl.helperText}
           onChange={this.handleChange}/>
