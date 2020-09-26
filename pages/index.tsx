@@ -1,6 +1,7 @@
 
 import * as React from 'react'
-import '../resources/styles/styles.scss'
+import '../resources/styles/sign-in.scss'
+import '../resources/styles/homescreen.scss'
 import AuthService from '../utils/AuthService'
 import ConsumptionList from '../components/ConsumptionList';
 import IconButton from '@material-ui/core/IconButton';
@@ -110,7 +111,7 @@ export default class Login extends React.Component<any, any> {
                 <label className="form-cont" >
                     <p className="text-cont">Email</p>
                     <input className="signIn" type="text" name="email"
-                    onChange={this.handleChange}></input>
+                    onChange={this.handleChange} ></input>
                 </label>
                 <label className="form-cont">
                     <p className="text-cont">Password</p>
@@ -130,3 +131,4 @@ export default class Login extends React.Component<any, any> {
     return page;
   }
 }
+

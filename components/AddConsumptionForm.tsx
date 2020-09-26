@@ -1,5 +1,5 @@
 import * as React from 'react'
-import '../resources/styles/styles.scss'
+import '../resources/styles/addConsumptionForm.scss'
 import {TextField, Select, InputLabel, FormControl, Button} from '@material-ui/core';
 import AuthService  from '../utils/AuthService';
 import IconButton from '@material-ui/core/IconButton';
@@ -76,11 +76,10 @@ export default class AddConsumptionForm extends React.Component<any,any>{
           className="addConsumptionField"
           InputProps= {{ style: { fontSize:"0.9rem"}}}
           label="Titulo"
-          name="title"
           onChange={this.handleChange}/>
         </div>
         <div className="addConsumptionFormItem">
-          <TextField name="amount" label="Costo" name="label" className="addConsumptionInput addConsumptionAmountField"/>
+          <TextField name="amount" label="Costo" className="addConsumptionInput addConsumptionAmountField"/>
           <TextField
               id="date"
               name="date"

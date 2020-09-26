@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap');
+*{
+    margin: 0;
+}
+.mainContainer {
+  display:flex;
+  flex:1;
+  justify-content: center;
+  font-family: 'Quicksand';
+}
+.containerToolbar {
+  display:flex;
+  flex:1;
+}
+.containerTopBarTitle {
+  padding:10px;
+}
+.containerTopBar {
+  display: flex;
+  flex-direction:row;
+  flex:1;
+  justify-content: space-between;
+  padding-bottom:15px;
+  padding-top:15px;
+  align-items: center;
+}
+.addContsumptionModal {
+  display:flex;
+  align-items:center;
+  justify-content: center;
+  border:0px;
+}
+.addContsumptionModal:focus {
+  outline:none;
+}
+.topBarLeft {
+  display:flex;
+  flex:1;
+  align-items: center;
+}
+.mainContainerContent {
+  min-width:800px;
+}
+.skrillaTopBarLogo {
+  height:60px;
+  width:60px;
+  border-radius: 60px;
+    opacity:0.5;
+}
+.skrillaTopBarLogo:hover {
+  opacity:0.7;
+}

@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap');
+*{
+    margin: 0;
+}
+.addContsumptionFormContainer {
+    background-color: white;
+    font-family: 'Quicksand';
+    padding:10px;
+}
+.addConsumptionFormTitle {
+  padding:10px;
+}
+.addContsumptionForm {
+  flex:1;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.addConsumptionFormItem {
+  padding-top:10px;
+  padding-bottom:10px;
+  padding-right:20px;
+  padding-left:20px;
+  min-width:300px;
+  flex:1;
+  display:flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.addConsumptionField {
+  width:100%;
+}
+.addContsumptionFormContainer:focus {
+    outline: none;
+}
+.addContsumptionModal {
+  display:flex;
+  align-items:center;
+  justify-content: center;
+  border:0px;
+}
+.addContsumptionModal:focus {
+  outline:none;
+}
