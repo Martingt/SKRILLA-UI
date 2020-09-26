@@ -11,50 +11,104 @@ export default class AddConsumptionForm extends React.Component<any,any>{
     super(props);
     this.state = {
       title: "",
-      amount: 0,
+      amount: null,
       category:"",
-      date: null,
+      date: getTodaysDate(),
       creationStatus:"empty",
-      errorMessages: []
+      errorMessages: [],
+      titleControl: {error: false, helperText: ""},
+      amountControl: {error: false, helperText: ""},
+      categoryControl: {error: false, helperText: ""},
+      dateControl: {error: false, helperText: ""}
     }
   }
   handleChange = (e) =>{
       this.setState({[e.target.name]: e.target.value});
   }
 
+  formIsValid() {
+    var error = true;
+
+    let payload = {
+       title: this.state.title,
+       amount: this.state.amount,
+       category: this.state.category,
+       date: this.state.date
+    };
+
+    if (payload.title == null || payload.title == ""){
+      this.setState({
+          titleControl: {error: true, helperText: "Se debe especificar un titulo."}
+      });
+      error = false;
+    }
+    else {
+      this.setState({
+          titleControl: {error: false, helperText: "Se debe especificar un titulo."}
+      });
+    }
+
+    if (payload.amount == null || isNaN(payload.amount) || payload.amount < 0){
+      this.setState({
+          amountControl: {error: true, helperText: "Se debe especificar un monto numerico positivo."}
+      });
+
+      error = false;
+    }
+    else {
+      this.setState({
+          amountControl: {error: false, helperText: "Se debe especificar un monto positivo."}
+      });
+    }
+    if (payload.date == null ){
+      this.setState({
+          dateControl: {error: true, helperText: "Fecha invalida."}
+      });
+
+      error = false;
+    }
+    else {
+      this.setState({
+          dateControl: {error: false, helperText: "Fecha invalida."}
+      });
+    }
+
+    if (payload.category == null || payload.category == ""){
+      this.setState({
+          categoryControl: {error: true, helperText: "Se debe especificar una categoria."}
+        });
+      error = false;
+    }
+    else {
+      this.setState({
+          categoryControl: {error: false, helperText: "Se debe especificar una categoria."}
+        });
+    }
+
+    return error;
+  }
+
   onSubmit = (e) => {
       e.preventDefault();
+      var error = false;
       let errorMessages = this.state.errorMessages;
 
       let payload = {
          title: this.state.title,
-         amount: this.state.amount,
+         amount: parseFloat(this.state.amount),
          category: this.state.category,
          date: this.state.date
       };
 
-      /*if (payload.title == null || payload.title == ""){
-        errorMessages.push("Se debe especificar un titulo no vacio. ");
-
-        this.setState({
-          creationStatus:"error",
-          errorMessages: errorMessages
-        });
-        return;
-      }
-
-      if (isNaN(payload.amount) || payload.amount < 0){
-        errorMessages.push("Se debe especificar un costo numerico. ");
-        this.setState({
-          creationStatus:"error",
-          errorMessage: errorMessages
-        });
-        return;
-      }*/
-
-
+      if(!this.formIsValid()){return;}
       let result = postConsumption(payload).then(res => {
-        this.setState({creationStatus: "created"});
+        console.log(res);
+        if(res.result == "error"){
+          this.setState({status: "error", errorMessages: res.messages});
+        }
+        else {
+            //this.props.onCreationOk();
+        }
       });
   }
 
@@ -77,16 +131,26 @@ export default class AddConsumptionForm extends React.Component<any,any>{
           InputProps= {{ style: { fontSize:"0.9rem"}}}
           label="Titulo"
           name="title"
+          error={this.state.titleControl.error}
+          helperText={this.state.titleControl.helperText}
           onChange={this.handleChange}/>
         </div>
         <div className="addConsumptionFormItem">
-          <TextField name="amount" label="Costo" name="label" className="addConsumptionInput addConsumptionAmountField"/>
+          <TextField
+            name="amount"
+            label="Monto"
+            error={this.state.amountControl.error}
+            helperText={this.state.amountControl.helperText}
+            onChange={this.handleChange}
+            className="addConsumptionInput addConsumptionAmountField"/>
           <TextField
               id="date"
               name="date"
               label="Fecha"
               type="date"
-              defaultValue="2020-05-24"
+              error={this.state.dateControl.error}
+              helperText={this.state.dateControl.helperText}
+              defaultValue={getTodaysDate()}
               onChange={this.handleChange}
               InputLabelProps={{shrink: true}}
               InputProps= {{ style: { fontSize:"0.9rem", marginLeft:'10px'} }}
@@ -102,6 +166,7 @@ export default class AddConsumptionForm extends React.Component<any,any>{
                 value={this.state.age}
                 onChange={this.handleChange}
                 name="category"
+                error={this.state.categoryControl.error}
                 className="addConsumptionInput"
                 inputProps={{
                   name: 'category',
@@ -123,12 +188,20 @@ export default class AddConsumptionForm extends React.Component<any,any>{
                 autoComplete="off"
                 InputProps= {{ style: { fontSize:"0.9rem"}}}
                 label="Nueva categoria"
+                error={this.state.categoryControl.error}
+                helperText={this.state.categoryControl.helperText}
                 onChange={this.handleChange}/>
             <IconButton color="primary" onClick={this.toggleNewCategory} >
               <ClearButton />
             </IconButton></div>}
             </div>
         </div>
+        {(this.state.status === "error")?
+        <div className="consumptionCreationErrors">
+            {this.state.errorMessages.map(err => {
+              return <div>{err}</div>
+            })}
+        </div>:null}
         <div className="addConsumptionFormItem">
           <Button  color="primary" onClick={this.onSubmit}>Agregar</Button>
           <Button  color="primary" onClick={this.onCancel}>Cancelar</Button>
@@ -148,11 +221,21 @@ async function postConsumption(data) {
       credentials: 'same-origin',
       headers: {
         'Content-Type': 'application/json',
-        'Authentication': 'Bearer' + token
+        'Authorization': 'Bearer ' + token
       },
       redirect: 'follow',
       referrerPolicy: 'no-referrer',
       body: JSON.stringify(data)
     });
     return response.json();
+}
+
+function getTodaysDate(){
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+
+  today = yyyy + '-' + mm + '-' + dd;
+  return today;
 }

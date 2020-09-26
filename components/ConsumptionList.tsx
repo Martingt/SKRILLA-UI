@@ -50,6 +50,7 @@ export default class ConsumptionList extends React.Component<any, any>  {
 
 
   render(){
+    var i = 0;
 
   return (
         <TableContainer component={Paper}>
@@ -63,14 +64,16 @@ export default class ConsumptionList extends React.Component<any, any>  {
               </TableRow>
             </TableHead>
             <TableBody>
-              {this.state.consumptions.map((row) => (
-                <TableRow key={row.id}>
+              {this.state.consumptions.map((row) => {
+                i =  i + 1;
+                return (
+                <TableRow key={i}>
                   <TableCell align="left">{row.date.day}-{row.date.month}-{row.date.year}</TableCell>
                   <TableCell align="left">{row.title}</TableCell>
                   <TableCell align="left">{row.amount}</TableCell>
                   <TableCell align="left">{row.category}</TableCell>
                 </TableRow>
-              ))}
+              )} )}
             </TableBody>
           </Table>
         </TableContainer>);
