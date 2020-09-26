@@ -68,21 +68,22 @@ export default class Login extends React.Component<any, any> {
     let error = (this.state.error == 1)? <p className="forg-pass">Wrong username or password</p>:null;
     let page = null;
     if(this.state.token !== null){
-      page = <div className="mainContainer">
+      page = 
+      <div className="mainContainer">
         <div className="mainContainerContent">
-        <div className="containerTopBar">
-        <div className="topBarLeft">
-          <img src="/images/skrilla-icon.png" className="skrillaTopBarLogo"/>
-          <h1 className="containerTopBarTitle">Consumos</h1>
+          <div className="containerTopBar">
+            <div className="topBarLeft">
+              <img src="/images/skrilla-icon.png" className="skrillaTopBarLogo"/>
+              <h1 className="containerTopBarTitle">Consumos</h1>
+            </div>
+            <div className="logout">Logout</div>
           </div>
-          <div style={{color:"#bbb"}}>Logout</div>
-        </div>
-        <div className="containerToolbar">
-          <IconButton color="primary" onClick={this.handleAddConsumption} >
-            <AddButton />
-          </IconButton>
-        </div>
-        <ConsumptionList />
+          <div className="containerToolbar">
+            <IconButton color="primary" onClick={this.handleAddConsumption} >
+              <AddButton />
+            </IconButton>
+          </div>
+          <ConsumptionList />
           <Modal
             aria-labelledby="Agregar Consumo"
             open={this.state.consumptionItemCreation}
