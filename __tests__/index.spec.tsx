@@ -5,7 +5,7 @@ import * as React from 'react'
 import {mount} from 'enzyme'
 import IndexPage from '../pages/index'
 import ConsumptionList from '../components/ConsumptionList'
-
+import {slide as Menu} from 'react-burger-menu'
 
 describe('Pages', () => {
   describe('Sign In', () => {
@@ -66,6 +66,11 @@ describe('Pages', () => {
       const wrap = mount(<IndexPage/>);
       wrap.setState({token: "dummyToken"});
       expect(wrap.contains(<ConsumptionList/>)).toEqual(true)
+    })
+    it('has a burger menu',function(){
+      const wrap = mount(<IndexPage/>);
+      wrap.setState({token: 'dummyToken'});
+      expect(wrap.contains(<Menu/>)).toEqual(true)
     })
   })
   describe('Topbar @ HomeScreen', () => {
