@@ -10,7 +10,7 @@ export default class TopBar extends React.Component<any, any>  {
   render(){
     var i = 0;
 
-  return (<div style={{"box-sizing":"border-box" }}>
+  return (<div>
       <div className="containerTopBar">
         <Menu outerContainerId={"content"}>
           <a>Consumos</a>
