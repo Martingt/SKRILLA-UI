@@ -2,7 +2,6 @@
 import * as React from 'react'
 import '../resources/styles/sign-in.scss'
 import '../resources/styles/homescreen.scss'
-import '../resources/styles/burgerMenu.scss'
 import AuthService from '../utils/AuthService'
 import ConsumptionList from '../components/ConsumptionList';
 import IconButton from '@material-ui/core/IconButton';
@@ -12,7 +11,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import AddConsumptionForm from '../components/AddConsumptionForm';
-import {slide as Menu} from 'react-burger-menu'
+import TopBar from '../components/TopBar';
 
 export default class Login extends React.Component<any, any> {
   constructor(props) {
@@ -70,22 +69,13 @@ export default class Login extends React.Component<any, any> {
     let error = (this.state.error == 1)? <p className="forg-pass">Wrong username or password</p>:null;
     let page = null;
     if(this.state.token !== null){
-      page = 
-        <div>
-          <Menu>
-            <a>Item 1</a>
-            <a>Item 2</a>
-            <a>Item 3</a>
-          </Menu>
+      page =
+        <div id="content">
+          <TopBar />
           <div className="mainContainer">
             <div className="mainContainerContent">
-              <div className="containerTopBar">
-                <div className="topBarLeft">
-                  <img src="/images/skrilla-icon.png" className="skrillaTopBarLogo"/>
-                  <h1 className="containerTopBarTitle">Consumos</h1>
-                </div>
-                <div className="logout">Logout</div>
-              </div>
+
+              <h1 className="containerTopBarTitle">Consumos</h1>
               <div className="containerToolbar">
                 <IconButton color="primary" onClick={this.handleAddConsumption} >
                   <AddButton />
@@ -139,4 +129,3 @@ export default class Login extends React.Component<any, any> {
     return page;
   }
 }
-

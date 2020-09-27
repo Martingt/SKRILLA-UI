@@ -20,9 +20,9 @@
   flex-direction:row;
   flex:1;
   justify-content: space-between;
-  padding-bottom:15px;
-  padding-top:15px;
   align-items: center;
+  padding:5px;
+  border-bottom:1px solid #ccc;
 }
 .addContsumptionModal {
   display:flex;
@@ -32,11 +32,6 @@
 }
 .addContsumptionModal:focus {
   outline:none;
-}
-.topBarLeft {
-  display:flex;
-  flex:1;
-  align-items: center;
 }
 .mainContainerContent {
   min-width:800px;
