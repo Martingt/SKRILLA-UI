@@ -70,7 +70,7 @@ describe('Pages', () => {
     it('has a burger menu',function(){
       const wrap = mount(<IndexPage/>);
       wrap.setState({token: 'dummyToken'});
-      expect(wrap.contains(<Menu/>)).toEqual(true)
+      expect(wrap.contains(Menu)).toEqual(true)
     })
   })
   describe('Topbar @ HomeScreen', () => {
