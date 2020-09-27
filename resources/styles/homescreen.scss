@@ -12,18 +12,7 @@
   display:flex;
   flex:1;
 }
-.containerTopBarTitle {
-  padding:10px;
-}
-.containerTopBar {
-  display: flex;
-  flex-direction:row;
-  flex:1;
-  justify-content: space-between;
-  align-items: center;
-  padding:5px;
-  border-bottom:1px solid #ccc;
-}
+
 .addContsumptionModal {
   display:flex;
   align-items:center;
@@ -35,13 +24,4 @@
 }
 .mainContainerContent {
   min-width:800px;
-}
-.skrillaTopBarLogo {
-  height:60px;
-  width:60px;
-  border-radius: 60px;
-    opacity:0.5;
-}
-.skrillaTopBarLogo:hover {
-  opacity:0.7;
 }
