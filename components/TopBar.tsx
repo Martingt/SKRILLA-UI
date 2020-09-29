@@ -6,6 +6,9 @@ import '../resources/styles/topBar.scss'
 import {slide as Menu} from 'react-burger-menu'
 export default class TopBar extends React.Component<any, any>  {
 
+  constructor(props) {
+    super(props);
+  }
 
   render(){
     var i = 0;
@@ -19,8 +22,10 @@ export default class TopBar extends React.Component<any, any>  {
         <div className="topBarLeft">
           <img src="/images/skrilla-icon.png" className="skrillaTopBarLogo"/>
         </div>
-        <div className="logout">Logout</div>
+        <div className="logout">
+          <input onClick= {() => this.props.handleToUpdate(null)} type="submit" value="Logout"/>
+        </div>
     </div></div>);
   }
-
+  
 }

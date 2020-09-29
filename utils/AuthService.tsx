@@ -26,7 +26,7 @@ export default class AuthService {
         redirect: 'follow'
       };
 
-      return this.fetch("http://localhost:6001/connect/token", requestOptions)
+      return this.fetch("https://localhost:6001/connect/token", requestOptions)
         /*.then(result => this.setToken(result.access_token))*/
         .then(result => {
           this.setToken(result['access_token']);
@@ -34,6 +34,38 @@ export default class AuthService {
         })
         .catch(error => console.log('error', error));
 
+    }
+
+    signUp(email, password, confirmPassword) {
+      // Get a token
+      var myHeaders = new Headers();
+      myHeaders.append("Accept", "application/json");
+      myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+  
+      var urlencoded = new URLSearchParams();
+      urlencoded.append("email", email);
+      urlencoded.append("password", password);
+      urlencoded.append("confirmPassword", confirmPassword);
+  
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: urlencoded,
+        redirect: 'follow'
+      };
+  
+      return this.fetch("https://localhost:6001/Auth/Register", requestOptions)
+        /*.then(result => this.setToken(result.access_token))*/
+        .then(res => {
+          console.log(res);
+          return this.login(email, password);
+        })
+        // .then(result => {
+        //   this.setToken(result['access_token']);
+        //   return result['access_token'];
+        // })
+        .catch(error => console.log('error', error));
+  
     }
 
     loggedIn(){

@@ -11,6 +11,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import AddConsumptionForm from '../components/AddConsumptionForm';
+import RegisterForm from '../components/RegisterForm';
 import TopBar from '../components/TopBar';
 
 export default class Login extends React.Component<any, any> {
@@ -19,6 +20,7 @@ export default class Login extends React.Component<any, any> {
     this.state = {
       value: '',
       token:null,
+      onRegister: false,
       name: "",
       password:"",
       error:0,
@@ -26,6 +28,7 @@ export default class Login extends React.Component<any, any> {
     };
      this.handleChange = this.handleChange.bind(this);
      this.handleSubmit = this.handleSubmit.bind(this);
+     this.handleRegisterClick = this.handleRegisterClick.bind(this);
   }
 
    handleAddConsumption = () => {
@@ -35,6 +38,8 @@ export default class Login extends React.Component<any, any> {
   componentDidMount () {
     this.setState({token: this.getAuthToken()});
   }
+
+
   handleChange(e) {
     this.setState({[e.target.name]: e.target.value});
   }
@@ -50,6 +55,15 @@ export default class Login extends React.Component<any, any> {
 
       })
       .catch(e => console.log(e))
+  }
+
+  handleToUpdate(someArg){
+    this.setState({token:someArg});
+  }
+
+  handleRegisterClick (e) {
+    e.preventDefault();
+    this.setState({onRegister: true});
   }
 
   getAuthToken(){
@@ -71,7 +85,7 @@ export default class Login extends React.Component<any, any> {
     if(this.state.token !== null){
       page =
         <div id="content">
-          <TopBar />
+          <TopBar handleToUpdate = {this.handleToUpdate.bind(this)}/>
           <div className="mainContainer">
             <div className="mainContainerContent">
 
@@ -98,6 +112,10 @@ export default class Login extends React.Component<any, any> {
           </div>
         </div>
     }
+    else if(this.state.onRegister)
+    {
+      page = <RegisterForm handleToUpdate = {this.handleToUpdate.bind(this)}></RegisterForm>
+    }
     else
     {
       page = <div className="loginBody">
@@ -118,6 +136,7 @@ export default class Login extends React.Component<any, any> {
                 </label>
                 <label className="subm-cont">
                     <input className="signIn" type="submit" value="Log In" ></input>
+                    <input  className="signIn" type="submit" value="Sign Up" onClick={this.handleRegisterClick}></input>
                 </label>
             </form>
             {error}
