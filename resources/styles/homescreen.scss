@@ -11,6 +11,8 @@
 .containerToolbar {
   display:flex;
   flex:1;
+  justify-content:space-between;
+  align-items: center;
 }
 
 .addContsumptionModal {
@@ -24,4 +26,9 @@
 }
 .mainContainerContent {
   min-width:800px;
+}
+.topBarFilters {
+    display:flex;
+    align-items: center;
+    padding:10px;
 }

@@ -6,22 +6,30 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-
+import TextField from '@material-ui/core/TextField';
+import IconButton from '@material-ui/core/IconButton';
+import AddButton from '@material-ui/icons/Add';
 
 export default class ConsumptionList extends React.Component<any, any>  {
 
   constructor(props){
     super(props);
-    this.state = { consumptions: [], token: null}
+    this.state = { consumptions: [], token: null, category: ""}
   }
 
   componentDidMount(){
-    this.setState({token: this.getAuthToken()})
+    this.setState({token: this.getAuthToken()});
     this.fetchConsumptions();
   }
 
-  fetchConsumptions(){
+  fetchConsumptions(category){
     var myHeaders = new Headers();
+    var fetchURL = "https://localhost:5001/consumptions";
+
+    if(category != undefined && category != ""){
+        fetchURL += "?category="+category;
+    }
+
     myHeaders.append("Authorization", "Bearer " + this.getAuthToken());
 
     let requestOptions: RequestInit = {
@@ -30,7 +38,7 @@ export default class ConsumptionList extends React.Component<any, any>  {
       redirect: 'follow'
     };
 
-    fetch("https://localhost:5001/consumptions", requestOptions)
+    fetch(fetchURL, requestOptions)
       .then(response => response.json())
       .then(result => { this.setState({...this.state, consumptions: result }); })
       .catch(error => console.log('error', error));
@@ -47,18 +55,36 @@ export default class ConsumptionList extends React.Component<any, any>  {
     return token;
   }
 
+  filterByCategory = (e) => {
+
+      this.fetchConsumptions(e.target.value);
+      this.setState({category: e.target.value});
+  }
 
   render(){
     var i = 0;
 
-  return (
+  return (<div>
+      <div className="containerToolbar">
+          <div className="topBarFilters">
+            <TextField
+              size="small"
+              name="category"
+              label="Busca por categoria"
+              onChange={this.filterByCategory}
+              className="categoryFilter"/>
+          </div>
+          <IconButton color="primary" onClick={this.props.onAddConsumption} >
+            <AddButton />
+          </IconButton>
+        </div>
         <TableContainer component={Paper}>
           <Table  aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell align="left">Fecha</TableCell>
                 <TableCell align="left">Titulo</TableCell>
-                <TableCell align="left">Costo</TableCell>
+                <TableCell align="left">Monto</TableCell>
                 <TableCell align="left">Categoria</TableCell>
               </TableRow>
             </TableHead>
@@ -70,12 +96,13 @@ export default class ConsumptionList extends React.Component<any, any>  {
                   <TableCell align="left">{row.date.day}-{row.date.month}-{row.date.year}</TableCell>
                   <TableCell align="left">{row.title}</TableCell>
                   <TableCell align="left">{row.amount}</TableCell>
-                  <TableCell align="left">{row.category}</TableCell>
+                  <TableCell align="left">{row.category.name}</TableCell>
                 </TableRow>
               )} )}
             </TableBody>
           </Table>
-        </TableContainer>);
+        </TableContainer>
+        </div>);
   }
 
 }

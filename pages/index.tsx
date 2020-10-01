@@ -14,6 +14,7 @@ import AddConsumptionForm from '../components/AddConsumptionForm';
 import RegisterForm from '../components/RegisterForm';
 import TopBar from '../components/TopBar';
 
+
 export default class Login extends React.Component<any, any> {
   constructor(props) {
     super(props);
@@ -43,6 +44,7 @@ export default class Login extends React.Component<any, any> {
   handleChange(e) {
     this.setState({[e.target.name]: e.target.value});
   }
+  
   handleSubmit (e) {
     e.preventDefault();
     auth.login(this.state.email, this.state.password)
@@ -77,8 +79,6 @@ export default class Login extends React.Component<any, any> {
     return token;
   }
 
-
-
   render() {
     let error = (this.state.error == 1)? <p className="forg-pass">Wrong username or password</p>:null;
     let page = null;
@@ -90,12 +90,7 @@ export default class Login extends React.Component<any, any> {
             <div className="mainContainerContent">
 
               <h1 className="containerTopBarTitle">Consumos</h1>
-              <div className="containerToolbar">
-                <IconButton color="primary" onClick={this.handleAddConsumption} >
-                  <AddButton />
-                </IconButton>
-              </div>
-              <ConsumptionList />
+              <ConsumptionList  onAddConsumption={this.handleAddConsumption} />
               <Modal
                 aria-labelledby="Agregar Consumo"
                 open={this.state.consumptionItemCreation}
