@@ -14,6 +14,7 @@ import AddConsumptionForm from '../components/AddConsumptionForm';
 import RegisterForm from '../components/RegisterForm';
 import TopBar from '../components/TopBar';
 import TextField from '@material-ui/core/TextField';
+import CategoriesList from '../components/CategoriesList';
 
 export default class Login extends React.Component<any, any> {
   constructor(props) {
@@ -151,6 +152,7 @@ export default class Login extends React.Component<any, any> {
                   <AddConsumptionForm onCreationOk={this.handleConsumptionCreation} onCancel={this.handleAddConsumption}/>
                 </Fade>
               </Modal>
+              <CategoriesList/>
             </div>
           </div>
         </div>

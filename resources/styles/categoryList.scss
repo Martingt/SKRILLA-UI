@@ -1,0 +1,20 @@
+.container {
+    display:flex;
+    flex:1;
+    justify-content: center;
+    margin: 20px;
+}
+.title {
+    margin-top: 80px;
+}
+.category {
+    border-radius: 5px;
+    height: 50px;
+    margin-left: 10px;
+    padding: 5px;
+    display:flex;
+    align-items:center;
+}
+p {
+    color: white;
+}
