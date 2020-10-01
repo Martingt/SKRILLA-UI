@@ -51,6 +51,13 @@ input[type=submit].signIn {
     border-radius: 4px;
     font-size: 20px;
 }
+input[type=submit].signUp {
+    color: white;
+    border: none;
+    padding: px 20px;
+    border-radius: 4px;
+    font-size: 10px;
+}
 .forg-pass {
     font-size: 12px;
     display: flex;

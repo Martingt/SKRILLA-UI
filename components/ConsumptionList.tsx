@@ -47,7 +47,18 @@ export default class ConsumptionList extends React.Component<any, any>  {
     return token;
   }
 
-
+  /*
+              {this.state.consumptions.map((row) => {
+                i =  i + 1;
+                return (
+                <TableRow key={i}>
+                  <TableCell align="left">{row.date.day}-{row.date.month}-{row.date.year}</TableCell>
+                  <TableCell align="left">{row.title}</TableCell>
+                  <TableCell align="left">{row.amount}</TableCell>
+                  <TableCell align="left">{row.category}</TableCell>
+                </TableRow>
+              )} )}
+  */
   render(){
     var i = 0;
 
@@ -64,15 +75,15 @@ export default class ConsumptionList extends React.Component<any, any>  {
             </TableHead>
             <TableBody>
               {this.state.consumptions.map((row) => {
-                i =  i + 1;
-                return (
-                <TableRow key={i}>
-                  <TableCell align="left">{row.date.day}-{row.date.month}-{row.date.year}</TableCell>
-                  <TableCell align="left">{row.title}</TableCell>
-                  <TableCell align="left">{row.amount}</TableCell>
-                  <TableCell align="left">{row.category}</TableCell>
-                </TableRow>
-              )} )}
+                  i =  i + 1;
+                  return (
+                  <TableRow key={i}>
+                    <TableCell align="left">{row.date.day}-{row.date.month}-{row.date.year}</TableCell>
+                    <TableCell align="left">{row.title}</TableCell>
+                    <TableCell align="left">{row.amount}</TableCell>
+                    <TableCell align="left">{row.category}</TableCell>
+                  </TableRow>
+                )} )}
             </TableBody>
           </Table>
         </TableContainer>);

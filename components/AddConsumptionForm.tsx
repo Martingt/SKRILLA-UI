@@ -5,7 +5,7 @@ import AuthService  from '../utils/AuthService';
 import IconButton from '@material-ui/core/IconButton';
 import AddButton from '@material-ui/icons/Add';
 import ClearButton from '@material-ui/icons/Clear';
-
+import Categories from '../components/Categories';
 export default class AddConsumptionForm extends React.Component<any,any>{
   constructor(props){
     super(props);
@@ -160,23 +160,7 @@ export default class AddConsumptionForm extends React.Component<any,any>{
               <div>
               <FormControl className="addConsumptionFormSelect">
               <InputLabel htmlFor="category-select">Categoria: </InputLabel>
-              <Select
-                native
-                value={this.state.age}
-                onChange={this.handleChange}
-                name="category"
-                error={this.state.categoryControl.error}
-                className="addConsumptionInput"
-                inputProps={{
-                  name: 'category',
-                  id: 'category-select',
-                  style: { fontSize:"0.9rem"}
-                }}>
-                <option value={10}></option>
-                <option value={10}>Ten</option>
-                <option value={20}>holahola</option>
-                <option value={30}>Thirty</option>
-                </Select>
+              <Categories /*onChange={this.handleChange} error={this.state.categoryControl.error}*//>
             </FormControl>
             <IconButton  onClick={this.toggleNewCategory} >
               <AddButton />

@@ -24,11 +24,11 @@ export default class Login extends React.Component<any, any> {
       name: "",
       password:"",
       error:0,
-      consumptionItemCreation:false
+      consumptionItemCreation:false,
     };
-     this.handleChange = this.handleChange.bind(this);
-     this.handleSubmit = this.handleSubmit.bind(this);
-     this.handleRegisterClick = this.handleRegisterClick.bind(this);
+      this.handleChange = this.handleChange.bind(this);
+      this.handleSubmit = this.handleSubmit.bind(this);
+      this.handleRegisterClick = this.handleRegisterClick.bind(this);
   }
 
    handleAddConsumption = () => {
@@ -91,6 +91,7 @@ export default class Login extends React.Component<any, any> {
 
               <h1 className="containerTopBarTitle">Consumos</h1>
               <div className="containerToolbar">
+                
                 <IconButton color="primary" onClick={this.handleAddConsumption} >
                   <AddButton />
                 </IconButton>
@@ -136,7 +137,9 @@ export default class Login extends React.Component<any, any> {
                 </label>
                 <label className="subm-cont">
                     <input className="signIn" type="submit" value="Log In" ></input>
-                    <input  className="signIn" type="submit" value="Sign Up" onClick={this.handleRegisterClick}></input>
+                </label>
+                <label className="subm-cont">
+                <input  className="signUp" type="submit" value="Sign Up" onClick={this.handleRegisterClick}></input>
                 </label>
             </form>
             {error}
