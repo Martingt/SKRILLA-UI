@@ -28,7 +28,8 @@ export default class Login extends React.Component<any, any> {
       error:0,
       category:"",
       consumptions: [],
-      consumptionItemCreation:false
+      consumptionItemCreation:false,
+      viewPage: 1
     };
      this.handleChange = this.handleChange.bind(this);
      this.handleSubmit = this.handleSubmit.bind(this);
@@ -115,13 +116,18 @@ export default class Login extends React.Component<any, any> {
     return token;
   }
 
+  changePage = (pageNumber) =>{
+    this.setState({viewPage: pageNumber});
+  }
+
   render() {
     let error = (this.state.error == 1)? <p className="forg-pass">Wrong username or password</p>:null;
     let page = null;
     if(this.state.token !== null){
+      if(this.state.viewPage == 1){
       page =
         <div id="content">
-          <TopBar handleToUpdate = {this.handleToUpdate.bind(this)}/>
+          <TopBar handleToUpdate = {this.handleToUpdate.bind(this)} onChangePage={this.changePage}/>
           <div className="mainContainer">
             <div className="mainContainerContent">
 
@@ -152,10 +158,24 @@ export default class Login extends React.Component<any, any> {
                   <AddConsumptionForm onCreationOk={this.handleConsumptionCreation} onCancel={this.handleAddConsumption}/>
                 </Fade>
               </Modal>
-              <CategoriesList/>
             </div>
           </div>
         </div>
+      }
+      else {
+        page = <div id="content">
+          <TopBar handleToUpdate = {this.handleToUpdate.bind(this)} onChangePage={this.changePage}/>
+          <div className="mainContainer">
+            <div className="mainContainerContent">
+
+              <h1 className="containerTopBarTitle">Consumos</h1>
+             <CategoriesList/>
+
+
+            </div>
+          </div>
+        </div>
+      }
     }
     else if(this.state.onRegister)
     {

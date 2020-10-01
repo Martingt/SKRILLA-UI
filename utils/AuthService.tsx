@@ -41,19 +41,19 @@ export default class AuthService {
       var myHeaders = new Headers();
       myHeaders.append("Accept", "application/json");
       myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-  
+
       var urlencoded = new URLSearchParams();
       urlencoded.append("email", email);
       urlencoded.append("password", password);
       urlencoded.append("confirmPassword", confirmPassword);
-  
+
       var requestOptions = {
         method: 'POST',
         headers: myHeaders,
         body: urlencoded,
         redirect: 'follow'
       };
-  
+
       return this.fetch("https://localhost:6001/Auth/Register", requestOptions)
         /*.then(result => this.setToken(result.access_token))*/
         .then(res => {
@@ -65,7 +65,7 @@ export default class AuthService {
         //   return result['access_token'];
         // })
         .catch(error => console.log('error', error));
-  
+
     }
 
     loggedIn(){
@@ -104,7 +104,7 @@ export default class AuthService {
     }
 
     logout(){
-      document.cookie = "doSomethingOnlyOnce=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+      document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     }
 
     _checkStatus(response) {
