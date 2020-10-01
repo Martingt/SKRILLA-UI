@@ -160,7 +160,9 @@ export default class AddConsumptionForm extends React.Component<any,any>{
               <div>
               <FormControl className="addConsumptionFormSelect">
               <InputLabel htmlFor="category-select">Categoria: </InputLabel>
-              <Categories /*onChange={this.handleChange} error={this.state.categoryControl.error}*//>
+              <Categories
+                onChange={this.handleChange}
+                error={this.state.categoryControl.error} />
             </FormControl>
             <IconButton  onClick={this.toggleNewCategory} >
               <AddButton />

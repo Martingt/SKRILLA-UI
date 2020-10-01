@@ -12,29 +12,13 @@ export default class ConsumptionList extends React.Component<any, any>  {
 
   constructor(props){
     super(props);
-    this.state = { consumptions: [], token: null}
+    this.state = {  token: null}
   }
 
   componentDidMount(){
-    this.setState({token: this.getAuthToken()})
-    this.fetchConsumptions();
+    this.setState({token: this.getAuthToken()});
   }
 
-  fetchConsumptions(){
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer " + this.getAuthToken());
-
-    let requestOptions: RequestInit = {
-      method: 'GET',
-      headers: myHeaders,
-      redirect: 'follow'
-    };
-
-    fetch("https://localhost:5001/consumptions", requestOptions)
-      .then(response => response.json())
-      .then(result => { this.setState({...this.state, consumptions: result }); })
-      .catch(error => console.log('error', error));
-  }
 
   getAuthToken(){
     let token = null;
@@ -47,18 +31,7 @@ export default class ConsumptionList extends React.Component<any, any>  {
     return token;
   }
 
-  /*
-              {this.state.consumptions.map((row) => {
-                i =  i + 1;
-                return (
-                <TableRow key={i}>
-                  <TableCell align="left">{row.date.day}-{row.date.month}-{row.date.year}</TableCell>
-                  <TableCell align="left">{row.title}</TableCell>
-                  <TableCell align="left">{row.amount}</TableCell>
-                  <TableCell align="left">{row.category}</TableCell>
-                </TableRow>
-              )} )}
-  */
+
   render(){
     var i = 0;
 
@@ -74,14 +47,14 @@ export default class ConsumptionList extends React.Component<any, any>  {
               </TableRow>
             </TableHead>
             <TableBody>
-              {this.state.consumptions.map((row) => {
+              {this.props.consumptions.map((row) => {
                   i =  i + 1;
                   return (
                   <TableRow key={i}>
                     <TableCell align="left">{row.date.day}-{row.date.month}-{row.date.year}</TableCell>
                     <TableCell align="left">{row.title}</TableCell>
                     <TableCell align="left">{row.amount}</TableCell>
-                    <TableCell align="left">{row.category}</TableCell>
+                    <TableCell align="left">{row.category.name}</TableCell>
                   </TableRow>
                 )} )}
             </TableBody>

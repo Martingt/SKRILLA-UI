@@ -45,6 +45,7 @@ export default class Categories extends React.Component<any, any>  {
             native
             value={this.state.age}
             name="category"
+            onChange={this.props.onChange}
             className="categoryList"
             inputProps={{
             name: 'category',
@@ -59,5 +60,5 @@ export default class Categories extends React.Component<any, any>  {
             }))}
         </Select>
     )}
-    
+
 }
