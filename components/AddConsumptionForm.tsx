@@ -107,7 +107,7 @@ export default class AddConsumptionForm extends React.Component<any,any>{
           this.setState({status: "error", errorMessages: res.messages});
         }
         else {
-            //this.props.onCreationOk();
+            this.props.onCreationOk();
         }
       });
   }
