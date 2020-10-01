@@ -27,8 +27,16 @@
 .mainContainerContent {
   min-width:800px;
 }
+.categoryIconSmall{
+height:23px;
+width:23px;
+}
 .topBarFilters {
     display:flex;
     align-items: center;
     padding:10px;
+}
+.listCategoryItem {
+  display:flex;
+  align-items:center;
 }
