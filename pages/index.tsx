@@ -13,7 +13,7 @@ import Fade from '@material-ui/core/Fade';
 import AddConsumptionForm from '../components/AddConsumptionForm';
 import RegisterForm from '../components/RegisterForm';
 import TopBar from '../components/TopBar';
-
+import TextField from '@material-ui/core/TextField';
 
 export default class Login extends React.Component<any, any> {
   constructor(props) {
@@ -25,6 +25,8 @@ export default class Login extends React.Component<any, any> {
       name: "",
       password:"",
       error:0,
+      category:"",
+      consumptions: [],
       consumptionItemCreation:false
     };
      this.handleChange = this.handleChange.bind(this);
@@ -38,13 +40,14 @@ export default class Login extends React.Component<any, any> {
 
   componentDidMount () {
     this.setState({token: this.getAuthToken()});
+    this.fetchConsumptions();
   }
 
 
   handleChange(e) {
     this.setState({[e.target.name]: e.target.value});
   }
-  
+
   handleSubmit (e) {
     e.preventDefault();
     auth.login(this.state.email, this.state.password)
@@ -68,6 +71,38 @@ export default class Login extends React.Component<any, any> {
     this.setState({onRegister: true});
   }
 
+  fetchConsumptions(category){
+    var myHeaders = new Headers();
+    var fetchURL = "https://localhost:5001/consumptions";
+
+    if(category != undefined && category != ""){
+        fetchURL += "?category="+category;
+    }
+
+    myHeaders.append("Authorization", "Bearer " + this.getAuthToken());
+
+    let requestOptions: RequestInit = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+
+    fetch(fetchURL, requestOptions)
+      .then(response => response.json())
+      .then(result => { this.setState({...this.state, consumptions: result }); })
+      .catch(error => console.log('error', error));
+  }
+
+  filterByCategory = (e) => {
+
+      this.fetchConsumptions(e.target.value);
+      this.setState({category: e.target.value});
+  }
+
+  handleConsumptionCreation = (e) =>{
+    this.fetchConsumptions();
+    this.handleAddConsumption();
+  }
   getAuthToken(){
     let token = null;
     if (document.cookie.split(';').some((item) => item.trim().startsWith('token='))) {
@@ -90,7 +125,20 @@ export default class Login extends React.Component<any, any> {
             <div className="mainContainerContent">
 
               <h1 className="containerTopBarTitle">Consumos</h1>
-              <ConsumptionList  onAddConsumption={this.handleAddConsumption} />
+              <div className="containerToolbar">
+                  <div className="topBarFilters">
+                    <TextField
+                      size="small"
+                      name="category"
+                      label="Busca por categoria"
+                      onChange={this.filterByCategory}
+                      className="categoryFilter"/>
+                  </div>
+                  <IconButton color="primary" onClick={this.handleAddConsumption} >
+                    <AddButton />
+                  </IconButton>
+                </div>
+              <ConsumptionList consumptions={this.state.consumptions} />
               <Modal
                 aria-labelledby="Agregar Consumo"
                 open={this.state.consumptionItemCreation}
@@ -100,7 +148,7 @@ export default class Login extends React.Component<any, any> {
                 className="addContsumptionModal"
                 BackdropProps={{ timeout: 500 }}>
                 <Fade in={this.state.consumptionItemCreation}>
-                  <AddConsumptionForm onCancel={this.handleAddConsumption}/>
+                  <AddConsumptionForm onCreationOk={this.handleConsumptionCreation} onCancel={this.handleAddConsumption}/>
                 </Fade>
               </Modal>
             </div>
