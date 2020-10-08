@@ -14,11 +14,11 @@ export default class Register extends React.Component<any, any> {
           password:"",
           confirmPassword:""
         };
-        
+
          this.handleChange = this.handleChange.bind(this);
          this.handleSubmit = this.handleSubmit.bind(this);
       }
-    
+
       handleChange(e) {
         this.setState({[e.target.name]: e.target.value});
       }
@@ -34,15 +34,14 @@ export default class Register extends React.Component<any, any> {
             else
               this.setState({error: 1})
             console.log(res);
-    
+
           })
           .catch(e => console.log(e))
       }
-    
-    
+
+
     render() {
-        let page = 
-      
+        let page =
         <div className="login">
             <form onSubmit={
                 this.handleSubmit} >
@@ -68,7 +67,7 @@ export default class Register extends React.Component<any, any> {
         </div>
 
         return page;
-       
+
     }
 
 }

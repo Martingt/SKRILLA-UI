@@ -13,6 +13,7 @@ export default class TopBar extends React.Component<any, any>  {
   logout(){
     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
      this.props.handleToUpdate(null);
+     window.location.href = "/";
   }
 
   render(){

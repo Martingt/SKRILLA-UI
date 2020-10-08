@@ -15,11 +15,9 @@ import RegisterForm from '../components/RegisterForm';
 import TopBar from '../components/TopBar';
 import TextField from '@material-ui/core/TextField';
 import CategoriesList from '../components/CategoriesList';
-<<<<<<< HEAD
 import {fetchConsumptions} from '../controllers/ConsumptionsController.tsx'
-=======
 import {RadialChart} from 'react-vis';
->>>>>>> e7368af4bed0b277f31fbea74905b4c500cc172d
+
 
 export default class Login extends React.Component<any, any> {
   constructor(props) {
@@ -145,10 +143,6 @@ export default class Login extends React.Component<any, any> {
                   </IconButton>
                 </div>
               <ConsumptionList consumptions={this.state.consumptions} />
-              <RadialChart
-                  data={this.createDataChart()}
-                  width={300}
-                  height={300} />
               <Modal
                 aria-labelledby="Agregar Consumo"
                 open={this.state.consumptionItemCreation}
@@ -171,10 +165,13 @@ export default class Login extends React.Component<any, any> {
           <div className="mainContainer">
             <div className="mainContainerContent">
 
-              <h1 className="containerTopBarTitle">Consumos</h1>
+              <h1 className="containerTopBarTitle">Categorias</h1>
              <CategoriesList/>
-
-
+             <div style={{display:"flex", flex:1,justifyContent:"center"}}>
+              <RadialChart
+                 data={this.createDataChart()}
+                 width={300}
+                 height={300} /></div>
             </div>
           </div>
         </div>

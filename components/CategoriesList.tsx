@@ -28,17 +28,17 @@ export default class ConsumptionList extends React.Component<any, any>  {
     return token;
   }
   newColor(){
-    var randomColor = Math.floor(Math.random()*16777215).toString(16);
-    return '#'+randomColor.toString();
+    var red = Math.floor(((Math.random()*1000)%100)+140).toString(16);
+    var green = Math.floor(((Math.random()*1000)%100)+140).toString(16);
+    var blue = Math.floor(((Math.random()*1000)%100)+140).toString(16);
+    return '#'+red+green+blue;
   }
 
   render(){
     var i = 0;
 
   return (
-        <div>
-            <h2 className='title'>Categorias</h2>
-            <div className='container'>
+            <div className='categoriesList'>
 
                 {this.state.categories.map((category) => {
                     i =  i + 1;
@@ -51,7 +51,6 @@ export default class ConsumptionList extends React.Component<any, any>  {
                 })
             }
             </div>
-        </div>
 
   )}
 
