@@ -1,6 +1,6 @@
 import * as React from 'react'
 import '../resources/styles/styles.scss'
-import AuthService from '../utils/AuthService'
+import AuthService from '../utils/AuthService.tsx'
 
 const auth = new AuthService()
 

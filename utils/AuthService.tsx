@@ -1,5 +1,7 @@
 export default class AuthService {
-    constructor() {
+    constructor(domain) {
+      this.domain = domain || 'http://localhost:6001/connect'
+      this.api = 'https://localhost:5001'
       this.fetch = this.fetch.bind(this)
       this.login = this.login.bind(this)
       this.getProfile = this.getProfile.bind(this)
@@ -55,15 +57,10 @@ export default class AuthService {
       };
 
       return this.fetch("https://localhost:6001/Auth/Register", requestOptions)
-        /*.then(result => this.setToken(result.access_token))*/
         .then(res => {
           console.log(res);
           return this.login(email, password);
         })
-        // .then(result => {
-        //   this.setToken(result['access_token']);
-        //   return result['access_token'];
-        // })
         .catch(error => console.log('error', error));
 
     }

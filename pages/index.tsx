@@ -2,7 +2,7 @@
 import * as React from 'react'
 import '../resources/styles/sign-in.scss'
 import '../resources/styles/homescreen.scss'
-import AuthService from '../utils/AuthService'
+import AuthService from '../utils/AuthService.tsx'
 import ConsumptionList from '../components/ConsumptionList';
 import IconButton from '@material-ui/core/IconButton';
 import AddButton from '@material-ui/icons/Add';
@@ -46,9 +46,11 @@ export default class Login extends React.Component<any, any> {
 
   componentDidMount () {
     this.setState({token: this.getAuthToken()});
-    fetchConsumptions()
-    .then(result => { this.setState({...this.state, consumptions: result }); })
-    .catch(error => console.log('error', error));
+    if(this.getAuthToken() != null){
+      fetchConsumptions()
+      .then(result => { this.setState({...this.state, consumptions: result }); })
+      .catch(error => console.log('error', error));
+    }
   }
 
 
@@ -60,11 +62,14 @@ export default class Login extends React.Component<any, any> {
     e.preventDefault();
     auth.login(this.state.email, this.state.password)
       .then(res => {
-        if (res != undefined)
-          this.setState({token: res});
+        if (res != undefined){
+          fetchConsumptions()
+          .then(result => { this.setState({...this.state, consumptions: result }); })
+          .catch(error => console.log('error', error));
+          this.setState({token: this.getAuthToken()});
+        }
         else
           this.setState({error: 1})
-        console.log(res);
 
       })
       .catch(e => console.log(e))

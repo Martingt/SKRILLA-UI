@@ -1,7 +1,7 @@
 import * as React from 'react'
 import '../resources/styles/addConsumptionForm.scss'
 import {TextField, Select, InputLabel, FormControl, Button} from '@material-ui/core';
-import AuthService  from '../utils/AuthService';
+import AuthService  from '../utils/AuthService.tsx';
 import IconButton from '@material-ui/core/IconButton';
 import AddButton from '@material-ui/icons/Add';
 import ClearButton from '@material-ui/icons/Clear';

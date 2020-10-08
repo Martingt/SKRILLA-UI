@@ -1,4 +1,4 @@
-import AuthService  from '../utils/AuthService';
+import AuthService  from '../utils/AuthService.tsx';
 var authService = new AuthService();
 
 export async function fetchConsumptions(category){
@@ -8,7 +8,7 @@ export async function fetchConsumptions(category){
   if(category != undefined && category != ""){
       fetchURL += "?category="+category;
   }
-
+console.log("consumption moment: " + authService.getToken());
   myHeaders.append("Authorization", "Bearer " + authService.getToken());
 
   let requestOptions: RequestInit = {
