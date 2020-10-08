@@ -15,6 +15,7 @@ import RegisterForm from '../components/RegisterForm';
 import TopBar from '../components/TopBar';
 import TextField from '@material-ui/core/TextField';
 import CategoriesList from '../components/CategoriesList';
+import {RadialChart} from 'react-vis';
 
 export default class Login extends React.Component<any, any> {
   constructor(props) {
@@ -28,6 +29,7 @@ export default class Login extends React.Component<any, any> {
       error:0,
       category:"",
       consumptions: [],
+      data: [],
       consumptionItemCreation:false,
       viewPage: 1
     };
@@ -104,6 +106,7 @@ export default class Login extends React.Component<any, any> {
   handleConsumptionCreation = (e) =>{
     this.fetchConsumptions();
     this.handleAddConsumption();
+
   }
   getAuthToken(){
     let token = null;
@@ -120,7 +123,15 @@ export default class Login extends React.Component<any, any> {
     this.setState({viewPage: pageNumber});
   }
 
+  createDataChart(){
+    const data = []
+    this.state.consumptions.map((consumption) => {
+      data.push({angle: consumption.amount})
+    })
+    return data;
+  }
   render() {
+    const myData = [{angle: 1}, {angle: 5}, {angle: 2}]
     let error = (this.state.error == 1)? <p className="forg-pass">Wrong username or password</p>:null;
     let page = null;
     if(this.state.token !== null){
@@ -146,6 +157,10 @@ export default class Login extends React.Component<any, any> {
                   </IconButton>
                 </div>
               <ConsumptionList consumptions={this.state.consumptions} />
+              <RadialChart
+                  data={this.createDataChart()}
+                  width={300}
+                  height={300} />
               <Modal
                 aria-labelledby="Agregar Consumo"
                 open={this.state.consumptionItemCreation}

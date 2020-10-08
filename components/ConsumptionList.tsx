@@ -33,9 +33,7 @@ export default class ConsumptionList extends React.Component<any, any>  {
   }
 
   getCategoryIcon(category){
-    console.log(CategoryIcons);
     for (const c in CategoryIcons){
-
       if (CategoryIcons[c].name == category){
         var path = "/images/categories/" + CategoryIcons[c].path;
         return (
