@@ -15,6 +15,7 @@ import RegisterForm from '../components/RegisterForm';
 import TopBar from '../components/TopBar';
 import TextField from '@material-ui/core/TextField';
 import CategoriesList from '../components/CategoriesList';
+import {fetchConsumptions} from '../controllers/ConsumptionsController.tsx'
 
 export default class Login extends React.Component<any, any> {
   constructor(props) {
@@ -42,7 +43,9 @@ export default class Login extends React.Component<any, any> {
 
   componentDidMount () {
     this.setState({token: this.getAuthToken()});
-    this.fetchConsumptions();
+    fetchConsumptions()
+    .then(result => { this.setState({...this.state, consumptions: result }); })
+    .catch(error => console.log('error', error));
   }
 
 
@@ -73,36 +76,18 @@ export default class Login extends React.Component<any, any> {
     this.setState({onRegister: true});
   }
 
-  fetchConsumptions(category){
-    var myHeaders = new Headers();
-    var fetchURL = "https://localhost:5001/consumptions";
-
-    if(category != undefined && category != ""){
-        fetchURL += "?category="+category;
-    }
-
-    myHeaders.append("Authorization", "Bearer " + this.getAuthToken());
-
-    let requestOptions: RequestInit = {
-      method: 'GET',
-      headers: myHeaders,
-      redirect: 'follow'
-    };
-
-    fetch(fetchURL, requestOptions)
-      .then(response => response.json())
-      .then(result => { this.setState({...this.state, consumptions: result }); })
-      .catch(error => console.log('error', error));
-  }
-
   filterByCategory = (e) => {
 
-      this.fetchConsumptions(e.target.value);
+      fetchConsumptions(e.target.value)
+      .then(result => { this.setState({...this.state, consumptions: result }); })
+      .catch(error => console.log('error', error));
       this.setState({category: e.target.value});
   }
 
   handleConsumptionCreation = (e) =>{
-    this.fetchConsumptions();
+    fetchConsumptions()
+      .then(result => { this.setState({...this.state, consumptions: result }); })
+      .catch(error => console.log('error', error));
     this.handleAddConsumption();
   }
   getAuthToken(){

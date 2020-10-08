@@ -1,5 +1,6 @@
 import * as React from 'react'
 import '../resources/styles/CategoryList.scss'
+import {fetchCategories} from '../controllers/CategoriesController.tsx'
 export default class ConsumptionList extends React.Component<any, any>  {
 
   constructor(props){
@@ -9,23 +10,12 @@ export default class ConsumptionList extends React.Component<any, any>  {
 
   componentDidMount(){
     this.setState({token: this.getAuthToken()});
-    this.fetchCategories();
+    fetchCategories()
+    .then(result => { this.setState({...this.state, categories: result }); })
+    .catch(error => console.log('error', error));;
   }
 
-  fetchCategories(){
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer " + this.getAuthToken());
-    let requestOptions: RequestInit = {
-      method: 'GET',
-      headers: myHeaders,
-      redirect: 'follow'
-    };
 
-    fetch("https://localhost:5001/categories", requestOptions)
-      .then(response => response.json())
-      .then(result => { this.setState({...this.state, categories: result }); })
-      .catch(error => console.log('error', error));
-  }
 
   getAuthToken(){
     let token = null;
@@ -49,7 +39,7 @@ export default class ConsumptionList extends React.Component<any, any>  {
         <div>
             <h2 className='title'>Categorias</h2>
             <div className='container'>
-                
+
                 {this.state.categories.map((category) => {
                     i =  i + 1;
                     var color = this.newColor();
@@ -62,7 +52,7 @@ export default class ConsumptionList extends React.Component<any, any>  {
             }
             </div>
         </div>
-        
+
   )}
 
 }

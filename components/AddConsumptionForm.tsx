@@ -6,6 +6,9 @@ import IconButton from '@material-ui/core/IconButton';
 import AddButton from '@material-ui/icons/Add';
 import ClearButton from '@material-ui/icons/Clear';
 import Categories from '../components/Categories';
+import {postConsumption} from '../controllers/ConsumptionsController.tsx';
+
+
 export default class AddConsumptionForm extends React.Component<any,any>{
   constructor(props){
     super(props);
@@ -196,24 +199,6 @@ export default class AddConsumptionForm extends React.Component<any,any>{
   }
 }
 
-async function postConsumption(data) {
-    let token = (new AuthService).getToken();
-
-    const response = await fetch("https://localhost:5001/consumptions", {
-      method: 'POST',
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-      },
-      redirect: 'follow',
-      referrerPolicy: 'no-referrer',
-      body: JSON.stringify(data)
-    });
-    return response.json();
-}
 
 function getTodaysDate(){
   var today = new Date();

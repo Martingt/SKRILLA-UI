@@ -1,6 +1,7 @@
 import * as React from 'react'
 import {Select} from '@material-ui/core';
 import '../resources/styles/category.scss'
+import {fetchCategories} from '../controllers/CategoriesController.tsx'
 export default class Categories extends React.Component<any, any>  {
 
   constructor(props){
@@ -10,22 +11,9 @@ export default class Categories extends React.Component<any, any>  {
 
   componentDidMount(){
     this.setState({token: this.getAuthToken()})
-    this.fetchCategories();
-  }
-
-  fetchCategories(){
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer " + this.getAuthToken());
-    let requestOptions: RequestInit = {
-      method: 'GET',
-      headers: myHeaders,
-      redirect: 'follow'
-    };
-
-    fetch("https://localhost:5001/categories", requestOptions)
-      .then(response => response.json())
-      .then(result => { this.setState({...this.state, categories: result }); })
-      .catch(error => console.log('error', error));
+    fetchCategories()
+    .then(result => { this.setState({...this.state, categories: result }); })
+    .catch(error => console.log('error', error));
   }
 
   getAuthToken(){
@@ -38,6 +26,7 @@ export default class Categories extends React.Component<any, any>  {
       }
     return token;
   }
+
   render(){
     var i = 0;
     return(
