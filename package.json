@@ -28,6 +28,7 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-tag-input": "^6.4.3",
+    "react-vis": "^1.11.7",
     "url-loader": "^4.1.0"
   },
   "devDependencies": {
