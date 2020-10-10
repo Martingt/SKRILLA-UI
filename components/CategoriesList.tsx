@@ -5,28 +5,16 @@ export default class ConsumptionList extends React.Component<any, any>  {
 
   constructor(props){
     super(props);
-    this.state = { categories: [], token: null}
+    this.state = { categories: []}
   }
 
   componentDidMount(){
-    this.setState({token: this.getAuthToken()});
     fetchCategories()
     .then(result => { this.setState({...this.state, categories: result }); })
     .catch(error => console.log('error', error));;
   }
 
 
-
-  getAuthToken(){
-    let token = null;
-    if (document.cookie.split(';').some((item) => item.trim().startsWith('token='))) {
-      token = document.cookie
-        .split("; ")
-        .find(row => row.startsWith("token"))
-        .split("=")[1];
-      }
-    return token;
-  }
   newColor(){
     var red = Math.floor(((Math.random()*1000)%100)+140).toString(16);
     var green = Math.floor(((Math.random()*1000)%100)+140).toString(16);

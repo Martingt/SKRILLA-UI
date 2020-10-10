@@ -10,7 +10,6 @@ export default class MyDocument extends Document {
     return (
       <html>
         <Head>
-          <link rel="stylesheet" href="/_next/static/style.css" />
         </Head>
         <body className="custom_class">
           <Main />

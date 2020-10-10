@@ -44,9 +44,20 @@
     background: #207178;
     padding: 2.5em 1.5em 0;
     font-size: 1.15em;
+    display:flex;
+    flex-direction: column;
 
   }
-
+  .barMenuItem {
+    cursor: pointer;
+  }
+  .barMenuItem:hover {
+    cursor: pointer;
+    color: #9fa090;
+  }
+  .barMenuItem:focus {
+    outline:none;
+  }
   /* Wrapper for item list */
   .bm-item-list {
     color: #b8b7ad;

@@ -2,29 +2,18 @@ import * as React from 'react'
 import {Select} from '@material-ui/core';
 import '../resources/styles/category.scss'
 import {fetchCategories} from '../controllers/CategoriesController.tsx'
+
 export default class Categories extends React.Component<any, any>  {
 
   constructor(props){
     super(props);
-    this.state = { categories: [], token: null}
+    this.state = { categories: [] }
   }
 
   componentDidMount(){
-    this.setState({token: this.getAuthToken()})
     fetchCategories()
     .then(result => { this.setState({...this.state, categories: result }); })
     .catch(error => console.log('error', error));
-  }
-
-  getAuthToken(){
-    let token = null;
-    if (document.cookie.split(';').some((item) => item.trim().startsWith('token='))) {
-      token = document.cookie
-        .split("; ")
-        .find(row => row.startsWith("token"))
-        .split("=")[1];
-      }
-    return token;
   }
 
   render(){
@@ -49,5 +38,4 @@ export default class Categories extends React.Component<any, any>  {
             }))}
         </Select>
     )}
-
 }
