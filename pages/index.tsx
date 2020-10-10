@@ -19,7 +19,6 @@ export default class IndexPage extends React.Component<any, any> {
     super(props);
   }
 
-
   render() {
     return <Provider store={store}><AppView /></Provider>;
   }

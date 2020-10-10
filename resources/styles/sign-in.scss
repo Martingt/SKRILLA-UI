@@ -19,28 +19,31 @@
     margin-top: 28vh;
 
 }
+
+.leftPanelForm {
+  padding-left:15%;
+  padding-right:15%;
+}
 .form-cont {
-    height: 10vh;
-    display: inline-block;
-    align-items: vertical;
-    justify-content: center;
-    margin-left: 23%;
-    margin-bottom: 5vh;
+  display:flex;
+  padding-top:20px;
+  padding-bottom:20px;
+  flex-direction: column;
 }
 .subm-cont {
     display: flex;
+    flex-direction: column;
     align-items: center;
     margin-top: 5vh;
     justify-content: center;
 }
 .text-cont {
     font-family: 'Quicksand', sans-serif;
+    padding-bottom:10px;
 }
 input[type=text].signIn,input[type=password].signIn {
     border: none;
     border-bottom: 0.5px solid black;
-    width: 100%;
-    padding: 8px 55px;
     margin-top: 9%;
 }
 input[type=submit].signIn {
@@ -50,6 +53,7 @@ input[type=submit].signIn {
     padding: 5px 80px;
     border-radius: 4px;
     font-size: 20px;
+    cursor: pointer;
 }
 input[type=submit].signUp {
     color: white;
@@ -59,12 +63,24 @@ input[type=submit].signUp {
     font-size: 10px;
 }
 .forg-pass {
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Quicksand';
+    cursor:pointer;
+}
+.forg-pass:hover {
+  color:#055055;
+}
+.login-error {
     font-size: 12px;
     display: flex;
     align-items: center;
     margin-top: 8vh;
     justify-content: center;
     font-family: 'Quicksand';
+    color:red;
 }
 img {
     height: 45vw;
@@ -72,4 +88,14 @@ img {
 }
 .logout {
   color: black
+}
+.signUpOption {
+  margin-top:20px;
+  padding:10px;
+  color:black;
+}
+.signUpOption:hover {
+  cursor: pointer;
+  border-radius:3px;
+  color:#055055;
 }

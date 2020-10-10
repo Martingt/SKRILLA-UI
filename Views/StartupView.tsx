@@ -3,87 +3,43 @@ import '../resources/styles/sign-in.scss';
 import '../resources/styles/homescreen.scss';
 import AuthService from '../utils/AuthService.tsx';
 import RegisterForm from '../components/RegisterForm';
+import LoginForm from '../components/LoginForm';
 import TopBar from '../components/TopBar';
 import TextField from '@material-ui/core/TextField';
-import loginAction from  '../redux/LoginAction.tsx';
-import { connect } from 'react-redux';
 
-const authService = new AuthService();
 
-class StartupView extends React.Component<any, any>  {
+export default class StartupView extends React.Component<any, any>  {
   constructor(props){
     super(props);
     this.state = {
-        error:0,
-        currentView: "login",
-        username: "",
-        password: ""
+        currentForm: "login",
     }
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    authService.login(this.state.email, this.state.password)
-      .then(res => {
-        if (res != undefined){
-          this.props.onLogin(res);
-        }
-        else
-          this.setState({error: 1})
-
-      })
-      .catch(e => console.log(e))
-  }
-
-  handleRegisterClick = (e) => {
-    e.preventDefault();
-    this.setState({onRegister: true});
-  }
-
-  handleChange = (e) => {
-    this.setState({[e.target.name]: e.target.value});
+  handleFormChange = (form) => {
+    this.setState({currentForm: form});
   }
 
   render(){
-    let error = (this.state.error == 1)? <p className="forg-pass">Wrong username or password</p>:null;
-    if(this.state.currentView === "login"){
-      return <div className="loginBody">
-        <div className="logo">
-          <img src="/images/skrilla-logo-large.png"></img>
-        </div>
-        <div className="login">
-            <form onSubmit={this.handleSubmit} >
-                <label className="form-cont" >
-                    <p className="text-cont">Email</p>
-                    <input className="signIn" type="text" name="email"
-                    onChange={this.handleChange} ></input>
-                </label>
-                <label className="form-cont">
-                    <p className="text-cont">Password</p>
-                    <input className="signIn"  type="password" name="password"
-                    onChange={this.handleChange}></input>
-                </label>
-                <label className="subm-cont">
-                    <input className="signIn" type="submit" value="Log In" ></input>
-                    <input  className="signIn" type="submit" value="Sign Up" onClick={this.handleRegisterClick}></input>
-                </label>
-            </form>
-            {error}
-            <p className="forg-pass">Forgot your password?</p>
-        </div>
-      </div>;
+    let page = null;
+
+    if(this.state.currentForm === "login"){
+      page = <LoginForm onFormChange={this.handleFormChange} />
     }
-    else if (this.state.currentView === "signUp"){
-      return <RegisterForm handleToUpdate = {this.handleToUpdate.bind(this)} />
+    else if (this.state.currentForm === "signUp"){
+      page = <RegisterForm  onFormChange={this.handleFormChange} />
     }
     else {
       return "Estado invalido. Cierre esta ventana."
     }
+
+    return <div className="loginBody">
+      <div className="logo">
+        <img src="/images/skrilla-logo-large.png"></img>
+      </div>
+      <div className="login">
+          {page}
+      </div>
+    </div>;
   }
 }
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  onLogin: (token) => dispatch(loginAction(token))
-})
-
-export default connect(null,mapDispatchToProps)(StartupView);

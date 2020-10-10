@@ -1,10 +1,12 @@
 import * as React from 'react'
 import '../resources/styles/styles.scss'
 import AuthService from '../utils/AuthService.tsx'
-
+import { connect } from 'react-redux';
+import {TextField} from '@material-ui/core';
+import loginAction from  '../redux/LoginAction.tsx';
 const auth = new AuthService()
 
-export default class Register extends React.Component<any, any> {
+class Register extends React.Component<any, any> {
     constructor(props) {
         super(props);
         this.state = {
@@ -28,8 +30,7 @@ export default class Register extends React.Component<any, any> {
         auth.signUp(this.state.email, this.state.password, this.state.confirmPassword)
           .then(res => {
             if (res != undefined) {
-                this.setState({token: res});
-                this.props.handleToUpdate(this.state.token);
+              this.props.onLogin(res);
             }
             else
               this.setState({error: 1})
@@ -39,35 +40,48 @@ export default class Register extends React.Component<any, any> {
           .catch(e => console.log(e))
       }
 
+      cancelSignUp = () => {
+        this.props.onFormChange("login");
+      }
+
 
     render() {
-        let page =
-        <div className="login">
-            <form onSubmit={
+        return <form className="leftPanelForm" onSubmit={
                 this.handleSubmit} >
-                <label className="form-cont" >
+                <div className="form-cont" >
                     <p className="text-cont">Email</p>
-                    <input className="signIn" type="text" name="email"
-                    onChange={this.handleChange}></input>
-                </label>
-                <label className="form-cont">
+                    <TextField
+                      className="signIn"
+                      name="email"
+                      onChange={this.handleChange} />
+                </div>
+                <div className="form-cont">
                     <p className="text-cont">Password</p>
-                    <input className="signIn"  type="password" name="password"
-                    onChange={this.handleChange}></input>
-                </label>
-                <label className="form-cont">
+                    <TextField
+                      className="signIn"
+                      type="password"
+                      name="password"
+                      onChange={this.handleChange}  />
+                </div>
+                <div className="form-cont">
                     <p className="text-cont">Confirm Password</p>
-                    <input className="signIn"  type="password" name="confirmPassword"
-                    onChange={this.handleChange}></input>
-                </label>
-                <label className="subm-cont">
-                    <input className="signIn" type="submit" value="Sign Up" ></input>
-                </label>
-            </form>
-        </div>
-
-        return page;
+                    <TextField
+                      className="signIn"
+                      type="password"
+                      name="confirmPassword"
+                      onChange={this.handleChange} />
+                </div>
+                <div className="subm-cont">
+                    <input className="signIn" type="submit" value="Sign Up" />
+                    <div  className="signUpOption"  onClick={this.cancelSignUp}>Cancel</div>
+                </div>
+            </form>;
 
     }
-
 }
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  onLogin: (token) => dispatch(loginAction(token))
+})
+
+export default connect(null,mapDispatchToProps)(Register);
