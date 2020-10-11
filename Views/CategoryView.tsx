@@ -30,7 +30,7 @@ class CategoryView extends React.Component<any, any>  {
 
   render(){
     return  <div id="content">
-      <TopBar  onChangePage={this.props.onChangePage}/>
+      <TopBar  />
       <div className="mainContainer">
         <div className="mainContainerContent">
 

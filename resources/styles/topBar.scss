@@ -49,10 +49,14 @@
 
   }
   .barMenuItem {
+    display:block;
+    color: #b8b7ad;
+    text-decoration: none;
     cursor: pointer;
   }
   .barMenuItem:hover {
     cursor: pointer;
+    outline:none;
     color: #9fa090;
   }
   .barMenuItem:focus {

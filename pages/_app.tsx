@@ -1,5 +1,10 @@
 import App from 'next/app'
 import React from 'react'
+import {createStore} from '@reduxjs/toolkit';
+import {Provider} from 'react-redux';
+import loginReducer from '../redux/LoginReducer.tsx';
+const store = createStore(loginReducer);
+
 
 export default class MyApp extends App {
   static async getInitialProps ({ Component, router, ctx }) {
@@ -14,6 +19,8 @@ export default class MyApp extends App {
 
   render () {
     const {Component, pageProps} = this.props
-    return <Component {...pageProps} />
+    return <Provider store={store}>
+        <Component {...pageProps} />
+        </Provider>
   }
 }

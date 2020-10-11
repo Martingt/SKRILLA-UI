@@ -10,9 +10,10 @@ import CategoryView from '../Views/CategoryView.tsx';
 import { connect } from 'react-redux';
 import loginReducer from '../redux/LoginReducer.tsx';
 import loginAction from  '../redux/LoginAction.tsx';
+import {withRouter} from 'next/router';
 const authService = new AuthService()
 
-class AppView extends React.Component<any, any> {
+class ConsumptionsPage extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,18 +24,23 @@ class AppView extends React.Component<any, any> {
 
   componentDidMount(){
     this.props.login(authService.getToken());
-    console.log(this.props.router);
+    if(authService.getToken() === null){
+      this.props.router.push("/");
+    }
   }
 
+  componentDidUpdate(){
+    if(authService.getToken() === null){
+      this.props.router.push("/");
+    }
+  }
 
   render() {
 
     let page = null;
+
     if(this.props.token !== null){
-        page = <CategoryView  />
-    }
-    else {
-          page = <StartupView  />
+        page = <ConsumptionView   />
     }
 
     return page;
@@ -49,4 +55,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   login: (token) => dispatch(loginAction(token))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AppView)
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ConsumptionsPage))

@@ -6,6 +6,7 @@ import '../resources/styles/topBar.scss'
 import {slide as Menu} from 'react-burger-menu';
 import {logoutAction} from  '../redux/LoginAction.tsx';
 import { connect } from 'react-redux'
+import Link from 'next/link'
 
 class TopBar extends React.Component<any, any>  {
 
@@ -27,8 +28,8 @@ class TopBar extends React.Component<any, any>  {
   return (<div>
       <div className="containerTopBar">
         <Menu>
-          <a onClick={()=> this.props.onChangePage(1)} className="barMenuItem">Consumos</a>
-          <a onClick={()=> this.props.onChangePage(2)} className="barMenuItem">Categorias</a>
+        <Link href="/" ><a  className="barMenuItem">Categorias</a></Link>
+        <Link href="/consumptions" ><a className="barMenuItem">Consumos</a></Link>
         </Menu>
         <div className="topBarLeft">
           <img src="/images/skrilla-icon.png" className="skrillaTopBarLogo"/>

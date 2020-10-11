@@ -44,11 +44,9 @@ class ConsumptionView extends React.Component<any, any>  {
       .then(result => { this.setState({...this.state, consumptions: result }); })
       .catch(error => console.log('error', error));
     this.handleAddConsumption();
-
   }
 
   filterByCategory = (e) => {
-
       fetchConsumptions(e.target.value)
       .then(result => { this.setState({...this.state, consumptions: result }); })
       .catch(error => console.log('error', error));
@@ -57,7 +55,7 @@ class ConsumptionView extends React.Component<any, any>  {
 
   render(){
     return <div id="content">
-        <TopBar  onChangePage={this.props.onChangePage}/>
+        <TopBar />
         <div className="mainContainer">
           <div className="mainContainerContent">
 

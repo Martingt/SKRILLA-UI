@@ -9,9 +9,6 @@ import {Provider} from 'react-redux';
 import loginReducer from '../redux/LoginReducer.tsx';
 import AppView from '../Views/AppView.tsx';
 
-const authService = new AuthService()
-
-const store = createStore(loginReducer);
 
 export default class IndexPage extends React.Component<any, any> {
 
@@ -20,6 +17,6 @@ export default class IndexPage extends React.Component<any, any> {
   }
 
   render() {
-    return <Provider store={store}><AppView /></Provider>;
+    return <AppView />;
   }
 }
