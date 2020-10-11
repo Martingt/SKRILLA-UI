@@ -30,8 +30,17 @@
   min-width:800px;
 }
 .categoryIconSmall{
-height:23px;
-width:23px;
+height:21px;
+width:21px;
+}
+.editIconSmall {
+  height:18px;
+  width:18px;
+  opacity:0.6;
+  cursor:pointer;
+}
+.editIconSmall:hover {
+  opacity:1
 }
 .topBarFilters {
     display:flex;

@@ -5,15 +5,23 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Checkbox from '@material-ui/core/Checkbox';
 import Paper from '@material-ui/core/Paper';
 import CategoryIcons from '../utils/CategoryIcons.js';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import Collapse from '@material-ui/core/Collapse';
+import IconButton from '@material-ui/core/IconButton';
 
 
 export default class ConsumptionList extends React.Component<any, any>  {
 
   constructor(props){
     super(props);
-    this.state = {  token: null}
+    this.state = {
+      token: null,
+      currentlyExpandedRow: null
+    }
   }
 
   componentDidMount(){
@@ -32,6 +40,19 @@ export default class ConsumptionList extends React.Component<any, any>  {
     return token;
   }
 
+  isRowExpanded(rowId){
+    return this.state.currentlyExpandedRow === rowId;
+  }
+
+  handleRowClick(event, rowId){
+    if(this.state.currentlyExpandedRow === rowId){
+      this.setState({currentlyExpandedRow: null});
+    }
+    else {
+      this.setState({currentlyExpandedRow: rowId});
+    }
+  }
+
   getCategoryIcon(category){
     for (const c in CategoryIcons){
       if (CategoryIcons[c].name == category){
@@ -46,6 +67,7 @@ export default class ConsumptionList extends React.Component<any, any>  {
     return category;
   }
 
+
   render(){
     var i = 0;
 
@@ -54,6 +76,7 @@ export default class ConsumptionList extends React.Component<any, any>  {
           <Table  aria-label="simple table">
             <TableHead>
               <TableRow>
+              <TableCell align="left"></TableCell>
                 <TableCell align="left">Fecha</TableCell>
                 <TableCell align="left">Titulo</TableCell>
                 <TableCell align="left">Monto</TableCell>
@@ -62,14 +85,28 @@ export default class ConsumptionList extends React.Component<any, any>  {
             </TableHead>
             <TableBody>
               {this.props.consumptions.map((row) => {
-                  i =  i + 1;
                   return (
-                  <TableRow key={i}>
-                    <TableCell align="left">{row.date.day}-{row.date.month}-{row.date.year}</TableCell>
-                    <TableCell align="left">{row.title}</TableCell>
-                    <TableCell align="left">{row.amount}</TableCell>
-                    <TableCell align="left">{this.getCategoryIcon(row.category.name)}</TableCell>
+                  <React.Fragment>
+                  <TableRow key={row.id} id={row.id}
+                  onClick={(event)=>this.handleRowClick(event, row.id)}>
+                    <TableCell style={{ borderBottom:0}} >
+                      <IconButton aria-label="expand row" size="small" >
+                        {this.isRowExpanded(row.id) ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                      </IconButton>
+                    </TableCell>
+                    <TableCell style={{ borderBottom:0}} align="left">{row.date.day}-{row.date.month}-{row.date.year}</TableCell>
+                    <TableCell style={{ borderBottom:0}} align="left">{row.title}</TableCell>
+                    <TableCell style={{ borderBottom:0}} align="left">{row.amount}</TableCell>
+                    <TableCell style={{ borderBottom:0}} align="left">{this.getCategoryIcon(row.category.name)}</TableCell>
                   </TableRow>
+                  <TableRow >
+                    <TableCell style={{ paddingBottom: 0, paddingTop: 0}} colSpan={5}>
+                    <Collapse in={this.isRowExpanded(row.id)}
+                    timeout="auto" unmountOnExit>
+                      Editar Eliminar
+                    </Collapse>
+                    </TableCell>
+                  </TableRow></React.Fragment>
                 )} )}
             </TableBody>
           </Table>
