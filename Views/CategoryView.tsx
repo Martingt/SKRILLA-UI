@@ -16,16 +16,38 @@ import CategoriesList from '../components/CategoriesList';
 import {fetchConsumptions} from '../controllers/ConsumptionsController.tsx'
 import {RadialChart} from 'react-vis';
 import { connect } from 'react-redux'
+import consumptions from 'pages/consumptions';
 const authService = new AuthService();
 
 class CategoryView extends React.Component<any, any>  {
+  constructor(props) {
+    super(props);
+    this.state = {
+      conspercat: []
+    };
+  }
 
   createDataChart(){
-    const data = [{angle:12}]
-    /*this.state.consumptions.map((consumption) => {
+    var myHeaders = new Headers();
+    var fetchURL = "https://localhost:5001/conspercat";
+
+    myHeaders.append("Authorization", "Bearer " + authService.getToken());
+
+    let requestOptions: RequestInit = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+    var data = [];
+    fetch(fetchURL, requestOptions)
+      .then(response => response.json())
+      .then(result => this.setState({conspercat: result}))
+    
+    this.state.conspercat.map((consumption) => {
       data.push({angle: consumption.amount})
-    })*/
-    return data;
+    })
+    
+    return data
   }
 
   render(){
