@@ -3,17 +3,8 @@ import '../resources/styles/sign-in.scss';
 import '../resources/styles/homescreen.scss';
 import AuthService from '../utils/AuthService.tsx';
 import ConsumptionList from '../components/ConsumptionList';
-import IconButton from '@material-ui/core/IconButton';
-import AddButton from '@material-ui/icons/Add';
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
-import AddConsumptionForm from '../components/AddConsumptionForm';
-import RegisterForm from '../components/RegisterForm';
 import TopBar from '../components/TopBar';
-import TextField from '@material-ui/core/TextField';
 import CategoriesList from '../components/CategoriesList';
-import {fetchConsumptions} from '../controllers/ConsumptionsController.tsx'
 import {RadialChart} from 'react-vis';
 import { connect } from 'react-redux'
 import consumptions from 'pages/consumptions';
@@ -28,7 +19,8 @@ class CategoryView extends React.Component<any, any>  {
   }
 
   createDataChart(){
-    var myHeaders = new Headers();
+    var data =[];
+    /*var myHeaders = new Headers();
     var fetchURL = "https://localhost:5001/conspercat";
 
     myHeaders.append("Authorization", "Bearer " + authService.getToken());
@@ -42,11 +34,11 @@ class CategoryView extends React.Component<any, any>  {
     fetch(fetchURL, requestOptions)
       .then(response => response.json())
       .then(result => this.setState({conspercat: result}))
-    
+
     this.state.conspercat.map((consumption) => {
       data.push({angle: consumption.amount})
-    })
-    
+    })*/
+
     return data
   }
 

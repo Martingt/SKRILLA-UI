@@ -12,7 +12,9 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
-
+import DeleteIcon from '@material-ui/icons/DeleteOutlined';
+import EditIcon from '@material-ui/icons/EditOutlined';
+import Button from '@material-ui/core/Button';
 
 export default class ConsumptionList extends React.Component<any, any>  {
 
@@ -103,7 +105,12 @@ export default class ConsumptionList extends React.Component<any, any>  {
                     <TableCell style={{ paddingBottom: 0, paddingTop: 0}} colSpan={5}>
                     <Collapse in={this.isRowExpanded(row.id)}
                     timeout="auto" unmountOnExit>
-                      Editar Eliminar
+                      <IconButton onClick={()=> this.props.onConsumptionEdition(row.id)} aria-label="expand row" size="small" >
+                        <EditIcon />
+                      </IconButton>|
+                      <IconButton  onClick={() => this.props.onConsumptionDeletion(row.id)} aria-label="expand row" size="small" >
+                        <DeleteIcon />
+                      </IconButton>
                     </Collapse>
                     </TableCell>
                   </TableRow></React.Fragment>

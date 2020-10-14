@@ -16,6 +16,13 @@
   flex-direction: column;
   justify-content: space-between;
 }
+.warningMessage {
+  font-size: 1.2rem;
+  padding:15px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
 .addConsumptionFormItem {
   padding-top:10px;
   padding-bottom:10px;

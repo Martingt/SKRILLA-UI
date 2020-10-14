@@ -12,7 +12,7 @@ export default class Categories extends React.Component<any, any>  {
 
   componentDidMount(){
     fetchCategories()
-    .then(result => { this.setState({...this.state, categories: result }); })
+    .then(result => { this.setState({categories: result }); })
     .catch(error => console.log('error', error));
   }
 
@@ -21,14 +21,12 @@ export default class Categories extends React.Component<any, any>  {
     return(
         <Select
             native
-            value={this.state.age}
+            value={this.props.value}
             name="category"
             onChange={this.props.onChange}
-            className="categoryList"
             inputProps={{
             name: 'category',
-            id: 'category-select',
-            style: { fontSize:"0.9rem"}
+            id: 'category-select'
             }}>
             {this.state.categories.map((category => {
                 i=i+1;
