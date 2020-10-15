@@ -36,14 +36,14 @@ export default class ConsumptionList extends React.Component<any, any>  {
 
   return (
             <div className='categoriesList'>
-              <CategoryButton operation={"add"} triggerCategoriesList={this.refreshCategoriesList()}/>
+              <CategoryButton operation={"add"} triggerCategoriesList={this.refreshCategoriesList}/>
                 {this.state.categories.map((category) => {
                     i =  i + 1;
                     return (
                         <div className='category' key={i} style={{backgroundColor: this.addColor(category.name)}} id={i.toString()}>
                             <p>{category.name}</p>
-                            <CategoryButton operation={"edit"} triggerCategoriesList={this.refreshCategoriesList()}/>
-                            <CategoryButton operation={"del"} triggerCategoriesList={this.refreshCategoriesList()}/>
+                            <CategoryButton operation={"edit"} triggerCategoriesList={this.refreshCategoriesList}/>
+                            <CategoryButton operation={"del"} triggerCategoriesList={this.refreshCategoriesList}/>
                         </div>
                     )
                 })
