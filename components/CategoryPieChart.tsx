@@ -17,14 +17,16 @@ export default class CategoryPieChart extends React.Component<any, any>  {
     };
     this.handleChange = this.handleChange.bind(this);
   }
+  componentDidMount(){
+    this.fetchData();
+  }
 
-  createDataChart(month,year){
-    var data =[];
+  fetchData(){
     var myHeaders = new Headers();
     var fetchURL = "https://localhost:5001/conspercat";
 
-    if(month != '' && year != ''){
-      fetchURL += "?month="+month+"&year="+year;
+    if(this.state.month != '' && this.state.year != ''){
+      fetchURL += "?month="+this.state.month+"&year="+this.state.year;
     }
     myHeaders.append("Authorization", "Bearer " + authService.getToken());
 
@@ -37,6 +39,10 @@ export default class CategoryPieChart extends React.Component<any, any>  {
     fetch(fetchURL, requestOptions)
       .then(response => response.json())
       .then(result => this.setState({conspercat: result}))
+  }
+  createDataChart(){
+
+    var data =[];
 
     if(this.state.conspercat.length!=0){
       this.state.conspercat.map((consumption) => {
@@ -45,18 +51,20 @@ export default class CategoryPieChart extends React.Component<any, any>  {
     }else{
       data.push({label: "No hay consumos",angle:1})
     }
-    
+
 
     return data
   }
   handleChange(event) {
     if(event.target.value<=12){
-      this.setState({month: event.target.value});
+      this.setState({month: event.target.value}, ()=> this.fetchData());
+
     }
     else{
-      this.setState({year: event.target.value});
+      this.setState({year: event.target.value}, ()=>this.fetchData());
+
     }
-    
+
   }
 
   render(){
@@ -86,11 +94,11 @@ export default class CategoryPieChart extends React.Component<any, any>  {
             </select>
         </div>
         <div style={{display:"flex", flex:1,justifyContent:"center", fontSize: 10}}>
-           
+
           <RadialChart
-             data={this.createDataChart(this.state.month,this.state.year)}
-             width={250}
-             height={250}
+             data={this.createDataChart()}
+             width={300}
+             height={300}
              showLabels={true}
              />
         </div>

@@ -44,9 +44,9 @@ export default class CategoryPieChart extends React.Component<any, any>  {
   render(){
     return  <div id="content">
         <div style={{display:"flex", flex:1,justifyContent:"center", fontSize: 10}}>
-        <XYPlot 
-            width={500}
-            height={500}
+        <XYPlot
+            width={300}
+            height={350}
             xType="ordinal"
             >
             <XAxis/>
@@ -57,7 +57,7 @@ export default class CategoryPieChart extends React.Component<any, any>  {
                 data={this.createDataChart()}
             />
         </XYPlot>
-          
+
         </div>
         </div>
   }
