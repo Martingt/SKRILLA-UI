@@ -2,9 +2,7 @@ import * as React from 'react'
 import '../resources/styles/CategoryList.scss'
 import {fetchCategories} from '../controllers/CategoriesController.tsx'
 import CategoryButton from '../components/CategoryButton';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/DeleteOutlined';
-import EditIcon from '@material-ui/icons/EditOutlined';
+import CategoryIcons from '../utils/CategoryIcons.js';
 
 export default class ConsumptionList extends React.Component<any, any>  {
 
@@ -18,11 +16,13 @@ export default class ConsumptionList extends React.Component<any, any>  {
   }
 
 
-  newColor(){
-    var red = Math.floor(((Math.random()*1000)%100)+140).toString(16);
-    var green = Math.floor(((Math.random()*1000)%100)+140).toString(16);
-    var blue = Math.floor(((Math.random()*1000)%100)+140).toString(16);
-    return '#'+red+green+blue;
+  addColor(category){
+    for (const c in CategoryIcons){
+      if (CategoryIcons[c].name == category){
+        return CategoryIcons[c].color
+      }
+    }
+    return "#C1E2F6"
   }
 
   refreshCategoriesList() {
@@ -39,9 +39,8 @@ export default class ConsumptionList extends React.Component<any, any>  {
               <CategoryButton operation={"add"} triggerCategoriesList={this.refreshCategoriesList()}/>
                 {this.state.categories.map((category) => {
                     i =  i + 1;
-                    var color = this.newColor();
                     return (
-                        <div className='category' key={i} style={{backgroundColor: this.newColor()}} id={i.toString()}>
+                        <div className='category' key={i} style={{backgroundColor: this.addColor(category.name)}} id={i.toString()}>
                             <p>{category.name}</p>
                             <CategoryButton operation={"edit"} triggerCategoriesList={this.refreshCategoriesList()}/>
                             <CategoryButton operation={"del"} triggerCategoriesList={this.refreshCategoriesList()}/>
