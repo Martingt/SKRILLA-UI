@@ -5,6 +5,7 @@ import AuthService from '../utils/AuthService.tsx';
 import TopBar from '../components/TopBar';
 import CategoriesList from '../components/CategoriesList';
 import CategoryPieChart from '../components/CategoryPieChart';
+import TotalPerMonth from '../components/TotalPerMonth';
 import { connect } from 'react-redux'
 import consumptions from 'pages/consumptions';
 
@@ -21,11 +22,12 @@ class CategoryView extends React.Component<any, any>  {
       <div className="mainContainer">
         <div className="mainContainerContent">
         <h1 className="containerTopBarTitle">Categorias</h1>
-        <div style={{display:"flex", flex:1,justifyContent:"center", fontSize: 10}}>
+        <div style={{display:"inline-block", flex:1,justifyContent:"center", fontSize: 10}}>
            <CategoriesList/>
         </div>
-        <div>
+        <div className="dashboard">
           <CategoryPieChart/>
+          <TotalPerMonth/>
         </div>
         </div>
       </div>
