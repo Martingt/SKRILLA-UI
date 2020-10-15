@@ -8,6 +8,7 @@ import CategoriesList from '../components/CategoriesList';
 import {RadialChart} from 'react-vis';
 import { connect } from 'react-redux'
 import consumptions from 'pages/consumptions';
+
 const authService = new AuthService();
 
 class CategoryView extends React.Component<any, any>  {
@@ -49,6 +50,7 @@ class CategoryView extends React.Component<any, any>  {
         <div className="mainContainerContent">
 
           <h1 className="containerTopBarTitle">Categorias</h1>
+          
          <CategoriesList/>
          <div style={{display:"flex", flex:1,justifyContent:"center"}}>
           <RadialChart
