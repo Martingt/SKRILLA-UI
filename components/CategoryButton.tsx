@@ -10,6 +10,9 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/DeleteOutlined';
 import EditIcon from '@material-ui/icons/EditOutlined';
 import AddIcon from '@material-ui/icons/Add';
+import {
+  deleteCategory
+} from '../controllers/CategoriesController.tsx';
 
 export default class CategoryButton extends React.Component<any, any>  {
 
@@ -23,30 +26,26 @@ export default class CategoryButton extends React.Component<any, any>  {
     }
 
 
-    deleteCategory = (id) => {
-        let task = {operation: "del", id:id}
-        this.setState({
-          task:task,
-          categoryItemTask: true})
-      }
-
       deleteCategoryFromTask = () => {
+        
         if(this.state.task !== null && this.state.task.operation === "del"){
-        deleteCategory(this.state.task.id)
-          .then(result => {
-            let newConsumptions = this.state.consumptions;
-            let index = newConsumptions.findIndex(c => c.id === this.state.task.id)
-            newConsumptions.splice(index,1)
-            this.setState({consumptions: newConsumptions,
-              task:null,
-              consumptionItemTask: false});
+          deleteCategory(this.props.categoryId).then(res => {
+            if(res.result != "error")
+              this.handleCategoryTaskFinished;
           })
-          .catch(error => console.log('error', error));
-     
-        }
+        };
+        
       }
 
-    handleAddCategory = () =>  {
+      handleDelCategory = () =>  {
+        var task = { operation:"del" }
+        this.setState({
+          task: task,
+          categoryItemTask: !this.state.categoryItemTask
+        });
+      }
+
+      handleAddCategory = () =>  {
         var task = { operation:"add" }
         this.setState({
           task: task,
@@ -83,6 +82,8 @@ export default class CategoryButton extends React.Component<any, any>  {
             this.handleAddCategory();
         else if(operation == 'edit')
             this.handleEditCategory();
+        else if(operation == 'del')
+            this.handleDelCategory();
       };
 
   render(){
@@ -112,6 +113,7 @@ export default class CategoryButton extends React.Component<any, any>  {
                   <Fade in={this.state.categoryItemTask}>
                   <CategoryForm
                     task={this.state.task}
+                    categoryId={this.props.categoryId}
                     onEditionOk={this.handleCategoryTaskFinished}
                     onCreationOk={this.handleCategoryTaskFinished}
                     onCancel={this.handleCategoryTaskCanceled}/>

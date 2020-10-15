@@ -71,7 +71,7 @@ export default class CategoryForm extends React.Component<any,any>{
       if(!this.formIsValid()){return;}
 
       if(this.props.task.operation === "edit"){
-        updateCategory(this.props.task.categoryId,payload).then(res => {
+        updateCategory(this.props.categoryId, payload).then(res => {
           console.log(res);
           if(res.result == "error"){
             this.setState({status: "error", errorMessages: res.messages});
