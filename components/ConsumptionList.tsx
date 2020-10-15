@@ -59,14 +59,9 @@ export default class ConsumptionList extends React.Component<any, any>  {
     for (const c in CategoryIcons){
       if (CategoryIcons[c].name == category){
         var path = "/images/categories/" + CategoryIcons[c].path;
-        return (
-        <div className="listCategoryItem">
-          <img src={path} alt={CategoryIcons[c].name} className="categoryIconSmall"/>
-          <div style={{paddingLeft:'5px'}}>{category}</div>
-        </div>)
+        return (<img src={path} alt={CategoryIcons[c].name} className="categoryIconSmall"/>)
       }
     }
-    return category;
   }
 
 
@@ -88,8 +83,8 @@ export default class ConsumptionList extends React.Component<any, any>  {
             <TableBody>
               {this.props.consumptions.map((row) => {
                   return (
-                  <React.Fragment>
-                  <TableRow key={row.id} id={row.id}
+                  <React.Fragment key={row.id}>
+                  <TableRow  id={row.id}
                   onClick={(event)=>this.handleRowClick(event, row.id)}>
                     <TableCell style={{ borderBottom:0}} >
                       <IconButton aria-label="expand row" size="small" >
@@ -99,7 +94,11 @@ export default class ConsumptionList extends React.Component<any, any>  {
                     <TableCell style={{ borderBottom:0}} align="left">{row.date.day}-{row.date.month}-{row.date.year}</TableCell>
                     <TableCell style={{ borderBottom:0}} align="left">{row.title}</TableCell>
                     <TableCell style={{ borderBottom:0}} align="left">{row.amount}</TableCell>
-                    <TableCell style={{ borderBottom:0}} align="left">{this.getCategoryIcon(row.category.name)}</TableCell>
+                    <TableCell style={{ borderBottom:0}} align="left">
+                      <div className="listCategoryItem">
+                      {this.getCategoryIcon(row.category.iconDescriptor)}
+                      <div style={{paddingLeft:'5px'}}>{row.category.name}</div>
+                      </div></TableCell>
                   </TableRow>
                   <TableRow >
                     <TableCell style={{ paddingBottom: 0, paddingTop: 0}} colSpan={5}>
