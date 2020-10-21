@@ -36,7 +36,6 @@ export default class CategoryPieChart extends React.Component<any, any>  {
     var data = [];
     this.state.totalpermonth.map((consumption) => {
         data.push({x: consumption.month+'/'+consumption.year, y: consumption.amount})
-        console.log(data)
       })
     return data
   }
