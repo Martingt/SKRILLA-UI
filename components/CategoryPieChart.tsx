@@ -102,7 +102,7 @@ export default class CategoryPieChart extends React.Component<any, any>  {
         </div>
         <div>
           <Select inputProps={{name: 'year'}} value={this.state.year} onChange={this.handleChange}>
-            {year.map((year, key) => { return <MenuItem value={2020+key}>{year}</MenuItem>})}
+            {year.map((year, key) => { return <MenuItem value={2020-key}>{year}</MenuItem>})}
           </Select>
         </div>
       </div>
