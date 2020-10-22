@@ -4,7 +4,7 @@ import {fetchCategories} from '../controllers/CategoriesController.tsx'
 import CategoryButton from '../components/CategoryButton';
 import CategoryIcons from '../utils/CategoryIcons.js';
 
-export default class ConsumptionList extends React.Component<any, any>  {
+export default class CategoriesList extends React.Component<any, any>  {
 
   constructor(props){
     super(props);
@@ -25,7 +25,7 @@ export default class ConsumptionList extends React.Component<any, any>  {
     return "#C1E2F6"
   }
 
-  refreshCategoriesList() {
+  refreshCategoriesList = () => {
     fetchCategories()
     .then(result => { this.setState({...this.state, categories: result }); })
     .catch(error => console.log('error', error));;

@@ -31,7 +31,7 @@ export default class CategoryButton extends React.Component<any, any>  {
         if(this.state.task !== null && this.state.task.operation === "del"){
           deleteCategory(this.props.categoryId).then(res => {
             if(res.result != "error")
-              this.handleCategoryTaskFinished;
+              this.handleCategoryTaskFinished();
           })
         };
         
@@ -69,7 +69,7 @@ export default class CategoryButton extends React.Component<any, any>  {
       }
 
       handleCategoryTaskFinished = () => {
-        this.props.triggerCategoriesList;
+        this.props.triggerCategoriesList();
         this.setState({
          consumptionItemTask: !this.state.consumptionItemTask,
          task: null
