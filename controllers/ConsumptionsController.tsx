@@ -97,7 +97,7 @@ export  async function deleteConsumption(id) {
 export async function getConsumptionPerCategory(month, year){
     var myHeaders = new Headers();
     var fetchURL = "https://localhost:5001/conspercat";
-
+    month+=1;
     if(month != '' && year != ''){
       fetchURL += "?month="+month+"&year="+year;
     }

@@ -1,0 +1,19 @@
+.date-picker{
+    display: flex;
+    flex:1;
+    margin-bottom: 15px;
+}
+.pie-chart{
+    display: flex;
+    flex:1;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+.categories {
+   display: inline-block;
+    margin-bottom: 5px;
+    align-items: center;
+}
+.chart {
+    font-size: small;
+}
