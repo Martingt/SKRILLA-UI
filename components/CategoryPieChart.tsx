@@ -121,6 +121,9 @@ export default class CategoryPieChart extends React.Component<any, any>  {
              height={300}
              showLabels={true}
              radius = {133}
+             onNearestX={(event)=>{
+              console.log(event)
+            }}
              />
         </div>
       </div>

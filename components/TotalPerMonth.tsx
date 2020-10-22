@@ -2,7 +2,7 @@ import * as React from 'react';
 import '../resources/styles/sign-in.scss';
 import '../resources/styles/homescreen.scss';
 import AuthService from '../utils/AuthService.tsx';
-import {XYPlot, VerticalBarSeries, HorizontalGridLines, VerticalGridLines, XAxis, YAxis} from 'react-vis';
+import {XYPlot, VerticalBarSeries, HorizontalGridLines, VerticalGridLines, XAxis, YAxis, Hint} from 'react-vis';
 
 
 const authService = new AuthService();
@@ -35,8 +35,14 @@ export default class CategoryPieChart extends React.Component<any, any>  {
   createDataChart(){
     var data = [];
     this.state.totalpermonth.map((consumption) => {
-        data.push({x: consumption.month+'/'+consumption.year, y: consumption.amount})
+        data.push({x: new Date(consumption.year,consumption.month-1), y: consumption.amount})
       })
+    data.sort(function(a,b){
+        return new Date(a.x) - new Date(b.x);
+    });
+    data.map((cons) => {
+      cons.x = cons.x.getMonth()+1+"/"+cons.x.getFullYear()
+    })
     return data
   }
 
@@ -49,14 +55,17 @@ export default class CategoryPieChart extends React.Component<any, any>  {
             xType="ordinal"
             >
             <XAxis/>
-            <YAxis title="Total Gastado" />
+            <YAxis/>
             <HorizontalGridLines />
             <VerticalGridLines />
             <VerticalBarSeries
                 data={this.createDataChart()}
+                onNearestX={(event)=>{
+                  
+                }}
             />
         </XYPlot>
-
+ 
         </div>
         </div>
   }
