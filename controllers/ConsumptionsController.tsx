@@ -111,3 +111,16 @@ export async function getConsumptionPerCategory(month, year){
     
     return fetch(fetchURL, requestOptions).then(response => response.json())
 }
+export async function fetchTotalPerMonth(){
+  var myHeaders = new Headers();
+    var fetchURL = "https://localhost:5001/consumptions/totalmonth";
+
+    myHeaders.append("Authorization", "Bearer " + authService.getToken());
+
+    let requestOptions: RequestInit = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+    return fetch(fetchURL, requestOptions).then(response => response.json())
+}

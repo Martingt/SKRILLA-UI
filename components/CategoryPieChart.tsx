@@ -94,6 +94,9 @@ export default class CategoryPieChart extends React.Component<any, any>  {
     const year = ["2020","2019","2018","2017"]
     
     return  <div id="content" className="content">
+      <div className="titleChart">
+        <h3>Consumos por categoria</h3>
+      </div>
       <div className="date-picker">
         <div>
           <Select inputProps={{name: "month"}} value={this.state.month} onChange={this.handleChange}>
@@ -121,9 +124,6 @@ export default class CategoryPieChart extends React.Component<any, any>  {
              height={300}
              showLabels={true}
              radius = {133}
-             onNearestX={(event)=>{
-              console.log(event)
-            }}
              />
         </div>
       </div>

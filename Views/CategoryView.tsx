@@ -25,9 +25,11 @@ class CategoryView extends React.Component<any, any>  {
 
         <div className="dashboard">
           <div style={{display:"flex", flex:1, justifyContent:"center"}}>
-          <CategoryPieChart/>
-          </div><div style={{display:"flex", flex:1, justifyContent:"center"}}>
-          <TotalPerMonth/></div>
+            <CategoryPieChart/>
+          </div>
+          <div style={{display:"flex", flex:1, justifyContent:"center"}}>
+            <TotalPerMonth/>
+          </div>
         </div>
 
         <div style={{display:"inline-block", flex:1,justifyContent:"center", fontSize: 10}}>

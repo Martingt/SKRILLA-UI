@@ -1,35 +1,29 @@
 import * as React from 'react';
-import '../resources/styles/sign-in.scss';
-import '../resources/styles/homescreen.scss';
-import AuthService from '../utils/AuthService.tsx';
+import '../resources/styles/totalPerMonth.scss';
+import AuthService from '../utils/AuthService';
 import {XYPlot, VerticalBarSeries, HorizontalGridLines, VerticalGridLines, XAxis, YAxis, Hint} from 'react-vis';
+import {fetchTotalPerMonth} from '../controllers/ConsumptionsController'
+import { FullscreenExit } from '@material-ui/icons';
 
 
-const authService = new AuthService();
-
+function buildValue(hoveredCell) {
+  return {
+    monto: hoveredCell.y
+  };
+}
 export default class CategoryPieChart extends React.Component<any, any>  {
   constructor(props) {
     super(props);
     this.state = {
       totalpermonth: [],
+      hoveredCell: false
     };
   }
   componentDidMount(){
       this.fetchTotal()
   }
   fetchTotal(){
-    var myHeaders = new Headers();
-    var fetchURL = "https://localhost:5001/consumptions/totalmonth";
-
-    myHeaders.append("Authorization", "Bearer " + authService.getToken());
-
-    let requestOptions: RequestInit = {
-      method: 'GET',
-      headers: myHeaders,
-      redirect: 'follow'
-    };
-    fetch(fetchURL, requestOptions)
-      .then(response => response.json())
+    fetchTotalPerMonth()
       .then(result => this.setState({totalpermonth: result}))
   }
   createDataChart(){
@@ -45,28 +39,39 @@ export default class CategoryPieChart extends React.Component<any, any>  {
     })
     return data
   }
-
   render(){
-    return  <div id="content">
-        <div style={{display:"flex", flex:1,justifyContent:"center", fontSize: 10}}>
-        <XYPlot
-            width={300}
-            height={350}
-            xType="ordinal"
-            >
-            <XAxis/>
-            <YAxis/>
-            <HorizontalGridLines />
-            <VerticalGridLines />
-            <VerticalBarSeries
-                data={this.createDataChart()}
-                onNearestX={(event)=>{
-                  
-                }}
-            />
-        </XYPlot>
- 
-        </div>
+    const {hoveredCell} = this.state;
+    return  <div className="content">
+          <div className="titleChart">
+            <h3>Consumos totales por mes</h3>
+          </div>
+          <div className="barChart">
+          <XYPlot
+              width={450}
+              height={350}
+              xType="ordinal"
+              margin={{left: 75}}
+              >
+              <XAxis/>
+              <YAxis/>
+              <HorizontalGridLines />
+              <VerticalGridLines />
+              <VerticalBarSeries
+                  data={this.createDataChart()}
+                  onValueMouseOver={v => {this.setState({hoveredCell: v.x && v.y ? v : false})}}
+                  onValueMouseOut={v => this.setState({hoveredCell: false})}
+              />
+              {hoveredCell ? (
+              <Hint 
+                value={buildValue(hoveredCell)}
+                align={{vertical: 'top', horizontal: 'left'}}>
+                <div>
+                  <h3>Monto</h3>
+                  <p>{buildValue(hoveredCell).monto}</p>
+                </div>
+              </Hint>) : null}
+          </XYPlot>
+          </div>
         </div>
   }
 }
