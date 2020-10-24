@@ -1,0 +1,27 @@
+.budgetCategoryList {
+  margin-top:25px;
+}
+.budgetSubtitle{
+  margin-top:20px;
+  margin-left: 5px;
+}
+.budgetToolbar {
+  display:flex;
+  flex:1;
+  justify-content: space-between;
+}
+.createBudgetButton {
+  padding:5px;
+  margin-bottom: 10px;
+  font-size: 0.8em;
+  border: 1px solid #25b0a5;
+  border-radius: 4px;
+  cursor:pointer;
+}
+.createBudgetButton:hover {
+  border-color:#057070;
+}
+.budgetToolbarContainer {
+  display:flex;
+  align-items: flex-end;
+}

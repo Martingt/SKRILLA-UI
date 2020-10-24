@@ -29,6 +29,7 @@ class TopBar extends React.Component<any, any>  {
       <div className="containerTopBar">
         <Menu>
         <Link href="/" ><a  className="barMenuItem">Categorias</a></Link>
+        <Link href="/budget" ><a className="barMenuItem">Presupuesto</a></Link>
         <Link href="/consumptions" ><a className="barMenuItem">Consumos</a></Link>
         </Menu>
         <div className="topBarLeft">
