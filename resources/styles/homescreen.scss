@@ -1,59 +1,59 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap');
-*{
-    margin: 0;
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap");
+* {
+  margin: 0;
 }
 .mainContainer {
-  display:flex;
-  flex:1;
-  justify-content: center;
-  font-family: 'Quicksand';
-  margin-left: 70px;
-  margin-right: 70px
+  display: flex;
+  position: relative;
+  height: 100vh;
+  font-family: "Quicksand";
 }
 .containerToolbar {
-  display:flex;
-  flex:1;
-  justify-content:space-between;
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
   align-items: center;
 }
 
 .addContsumptionModal {
-  display:flex;
-  align-items:center;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  border:0px;
+  border: 0px;
 }
 .addContsumptionModal:focus {
-  outline:none;
+  outline: none;
 }
 .mainContainerContent {
-  min-width:800px;
+  min-width: 800px;
+  justify-content: center;
+  width: 100%;
 }
-.categoryIconSmall{
-height:21px;
-width:21px;
+.categoryIconSmall {
+  height: 21px;
+  width: 21px;
 }
 .editIconSmall {
-  height:18px;
-  width:18px;
-  opacity:0.6;
-  cursor:pointer;
+  height: 18px;
+  width: 18px;
+  opacity: 0.6;
+  cursor: pointer;
 }
 .editIconSmall:hover {
-  opacity:1
+  opacity: 1;
 }
 .topBarFilters {
-    display:flex;
-    align-items: center;
-    padding:10px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
 }
 .listCategoryItem {
-  display:flex;
-  align-items:center;
+  display: flex;
+  align-items: center;
 }
 .dashboard {
-  margin-top:25px;
+  margin-top: 25px;
   display: flex;
-  flex:1;
+  flex: 1;
   justify-content: space-between;
 }
