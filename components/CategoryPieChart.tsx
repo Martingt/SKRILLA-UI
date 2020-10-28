@@ -93,40 +93,53 @@ export default class CategoryPieChart extends React.Component<any, any>  {
                 "Septiembre","Octubre","Noviembre","Diciembre"]
     const year = ["2020","2019","2018","2017"]
     
-    return  <div id="content" className="content">
-      <div className="titleChart">
-        <h3>Consumos por categoria</h3>
-      </div>
-      <div className="date-picker">
-        <div>
-          <Select inputProps={{name: "month"}} value={this.state.month} onChange={this.handleChange}>
-            {month.map((month, key) => { return <MenuItem value={key}>{month}</MenuItem>})}
-          </Select>
+    if(this.state.conspercat.lenght > 0){
+      return  <div id="content" className="content">
+        <div className="titleChart">
+          <h3>Consumos por categoria</h3>
         </div>
-        <div>
-          <Select inputProps={{name: 'year'}} value={this.state.year} onChange={this.handleChange}>
-            {year.map((year, key) => { return <MenuItem value={2020-key}>{year}</MenuItem>})}
-          </Select>
-        </div>
-      </div>
-      <div className="pie-chart">
-        <div className="categories">
-            {this.state.category.map((category) => {
-                return <div>
-                <input type="checkbox" value={category.name} checked={category.check} onChange={this.handleChange}></input>
-                <label>{category.name}</label>
-                </div>})}
+        <div className="date-picker">
+          <div>
+            <Select inputProps={{name: "month"}} value={this.state.month} onChange={this.handleChange}>
+              {month.map((month, key) => { return <MenuItem value={key}>{month}</MenuItem>})}
+            </Select>
           </div>
-        <div className="chart">
-          <RadialChart
-             data={this.createDataChart()}
-             width={300}
-             height={300}
-             showLabels={true}
-             radius = {133}
-             />
+          <div>
+            <Select inputProps={{name: 'year'}} value={this.state.year} onChange={this.handleChange}>
+              {year.map((year, key) => { return <MenuItem value={2020-key}>{year}</MenuItem>})}
+            </Select>
+          </div>
+        </div>
+        <div className="pie-chart">
+          <div className="categories">
+              {this.state.category.map((category) => {
+                  return <div>
+                  <input type="checkbox" value={category.name} checked={category.check} onChange={this.handleChange}></input>
+                  <label>{category.name}</label>
+                  </div>})}
+            </div>
+          <div className="chart">
+            <RadialChart
+              data={this.createDataChart()}
+              width={300}
+              height={300}
+              showLabels={true}
+              radius = {133}
+              />
+          </div>
         </div>
       </div>
-    </div>
+    }else{
+      return <div className="content">
+        <div className="titleChart">
+            <h3>Consumos por categoria</h3>
+          </div>
+        <div style={{width: 450, height: 350}} className="noChart">
+            <img style={{width: 160, height: 150, marginBottom: 10, marginTop: 40}} src="/images/no-piechart.png"></img>
+            <h2>Ups!</h2>
+            <p style={{textAlign:"center",marginTop: 10}}>Aun no posees consumos suficientes para mostrar este grafico.</p>
+        </div>
+      </div>
+    }
   }
 }

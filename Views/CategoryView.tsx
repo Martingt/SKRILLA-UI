@@ -6,7 +6,7 @@ import TopBar from "../components/TopBar";
 import SideBar from "../components/SideBar";
 import CategoriesList from "../components/CategoriesList";
 import CategoryPieChart from "../components/CategoryPieChart";
-import TotalPerMonth from "../components/TotalPerMonth";
+import TotalPerMonthBar from "../components/TotalPerMonthBar";
 import { connect } from "react-redux";
 import consumptions from "pages/consumptions";
 
@@ -35,7 +35,7 @@ class CategoryView extends React.Component<any, any> {
               <div
                 style={{ display: "flex", flex: 1, justifyContent: "center" }}
               >
-                <TotalPerMonth />
+                <TotalPerMonthBar />
               </div>
             </div>
 

@@ -4,7 +4,7 @@ import AuthService from "../utils/AuthService.tsx";
 import TopBar from "../components/TopBar";
 import CategoriesList from "../components/CategoriesList";
 import CategoryPieChart from "../components/CategoryPieChart";
-import TotalPerMonth from "../components/TotalPerMonth";
+import TotalPerMonthBar from "../components/TotalPerMonthBar";
 import BudgetCategoryList from "../components/budget/BudgetCategoryList";
 import BudgetSummary from "../components/budget/BudgetSummary";
 import { connect } from "react-redux";
