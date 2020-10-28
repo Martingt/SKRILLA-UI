@@ -41,8 +41,6 @@ export default class CategoryPieChart extends React.Component<any, any>  {
       this.state.conspercat.map((consumption) => {
         data.push({label: consumption.category, angle: consumption.amount})
       })
-    }else{
-      data.push({label: "No hay consumos", angle:1 })
     }
     return data
   }
@@ -93,7 +91,7 @@ export default class CategoryPieChart extends React.Component<any, any>  {
                 "Septiembre","Octubre","Noviembre","Diciembre"]
     const year = ["2020","2019","2018","2017"]
     
-    if(this.state.conspercat.lenght > 0){
+    if(this.state.conspercat.length > 0){
       return  <div id="content" className="content">
         <div className="titleChart">
           <h3>Consumos por categoria</h3>
