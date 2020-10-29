@@ -5,6 +5,7 @@ import AuthService from '../utils/AuthService.tsx';
 import RegisterForm from '../components/RegisterForm';
 import LoginForm from '../components/LoginForm';
 import TopBar from '../components/TopBar';
+import SideBar from '../components/SideBar';
 import TextField from '@material-ui/core/TextField';
 
 

@@ -3,6 +3,7 @@ $sidebar-bg-color: #207178;
 @import "~react-pro-sidebar/dist/scss/styles.scss";
 
 .sidebarheader {
+  margin-right: 110px;
   padding: 24px;
   text-transform: uppercase;
   font-weight: bold;
@@ -126,4 +127,18 @@ $sidebar-bg-color: #207178;
 }
 .topBarLeft {
   margin-left: 50%;
+}
+.logoutIcon {
+  height: 25px;
+  width: 25px;
+}
+.logoutIcon:hover {
+  height: 25px;
+  width: 25px;
+  opacity: 0.7;
+}
+.header {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
 }

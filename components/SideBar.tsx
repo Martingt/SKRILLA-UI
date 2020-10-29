@@ -1,18 +1,30 @@
 import * as React from "react";
 import "../resources/styles/topBar.scss";
+import { logoutAction } from "../redux/LoginAction.tsx";
+import { connect } from "react-redux";
 import Link from "next/link";
 import { ProSidebar, SidebarHeader, SidebarContent } from "react-pro-sidebar";
 
-export default class SideBar extends React.Component<any, any> {
+class SideBar extends React.Component<any, any> {
   constructor(props) {
     super(props);
   }
-
+  logout() {
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    this.props.logout();
+  }
+  handleItemClick = (param) => {
+    this.setState({ sideBarOpen: !this.state.sideBarOpen });
+    this.props.onChangePage(param);
+  };
   render() {
     return (
       <ProSidebar>
         <SidebarHeader>
-          <div className="sidebarheader">Skrilla</div>
+          <div className="header">
+            <div className="sidebarheader">Skrilla</div>
+            <img className="logoutIcon" src="/images/logout.png" onClick={() => this.logout()}></img>
+          </div>
         </SidebarHeader>
         <SidebarContent>
           <Link href="/">
@@ -29,3 +41,8 @@ export default class SideBar extends React.Component<any, any> {
     );
   }
 }
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  logout: () => dispatch(logoutAction()),
+});
+
+export default connect(null, mapDispatchToProps)(SideBar);
