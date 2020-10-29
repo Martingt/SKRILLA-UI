@@ -131,11 +131,23 @@ export default class CategoryPieChart extends React.Component<any, any>  {
       return <div className="content">
         <div className="titleChart">
             <h3>Consumos por categoria</h3>
+        </div>
+        <div className="date-picker">
+          <div>
+            <Select inputProps={{name: "month"}} value={this.state.month} onChange={this.handleChange}>
+              {month.map((month, key) => { return <MenuItem value={key}>{month}</MenuItem>})}
+            </Select>
           </div>
-        <div style={{width: 450, height: 350}} className="noChart">
+          <div>
+            <Select inputProps={{name: 'year'}} value={this.state.year} onChange={this.handleChange}>
+              {year.map((year, key) => { return <MenuItem value={2020-key}>{year}</MenuItem>})}
+            </Select>
+          </div>
+        </div>
+        <div style={{width: 400, height: 300}} className="noChart">
             <img style={{width: 160, height: 150, marginBottom: 10, marginTop: 40}} src="/images/no-piechart.png"></img>
             <h2>Ups!</h2>
-            <p style={{textAlign:"center",marginTop: 10}}>Aun no posees consumos suficientes para mostrar este grafico.</p>
+            <p style={{textAlign:"center",marginTop: 10}}>No tienes consumos este mes!</p>
         </div>
       </div>
     }

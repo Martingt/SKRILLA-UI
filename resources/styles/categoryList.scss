@@ -18,11 +18,19 @@
   align-content: center;
   text-align: center;
 }
-
+.category:hover + .options{
+  display: flex;
+}
+.options:hover{
+  display: inline;
+  align-content: center;
+}
+.options {
+  display: none;
+}
 .categoryOptions {
   display: flex;
 }
-
 p {
   color: black;
 }

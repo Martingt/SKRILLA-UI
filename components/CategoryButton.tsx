@@ -103,7 +103,7 @@ export default class CategoryButton extends React.Component<any, any>  {
                   (this.state.task.operation == "add" ||
                    this.state.task.operation == "edit"))?
                   <Modal
-                    aria-labelledby="Crear categoria"
+                    aria-labelledby={"Crear categoria"}
                     open={this.state.categoryItemTask}
                     onClose={this.handleCategoryTaskCanceled}
                     closeAfterTransition
@@ -114,6 +114,7 @@ export default class CategoryButton extends React.Component<any, any>  {
                   <CategoryForm
                     task={this.state.task}
                     categoryId={this.props.categoryId}
+                    categoryName={this.props.categoryName}
                     onEditionOk={this.handleCategoryTaskFinished}
                     onCreationOk={this.handleCategoryTaskFinished}
                     onCancel={this.handleCategoryTaskCanceled}/>

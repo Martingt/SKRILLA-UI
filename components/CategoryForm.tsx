@@ -111,7 +111,7 @@ export default class CategoryForm extends React.Component<any, any> {
     return (
       <div className="addContsumptionFormContainer">
         <h2 id="transition-modal-title" className="addConsumptionFormTitle">
-          Agregar categoria
+          {this.props.task.operation === "edit" ? "Editar Categoria" : "Crear Categoria"}
         </h2>
         <form className="addContsumptionForm">
           <div className="addCategoryFormItem">
@@ -121,6 +121,7 @@ export default class CategoryForm extends React.Component<any, any> {
               className="addConsumptionField"
               InputProps={{ style: { fontSize: "0.9rem" } }}
               label="Nombre"
+              placeholder={this.props.task.operation === "edit" ? this.props.categoryName : ""}
               value={this.state.categoryName}
               error={this.state.categoryNameControl.error}
               helperText={this.state.categoryNameControl.helperText}

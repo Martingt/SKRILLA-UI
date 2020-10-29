@@ -44,24 +44,28 @@ export default class CategoriesList extends React.Component<any, any> {
         {this.state.categories.map((category) => {
           i = i + 1;
           return (
-            <div className="category" key={i} id={i.toString()}>
-              {getCategoryIcon(category.iconDescriptor)}
-
-              <p>{category.name}</p>
-              {category.nonedit ? null : (
-                <div className="categoryOptions">
-                  <CategoryButton
-                    operation={"edit"}
-                    triggerCategoriesList={this.refreshCategoriesList}
-                    categoryId={category.categoryId}
-                  />
-                  <CategoryButton
-                    operation={"del"}
-                    triggerCategoriesList={this.refreshCategoriesList}
-                    categoryId={category.categoryId}
-                  />
-                </div>
-              )}
+            <div>
+              <div className="category" key={i} id={i.toString()}>
+                {getCategoryIcon(category.iconDescriptor)}
+                <p>{category.name}</p>
+              </div>
+              <div className="options">
+                {category.nonedit ? null : (
+                  <div className="categoryOptions">
+                    <CategoryButton
+                      operation={"edit"}
+                      triggerCategoriesList={this.refreshCategoriesList}
+                      categoryId={category.categoryId}
+                      categoryName={category.name}
+                    />
+                    <CategoryButton
+                      operation={"del"}
+                      triggerCategoriesList={this.refreshCategoriesList}
+                      categoryId={category.categoryId}
+                    />
+                  </div>
+                )}
+              </div>
             </div>
           );
         })}

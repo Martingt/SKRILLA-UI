@@ -12,8 +12,6 @@ export default class CategoryIconsList extends React.Component<any, any> {
 
   isAnyCategoryUsingThisIcon(iconName, categories) {
     for (const c in categories) {
-      console.log(iconName);
-      console.log(categories[c].iconDescriptor);
       if (categories[c].iconDescriptor == iconName) {
         return true;
       }
