@@ -48,6 +48,10 @@ export default class BudgetCategoryList extends React.Component<any, any>  {
   }
 
   handleRowClick(event, rowId){
+
+  }
+
+  handleExpandClick(event, rowId){
     if(this.state.currentlyExpandedRow === rowId){
       this.setState({currentlyExpandedRow: null});
     }
@@ -65,12 +69,19 @@ export default class BudgetCategoryList extends React.Component<any, any>  {
     }
   }
 
+  calculateProportion(spent, budget){
+    return (budget == -1)? "-": Math.round(spent/budget*100)
+  }
+
+  getProportionColor(spent, budget){
+    return (spent/budget > 1)? "red":"#05a025"
+  }
 
   render(){
-    var i = 0;
 
-  return (
-        <TableContainer className={this.props.className} component={Paper}>
+
+  return (<div className={this.props.className}>
+        <TableContainer  component={Paper}>
           <Table  size="small" aria-label="simple table">
             <TableHead>
               <TableRow>
@@ -87,14 +98,16 @@ export default class BudgetCategoryList extends React.Component<any, any>  {
               </TableRow>
             </TableHead>
             <TableBody>
-              {this.props.consumptions.map((row) => {
+              {this.props.budgetItems.map((row) => {
                   return (
-                  <React.Fragment key={row.id}>
-                  <TableRow  id={row.id}
-                  onClick={(event)=>this.handleRowClick(event, row.id)}>
-                    <TableCell style={{ borderBottom:0}} >
-                      <IconButton aria-label="expand row" size="small" >
-                        {this.isRowExpanded(row.id) ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                  <React.Fragment key={row.category.categoryId}>
+                  <TableRow  id={row.category.categoryId}
+                      onClick={(event)=>this.handleRowClick(event, row.category.categoryId)}>
+                    <TableCell style={{ borderBottom:0, maxWidth:"50px"}} >
+                      <IconButton  aria-label="expand row" size="small"
+                          onClick={(event)=>this.handleExpandClick(event, row.category.categoryId)}
+                      >
+                        {this.isRowExpanded(row.category.categoryId) ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                       </IconButton>
                     </TableCell>
                     <TableCell style={{ borderBottom:0}} align="left">
@@ -102,13 +115,19 @@ export default class BudgetCategoryList extends React.Component<any, any>  {
                       {this.getCategoryIcon(row.category.iconDescriptor)}
                       <div style={{paddingLeft:'5px'}}>{row.category.name}</div>
                       </div></TableCell>
-                      <TableCell style={{ borderBottom:0}} align="left">123.45</TableCell>
-                      <TableCell style={{ borderBottom:0}} align="left">175</TableCell>
-                      <TableCell style={{ borderBottom:0, color:"#05a025"}} align="left">35%</TableCell>
+                      <TableCell style={{ borderBottom:0}} align="left">{row.totalSpent}</TableCell>
+                      <TableCell style={{ borderBottom:0}} align="left">{
+                        (row.budgetedAmount == -1)? "-": row.budgetedAmount
+                      }</TableCell>
+                      <TableCell
+                        style={{ borderBottom:0,
+                        color: this.getProportionColor(row.totalSpent, row.budgetedAmount)}}
+                      align="left">
+                      {this.calculateProportion(row.totalSpent, row.budgetedAmount)}</TableCell>
                   </TableRow>
                   <TableRow >
                     <TableCell style={{ paddingBottom: 0, paddingTop: 0}} colSpan={5}>
-                    <Collapse in={this.isRowExpanded(row.id)}
+                    <Collapse in={this.isRowExpanded(row.category.categoryId)}
                     timeout="auto" unmountOnExit>
                     </Collapse>
                     </TableCell>
@@ -116,7 +135,7 @@ export default class BudgetCategoryList extends React.Component<any, any>  {
                 )} )}
             </TableBody>
           </Table>
-        </TableContainer>);
+        </TableContainer></div>);
   }
 
 }

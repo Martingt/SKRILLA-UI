@@ -68,9 +68,9 @@ export default class ConsumptionList extends React.Component<any, any>  {
   render(){
     var i = 0;
 
-  return (
+  return (<div className={this.props.className}>
         <TableContainer component={Paper}>
-          <Table  aria-label="simple table">
+          <Table  size="small" aria-label="simple table">
             <TableHead>
               <TableRow>
               <TableCell align="left"></TableCell>
@@ -116,7 +116,7 @@ export default class ConsumptionList extends React.Component<any, any>  {
                 )} )}
             </TableBody>
           </Table>
-        </TableContainer>);
+        </TableContainer></div>);
   }
 
 }

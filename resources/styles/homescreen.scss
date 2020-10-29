@@ -25,9 +25,8 @@
   outline: none;
 }
 .mainContainerContent {
-  min-width: 800px;
-  justify-content: center;
   width: 100%;
+  padding-left:15px;
 }
 .categoryIconSmall {
   height: 21px;
@@ -56,4 +55,7 @@
   display: flex;
   flex: 1;
   justify-content: space-between;
+}
+.consumptionsCategoryList {
+  padding:25px;
 }

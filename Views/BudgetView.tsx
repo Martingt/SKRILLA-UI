@@ -10,9 +10,12 @@ import BudgetSummary from "../components/budget/BudgetSummary";
 import { connect } from "react-redux";
 import consumptions from "pages/consumptions";
 import {
-  fetchConsumptions,
-  deleteConsumption,
-} from "../controllers/ConsumptionsController.tsx";
+  fetchBudget,
+  fetchBudgetSummary
+} from "../controllers/BudgetController.tsx";
+import {
+  fetchCategories
+} from "../controllers/CategoriesController.tsx";
 import SideBar from "../components/SideBar";
 
 const authService = new AuthService();
@@ -21,17 +24,23 @@ class BudgetView extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
-      consumptions: [],
+      budgetsByCategory: [],
+      budget: 0,
+      totalSpent: 0
     };
   }
 
   componentDidMount() {
     if (this.props.token !== null) {
-      fetchConsumptions()
-        .then((result) => {
-          this.setState({ ...this.state, consumptions: result });
-        })
-        .catch((error) => console.log("error", error));
+
+      fetchBudgetSummary().then((result) => {
+        this.setState({ ...this.state,
+          budget: result.amount,
+          totalSpent: result.totalSpent,
+          budgetsByCategory: result.categoryItems });
+      })
+      .catch((error) => console.log("error", error));
+
     }
   }
 
@@ -49,11 +58,11 @@ class BudgetView extends React.Component<any, any> {
               </div>
             </div>
             <div className="budgetSubtitle">Resumen</div>
-            <BudgetSummary />
+            <BudgetSummary budget={this.state.budget} spent={this.state.totalSpent}/>
             <div className="budgetSubtitle">Presupuesto por categoria</div>
             <BudgetCategoryList
               className="budgetCategoryList"
-              consumptions={this.state.consumptions}
+              budgetItems={this.state.budgetsByCategory}
             />
           </div>
         </div>
