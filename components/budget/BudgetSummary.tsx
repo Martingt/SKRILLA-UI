@@ -17,13 +17,13 @@ class BudgetSummary extends React.Component<any, any>  {
 
     return <div className="budgetSummary">
       <div className="budgetSummaryItem">
-        <div className="budgetSummaryItemValue">{this.props.budget}</div>
+        <div className="budgetSummaryItemValue">$ {this.props.budget}</div>
         <div className="budgetSummaryItemLabel">
           Presupuesto para este periodo
         </div>
       </div>
       <div className="budgetSummaryItem">
-        <div className="budgetSummaryItemValue">{this.props.spent}</div>
+        <div className="budgetSummaryItemValue">$ {this.props.spent}</div>
         <div className="budgetSummaryItemLabel">Gasto actual total</div>
       </div>
       <div className="budgetSummaryItem">

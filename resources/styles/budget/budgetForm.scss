@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap');
+
+.budgetFormContainer {
+  padding:20px;
+  border:1px solid black;
+  background: white;
+  font-family: "Quicksand";
+  width:40%;
+  height:30%;
+  min-height:200px;
+  max-height:500px;
+  min-width:300px;
+  max-width:500px;
+}
+.budgetCreationForm {
+  padding:10px;
+  display:flex;
+  flex:1;
+  flex-direction: column;
+  justify-content: space-between;
+
+}
+.newBudgetButtonDiv {
+  display:flex;
+  flex:1;
+  justify-content: space-between;
+
+}
+.newBudgetButton {
+  margin:10px;
+}
