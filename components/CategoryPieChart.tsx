@@ -111,8 +111,8 @@ export default class CategoryPieChart extends React.Component<any, any>  {
         <div className="pie-chart">
           <div className="categories">
               {this.state.category.map((category) => {
-                  return <div>
-                  <input type="checkbox" value={category.name} checked={category.check} onChange={this.handleChange}></input>
+                  return <div className="optionCategory">
+                  <input type="checkbox" className="inputCategory" value={category.name} checked={category.check} onChange={this.handleChange}></input>
                   <label>{category.name}</label>
                   </div>})}
             </div>

@@ -89,7 +89,7 @@ class BudgetView extends React.Component<any, any> {
                   className="createBudgetButton"
                   onClick={this.toggleNewBudgetForm}
                 >
-                  Nuevo Presupuesto
+                  <p style={{color: "white"}}>Nuevo Presupuesto</p>
                 </div>
               </div>
             </div>
