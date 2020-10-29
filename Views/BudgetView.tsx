@@ -11,16 +11,14 @@ import { connect } from "react-redux";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
-import NewBudgetForm from "../components/budget/NewBudgetForm.tsx"
+import NewBudgetForm from "../components/budget/NewBudgetForm.tsx";
 import consumptions from "pages/consumptions";
 import {
   fetchBudget,
   fetchBudgetSummary,
-  putCategoryBudget
+  putCategoryBudget,
 } from "../controllers/BudgetController.tsx";
-import {
-  fetchCategories
-} from "../controllers/CategoriesController.tsx";
+import { fetchCategories } from "../controllers/CategoriesController.tsx";
 import SideBar from "../components/SideBar";
 
 const authService = new AuthService();
@@ -32,7 +30,7 @@ class BudgetView extends React.Component<any, any> {
       budgetsByCategory: [],
       budget: 0,
       totalSpent: 0,
-      newBudgetFormActive: false
+      newBudgetFormActive: false,
     };
   }
 
@@ -43,31 +41,40 @@ class BudgetView extends React.Component<any, any> {
   }
 
   fetchBudgetSummary = () => {
-    fetchBudgetSummary().then((result) => {
-      this.setState({ ...this.state,
-        budget: result.amount,
-        totalSpent: result.totalSpent,
-        budgetsByCategory: result.categoryItems });
-    })
-    .catch((error) => console.log("error", error));
-  }
+    fetchBudgetSummary()
+      .then((result) => {
+        this.setState({
+          ...this.state,
+          budget: result.amount,
+          totalSpent: result.totalSpent,
+          budgetsByCategory: result.categoryItems,
+        });
+      })
+      .catch((error) => console.log("error", error));
+  };
 
-  updateCategoryBudget =(categoryId, amount) =>{
-    let data = {category: categoryId, amount: parseFloat(amount)}
+  updateCategoryBudget = (categoryId, amount) => {
+    let data = { category: categoryId, amount: parseFloat(amount) };
 
-    putCategoryBudget(data).then((result) => {
-      this.fetchBudgetSummary();
-    })
-    .catch((error) => console.log("error", error));
-  }
+    putCategoryBudget(data)
+      .then((result) => {
+        this.fetchBudgetSummary();
+      })
+      .catch((error) => console.log("error", error));
+  };
 
-  toggleNewBudgetForm = () =>{
-    this.setState({newBudgetFormActive: !this.state.newBudgetFormActive});
-  }
+  toggleNewBudgetForm = () => {
+    this.setState({ newBudgetFormActive: !this.state.newBudgetFormActive });
+  };
+
+  handleNewBudgetTaskFinished = () => {
+    this.fetchBudgetSummary();
+    this.setState({ newBudgetFormActive: !this.state.newBudgetFormActive });
+  };
 
   handeNewBudgetCancelation = () => {
     this.toggleNewBudgetForm();
-  }
+  };
 
   render() {
     return (
@@ -79,12 +86,19 @@ class BudgetView extends React.Component<any, any> {
             <div className="budgetToolbar">
               <h1 className="containerTopBarTitle">Presupuesto</h1>
               <div className="budgetToolbarContainer">
-                <div className="createBudgetButton"
-                onClick={this.toggleNewBudgetForm}>Nuevo Presupuesto</div>
+                <div
+                  className="createBudgetButton"
+                  onClick={this.toggleNewBudgetForm}
+                >
+                  Nuevo Presupuesto
+                </div>
               </div>
             </div>
             <div className="budgetSubtitle">Resumen</div>
-            <BudgetSummary budget={this.state.budget} spent={this.state.totalSpent}/>
+            <BudgetSummary
+              budget={this.state.budget}
+              spent={this.state.totalSpent}
+            />
             <div className="budgetSubtitle">Presupuesto por categoria</div>
             <BudgetCategoryList
               className="budgetCategoryList"
@@ -103,7 +117,10 @@ class BudgetView extends React.Component<any, any> {
           className="budgetForm"
         >
           <Fade in={this.state.newBudgetFormActive}>
-            <NewBudgetForm onCancel={this.handeNewBudgetCancelation} />
+            <NewBudgetForm
+              onCreationOk={this.handleNewBudgetTaskFinished}
+              onCancel={this.handeNewBudgetCancelation}
+            />
           </Fade>
         </Modal>
       </div>

@@ -11,12 +11,12 @@ var CategoryIcons = {
     name: "hogarYMercadoCategoryIcon",
     path: "hogarYMercadoCategoryIcon.jpg",
   },
-  BON_VIVIR: { 
-    name: "bonVivirIcon", 
-    path: "bonVivirIcon.jpg" 
+  BON_VIVIR: {
+    name: "bonVivirIcon",
+    path: "bonVivirIcon.jpg",
   },
   ELECTRODOMESTICOS: {
-    name: "Electrodomesticos",
+    name: "electrodomesticosIcon",
     path: "electrodomesticosIcon.png",
   },
   OTROS: { name: "otrosIcon", path: "otrosIcon.png" },

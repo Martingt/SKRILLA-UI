@@ -12,6 +12,7 @@ export default class CategoriesList extends React.Component<any, any> {
   }
 
   componentDidMount() {
+    console.log("Me esto montanto papa");
     this.refreshCategoriesList();
   }
 
