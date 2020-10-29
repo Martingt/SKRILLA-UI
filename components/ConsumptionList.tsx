@@ -15,6 +15,7 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/DeleteOutlined";
 import EditIcon from "@material-ui/icons/EditOutlined";
 import Button from "@material-ui/core/Button";
+import NumberFormat from 'react-number-format';
 import { getCategoryIcon } from "../controllers/CategoriesController";
 
 export default class ConsumptionList extends React.Component<any, any> {
@@ -96,7 +97,10 @@ export default class ConsumptionList extends React.Component<any, any> {
                       {row.title}
                     </TableCell>
                     <TableCell style={{ borderBottom: 0 }} align="left">
-                      {row.amount}
+                      <NumberFormat 
+                        value={row.amount} displayType={'text'} 
+                        thousandSeparator={true} 
+                        prefix={'$ '} />
                     </TableCell>
                     <TableCell style={{ borderBottom: 0 }} align="left">
                       <div className="listCategoryItem">
