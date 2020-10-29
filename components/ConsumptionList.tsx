@@ -60,11 +60,11 @@ export default class ConsumptionList extends React.Component<any, any> {
   render() {
     var i = 0;
 
-    return (
-      <TableContainer component={Paper}>
-        <Table aria-label="simple table">
-          <TableHead>
-            <TableRow>
+  return (<div className={this.props.className}>
+        <TableContainer component={Paper}>
+          <Table  size="small" aria-label="simple table">
+            <TableHead>
+              <TableRow>
               <TableCell align="left"></TableCell>
               <TableCell align="left">Fecha</TableCell>
               <TableCell align="left">Titulo</TableCell>
@@ -138,13 +138,10 @@ export default class ConsumptionList extends React.Component<any, any> {
                         </IconButton>
                       </Collapse>
                     </TableCell>
-                  </TableRow>
-                </React.Fragment>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    );
+                  </TableRow></React.Fragment>
+                )} )}
+            </TableBody>
+          </Table>
+        </TableContainer></div>);
   }
 }

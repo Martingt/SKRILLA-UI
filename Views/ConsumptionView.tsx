@@ -139,6 +139,7 @@ class ConsumptionView extends React.Component<any, any> {
               </IconButton>
             </div>
             <ConsumptionList
+              className="consumptionsCategoryList"
               onConsumptionEdition={this.editConsumption}
               onConsumptionDeletion={this.deleteConsumption}
               consumptions={this.state.consumptions}

@@ -1,5 +1,6 @@
 .budgetCategoryList {
   margin-top:25px;
+  margin:25px;
 }
 .budgetSubtitle{
   margin-top:20px;
@@ -24,4 +25,13 @@
 .budgetToolbarContainer {
   display:flex;
   align-items: flex-end;
+}
+.budgetForm {
+  display:flex;
+  flex:1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.newBudgetButton{
 }
