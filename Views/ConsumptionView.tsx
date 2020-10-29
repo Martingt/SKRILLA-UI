@@ -119,7 +119,6 @@ class ConsumptionView extends React.Component<any, any> {
   render() {
     return (
       <div id="content">
-        <TopBar />
         <div className="mainContainer">
           <SideBar />
           <div className="mainContainerContent">
