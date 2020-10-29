@@ -17,6 +17,7 @@ import EditIcon from "@material-ui/icons/EditOutlined";
 import Button from "@material-ui/core/Button";
 import NumberFormat from 'react-number-format';
 import { getCategoryIcon } from "../controllers/CategoriesController";
+import '../resources/styles/consumptionList.scss'
 
 export default class ConsumptionList extends React.Component<any, any> {
   constructor(props) {
@@ -80,6 +81,7 @@ export default class ConsumptionList extends React.Component<any, any> {
                   <TableRow
                     id={row.id}
                     onClick={(event) => this.handleRowClick(event, row.id)}
+                    className="tableRow"
                   >
                     <TableCell style={{ borderBottom: 0 }}>
                       <IconButton aria-label="expand row" size="small">
