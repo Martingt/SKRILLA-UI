@@ -1,55 +1,71 @@
-import * as React from 'react'
-import '../resources/styles/CategoryList.scss'
-import {fetchCategories} from '../controllers/CategoriesController.tsx'
-import CategoryButton from '../components/CategoryButton';
-import CategoryIcons from '../utils/CategoryIcons.js';
+import * as React from "react";
+import "../resources/styles/CategoryList.scss";
+import { fetchCategories } from "../controllers/CategoriesController.tsx";
+import CategoryButton from "../components/CategoryButton";
+import CategoryIcons from "../utils/CategoryIcons.js";
+import { getCategoryIcon } from "../controllers/CategoriesController";
 
-export default class CategoriesList extends React.Component<any, any>  {
-
-  constructor(props){
+export default class CategoriesList extends React.Component<any, any> {
+  constructor(props) {
     super(props);
-    this.state = { categories: []}
+    this.state = { categories: [] };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.refreshCategoriesList();
   }
 
-
-  addColor(category){
-    for (const c in CategoryIcons){
-      if (CategoryIcons[c].name == category){
-        return CategoryIcons[c].color
+  addColor(category) {
+    for (const c in CategoryIcons) {
+      if (CategoryIcons[c].name == category) {
+        return CategoryIcons[c].color;
       }
     }
-    return "#C1E2F6"
+    return "#C1E2F6";
   }
 
   refreshCategoriesList = () => {
     fetchCategories()
-    .then(result => { this.setState({...this.state, categories: result }); })
-    .catch(error => console.log('error', error));;
-  }
+      .then((result) => {
+        this.setState({ ...this.state, categories: result });
+      })
+      .catch((error) => console.log("error", error));
+  };
 
-  render(){
+  render() {
     var i = 0;
 
-  return (
-            <div className='categoriesList'>
-              <CategoryButton operation={"add"} triggerCategoriesList={this.refreshCategoriesList}/>
-                {this.state.categories.map((category) => {
-                    i =  i + 1;
-                    return (
-                        <div className='category' key={i} style={{backgroundColor: this.addColor(category.name)}} id={i.toString()}>
-                            <p>{category.name}</p>
-                            <CategoryButton operation={"edit"} triggerCategoriesList={this.refreshCategoriesList} categoryId={category.categoryId}/>
-                            <CategoryButton operation={"del"} triggerCategoriesList={this.refreshCategoriesList} categoryId={category.categoryId}/>
-                        </div>
-                    )
-                })
-            }
+    return (
+      <div className="categoriesList">
+        <CategoryButton
+          operation={"add"}
+          triggerCategoriesList={this.refreshCategoriesList}
+        />
+        {this.state.categories.map((category) => {
+          i = i + 1;
+          return (
+            <div className="category" key={i} id={i.toString()}>
+              {getCategoryIcon(category.iconDescriptor)}
+
+              <p>{category.name}</p>
+              {category.nonedit ? null : (
+                <div className="categoryOptions">
+                  <CategoryButton
+                    operation={"edit"}
+                    triggerCategoriesList={this.refreshCategoriesList}
+                    categoryId={category.categoryId}
+                  />
+                  <CategoryButton
+                    operation={"del"}
+                    triggerCategoriesList={this.refreshCategoriesList}
+                    categoryId={category.categoryId}
+                  />
+                </div>
+              )}
             </div>
-
-  )}
-
+          );
+        })}
+      </div>
+    );
+  }
 }

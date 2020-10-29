@@ -1,190 +1,225 @@
-import * as React from 'react'
-import '../resources/styles/addConsumptionForm.scss'
-import {TextField, Select, InputLabel, FormControl, Button} from '@material-ui/core';
-import AuthService  from '../utils/AuthService.tsx';
-import IconButton from '@material-ui/core/IconButton';
-import AddButton from '@material-ui/icons/Add';
-import ClearButton from '@material-ui/icons/Clear';
-import Categories from '../components/Categories';
+import * as React from "react";
+import "../resources/styles/addConsumptionForm.scss";
+import {
+  TextField,
+  Select,
+  InputLabel,
+  FormControl,
+  Button,
+} from "@material-ui/core";
+import AuthService from "../utils/AuthService.tsx";
+import IconButton from "@material-ui/core/IconButton";
+import AddButton from "@material-ui/icons/Add";
+import ClearButton from "@material-ui/icons/Clear";
+import Categories from "../components/Categories";
+import CategoryIconsList from "../components/CategoryIconsList";
 import {
   postConsumption,
   fetchConsumption,
-  updateConsumption
-} from '../controllers/ConsumptionsController.tsx';
+  updateConsumption,
+} from "../controllers/ConsumptionsController.tsx";
 
-
-
-export default class ConsumptionForm extends React.Component<any,any>{
-  constructor(props){
+export default class ConsumptionForm extends React.Component<any, any> {
+  constructor(props) {
     super(props);
     this.state = {
       title: "",
       amount: 0,
-      category:"",
+      category: "",
+      categoryIcon: "",
       date: getTodaysDate(),
-      creationStatus:"empty",
+      creationStatus: "empty",
       errorMessages: [],
-      titleControl: {error: false, helperText: ""},
-      amountControl: {error: false, helperText: ""},
-      categoryControl: {error: false, helperText: ""},
-      dateControl: {error: false, helperText: ""}
-    }
+      titleControl: { error: false, helperText: "" },
+      amountControl: { error: false, helperText: "" },
+      categoryControl: { error: false, helperText: "" },
+      dateControl: { error: false, helperText: "" },
+    };
   }
 
-  componentDidMount(){
-    if (this.props.task.operation === "edit"){
+  componentDidMount() {
+    if (this.props.task.operation === "edit") {
       fetchConsumption(this.props.task.consumptionId)
-      .then(result => {
-        this.setState({
-          title: result.title,
-          amount: result.amount,
-          date: formatDate(result.date.year, result.date.month, result.date.day),
-          category: result.category.name
-        }); })
-      .catch(error => console.log('error', error));
+        .then((result) => {
+          this.setState({
+            title: result.title,
+            amount: result.amount,
+            date: formatDate(
+              result.date.year,
+              result.date.month,
+              result.date.day
+            ),
+            category: result.category.name,
+          });
+        })
+        .catch((error) => console.log("error", error));
     }
   }
 
-  handleChange = (e) =>{
-      this.setState({[e.target.name]: e.target.value});
-  }
+  handleChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
 
   formIsValid() {
     var error = true;
 
     let payload = {
-       title: this.state.title,
-       amount: this.state.amount,
-       category: this.state.category,
-       date: this.state.date
+      title: this.state.title,
+      amount: this.state.amount,
+      category: this.state.category,
+      date: this.state.date,
     };
 
-    if (payload.title == null || payload.title == ""){
+    if (payload.title == null || payload.title == "") {
       this.setState({
-          titleControl: {error: true, helperText: "Se debe especificar un titulo."}
+        titleControl: {
+          error: true,
+          helperText: "Se debe especificar un titulo.",
+        },
       });
       error = false;
-    }
-    else {
+    } else {
       this.setState({
-          titleControl: {error: false, helperText: "Se debe especificar un titulo."}
+        titleControl: {
+          error: false,
+          helperText: "Se debe especificar un titulo.",
+        },
       });
     }
 
-    if (payload.amount == null || isNaN(payload.amount) || payload.amount < 0){
+    if (payload.amount == null || isNaN(payload.amount) || payload.amount < 0) {
       this.setState({
-          amountControl: {error: true, helperText: "Se debe especificar un monto numerico positivo."}
+        amountControl: {
+          error: true,
+          helperText: "Se debe especificar un monto numerico positivo.",
+        },
       });
 
       error = false;
-    }
-    else {
+    } else {
       this.setState({
-          amountControl: {error: false, helperText: "Se debe especificar un monto positivo."}
+        amountControl: {
+          error: false,
+          helperText: "Se debe especificar un monto positivo.",
+        },
       });
     }
-    if (payload.date == null ){
+    if (payload.date == null) {
       this.setState({
-          dateControl: {error: true, helperText: "Fecha invalida."}
+        dateControl: { error: true, helperText: "Fecha invalida." },
       });
 
       error = false;
-    }
-    else {
+    } else {
       this.setState({
-          dateControl: {error: false, helperText: "Fecha invalida."}
+        dateControl: { error: false, helperText: "Fecha invalida." },
       });
     }
 
-    if (payload.category == null || payload.category == ""){
+    if (payload.category == null || payload.category == "") {
       this.setState({
-          categoryControl: {error: true, helperText: "Se debe especificar una categoria."}
-        });
+        categoryControl: {
+          error: true,
+          helperText: "Se debe especificar una categoria.",
+        },
+      });
       error = false;
-    }
-    else {
+    } else {
       this.setState({
-          categoryControl: {error: false, helperText: "Se debe especificar una categoria."}
-        });
+        categoryControl: {
+          error: false,
+          helperText: "Se debe especificar una categoria.",
+        },
+      });
     }
 
     return error;
   }
 
   onSubmit = (e) => {
-      e.preventDefault();
-      var error = false;
-      let errorMessages = this.state.errorMessages;
+    e.preventDefault();
+    var error = false;
+    let errorMessages = this.state.errorMessages;
+    let payload = {
+      title: this.state.title,
+      amount: parseFloat(this.state.amount),
+      category: this.state.category,
+      categoryIcon: this.state.categoryIcon,
+      date: this.state.date,
+    };
 
-      let payload = {
-         title: this.state.title,
-         amount: parseFloat(this.state.amount),
-         category: this.state.category,
-         date: this.state.date
-      };
+    if (!this.formIsValid()) {
+      return;
+    }
 
-      if(!this.formIsValid()){return;}
-
-      if(this.props.task.operation === "edit"){
-        updateConsumption(this.props.task.consumptionId,payload).then(res => {
-          console.log(res);
-          if(res.result == "error"){
-            this.setState({status: "error", errorMessages: res.messages});
-          }
-          else {
-              this.props.onEditionOk();
-          }
-        });
-      }
-      else if (this.props.task.operation === "add"){
-        postConsumption(payload).then(res => {
-          console.log(res);
-          if(res.result == "error"){
-            this.setState({status: "error", errorMessages: res.messages});
-          }
-          else {
-              this.props.onCreationOk();
-          }
-        });
-      }
-  }
+    if (this.props.task.operation === "edit") {
+      updateConsumption(this.props.task.consumptionId, payload).then((res) => {
+        console.log(res);
+        if (res.result == "error") {
+          this.setState({ status: "error", errorMessages: res.messages });
+        } else {
+          this.props.onEditionOk();
+        }
+      });
+    } else if (this.props.task.operation === "add") {
+      postConsumption(payload).then((res) => {
+        console.log(res);
+        if (res.result == "error") {
+          this.setState({ status: "error", errorMessages: res.messages });
+        } else {
+          this.props.onCreationOk();
+        }
+      });
+    }
+  };
 
   onCancel = (e) => {
-    this.setState({ title: "",amount: 0, category:"",date: null, consumption:null});
-    if(this.props.onCancel !== null)
-      this.props.onCancel();
-  }
+    this.setState({
+      title: "",
+      amount: 0,
+      category: "",
+      date: null,
+      consumption: null,
+    });
+    if (this.props.onCancel !== null) this.props.onCancel();
+  };
 
   toggleNewCategory = (e) => {
-    this.setState({newCategory:!this.state.newCategory});
-  }
-  render(){
-    return <div className="addContsumptionFormContainer">
-      <h2 id="transition-modal-title" className="addConsumptionFormTitle">
-        {(this.props.task.operation === "edit")?
-        "Editar consumo" : "Agregar consumo"}
-      </h2>
-      <form className="addContsumptionForm">
-        <div className="addConsumptionFormItem">
-          <TextField name="title" autoComplete="off"
-          className="addConsumptionField"
-          InputProps= {{ style: { fontSize:"0.9rem"}}}
-          label="Titulo"
-          value={this.state.title}
-          error={this.state.titleControl.error}
-          helperText={this.state.titleControl.helperText}
-          onChange={this.handleChange}/>
-        </div>
-        <div className="addConsumptionFormItem">
-          <TextField
-            name="amount"
-            label="Monto"
-            error={this.state.amountControl.error}
-            helperText={this.state.amountControl.helperText}
-            value={this.state.amount}
-            onChange={this.handleChange}
-            className="addConsumptionInput addConsumptionAmountField"/>
-          <TextField
+    this.setState({ newCategory: !this.state.newCategory });
+  };
+  render() {
+    return (
+      <div className="addContsumptionFormContainer">
+        <h2 id="transition-modal-title" className="addConsumptionFormTitle">
+          {this.props.task.operation === "edit"
+            ? "Editar consumo"
+            : "Agregar consumo"}
+        </h2>
+        <form className="addContsumptionForm">
+          <div className="addConsumptionFormItem">
+            <TextField
+              name="title"
+              autoComplete="off"
+              className="addConsumptionField"
+              InputProps={{ style: { fontSize: "0.9rem" } }}
+              label="Titulo"
+              value={this.state.title}
+              error={this.state.titleControl.error}
+              helperText={this.state.titleControl.helperText}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="addConsumptionFormItem">
+            <TextField
+              name="amount"
+              label="Monto"
+              error={this.state.amountControl.error}
+              helperText={this.state.amountControl.helperText}
+              value={this.state.amount}
+              onChange={this.handleChange}
+              className="addConsumptionInput addConsumptionAmountField"
+            />
+            <TextField
               id="date"
               name="date"
               label="Fecha"
@@ -193,71 +228,93 @@ export default class ConsumptionForm extends React.Component<any,any>{
               helperText={this.state.dateControl.helperText}
               value={this.state.date}
               onChange={this.handleChange}
-              InputLabelProps={{shrink: true}}
-              InputProps= {{ style: { fontSize:"0.9rem", marginLeft:'10px'} }}
+              InputLabelProps={{ shrink: true }}
+              InputProps={{ style: { fontSize: "0.9rem", marginLeft: "10px" } }}
             />
-        </div>
-        <div className="addConsumptionFormItem"><div>
-          {(!this.state.newCategory)?
-              <div>
-              <FormControl className="addConsumptionFormSelect">
-              <InputLabel htmlFor="category-select">Categoria: </InputLabel>
-              <Categories
-                value={this.state.category}
-                onChange={this.handleChange}
-                error={this.state.categoryControl.error} />
-            </FormControl>
-            <IconButton  onClick={this.toggleNewCategory} >
-              <AddButton />
-            </IconButton>
+          </div>
+          <div className="addConsumptionFormItem">
+            <div>
+              {!this.state.newCategory ? (
+                <div>
+                  <FormControl className="addConsumptionFormSelect">
+                    <InputLabel htmlFor="category-select">
+                      Categoria:{" "}
+                    </InputLabel>
+                    <Categories
+                      value={this.state.category}
+                      onChange={this.handleChange}
+                      error={this.state.categoryControl.error}
+                    />
+                  </FormControl>
+                  <IconButton onClick={this.toggleNewCategory}>
+                    <AddButton />
+                  </IconButton>
+                </div>
+              ) : (
+                <div>
+                  <TextField
+                    name="category"
+                    autoComplete="off"
+                    InputProps={{ style: { fontSize: "0.9rem" } }}
+                    label="Nueva categoria"
+                    value={this.state.category}
+                    error={this.state.categoryControl.error}
+                    helperText={this.state.categoryControl.helperText}
+                    onChange={this.handleChange}
+                  />
+                  <FormControl className="addConsumptionFormSelect">
+                    <InputLabel htmlFor="category-icon-select">
+                      Icono de categoria:{" "}
+                    </InputLabel>
+                    <CategoryIconsList
+                      value={this.state.categoryIcon}
+                      onChange={this.handleChange}
+                      error={this.state.categoryControl.error}
+                    />
+                  </FormControl>
+
+                  <IconButton color="primary" onClick={this.toggleNewCategory}>
+                    <ClearButton />
+                  </IconButton>
+                </div>
+              )}
             </div>
-            : <div>
-              <TextField name="category"
-                autoComplete="off"
-                InputProps= {{ style: { fontSize:"0.9rem"}}}
-                label="Nueva categoria"
-                value={this.state.category}
-                error={this.state.categoryControl.error}
-                helperText={this.state.categoryControl.helperText}
-                onChange={this.handleChange}/>
-            <IconButton color="primary" onClick={this.toggleNewCategory} >
-              <ClearButton />
-            </IconButton></div>}
+          </div>
+          {this.state.status === "error" ? (
+            <div className="consumptionCreationErrors">
+              {this.state.errorMessages.map((err) => {
+                return <div>{err}</div>;
+              })}
             </div>
-        </div>
-        {(this.state.status === "error")?
-        <div className="consumptionCreationErrors">
-            {this.state.errorMessages.map(err => {
-              return <div>{err}</div>
-            })}
-        </div>:null}
-        <div className="addConsumptionFormItem">
-          <Button  color="primary" onClick={this.onSubmit}>{
-            (this.props.task.operation === "edit")?
-            "Guardar":"Agregar"
-          }</Button>
-          <Button  color="primary" onClick={this.onCancel}>Cancelar</Button>
-        </div>
-      </form>
-    </div>;
+          ) : null}
+          <div className="addConsumptionFormItem">
+            <Button color="primary" onClick={this.onSubmit}>
+              {this.props.task.operation === "edit" ? "Guardar" : "Agregar"}
+            </Button>
+            <Button color="primary" onClick={this.onCancel}>
+              Cancelar
+            </Button>
+          </div>
+        </form>
+      </div>
+    );
   }
 }
 
-
-function getTodaysDate(){
+function getTodaysDate() {
   var today = new Date();
-  var dd = String(today.getDate()).padStart(2, '0');
-  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var dd = String(today.getDate()).padStart(2, "0");
+  var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
   var yyyy = today.getFullYear();
 
-  var format_today = yyyy + '-' + mm + '-' + dd;
+  var format_today = yyyy + "-" + mm + "-" + dd;
   return format_today;
 }
 
-function formatDate(year, month,day){
-  var dd = String(day).padStart(2, '0');
-  var mm = String(month).padStart(2, '0');
+function formatDate(year, month, day) {
+  var dd = String(day).padStart(2, "0");
+  var mm = String(month).padStart(2, "0");
   var yyyy = year;
-  var format_today = yyyy + '-' + mm + '-' + dd;
+  var format_today = yyyy + "-" + mm + "-" + dd;
   return format_today;
 }
