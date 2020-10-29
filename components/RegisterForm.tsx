@@ -4,7 +4,7 @@ import AuthService from "../utils/AuthService.tsx";
 import { connect } from "react-redux";
 import { TextField } from "@material-ui/core";
 import loginAction from "../redux/LoginAction.tsx";
-import { postDefaultCategories } from "../controllers/CategoriesController.tsx";
+
 const auth = new AuthService();
 
 class Register extends React.Component<any, any> {
@@ -33,7 +33,6 @@ class Register extends React.Component<any, any> {
       .then((res) => {
         if (res != undefined) {
           this.props.onLogin(res);
-          postDefaultCategories();
         } else this.setState({ error: 1 });
         console.log(res);
       })

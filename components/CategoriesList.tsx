@@ -4,6 +4,7 @@ import { fetchCategories } from "../controllers/CategoriesController.tsx";
 import CategoryButton from "../components/CategoryButton";
 import CategoryIcons from "../utils/CategoryIcons.js";
 import { getCategoryIcon } from "../controllers/CategoriesController";
+import { postDefaultCategories } from "../controllers/CategoriesController.tsx";
 
 export default class CategoriesList extends React.Component<any, any> {
   constructor(props) {
@@ -12,8 +13,7 @@ export default class CategoriesList extends React.Component<any, any> {
   }
 
   componentDidMount() {
-    console.log("Me esto montanto papa");
-    this.refreshCategoriesList();
+    postDefaultCategories().then(this.refreshCategoriesList());
   }
 
   addColor(category) {

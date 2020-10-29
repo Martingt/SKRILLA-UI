@@ -23,7 +23,7 @@ export async function postCategory(data) {
 export async function postDefaultCategories() {
   let token = getAuthToken();
   for (let index = 0; index < defaultCategories.length; ++index) {
-    await fetch("https://localhost:5001/categories", {
+    fetch("https://localhost:5001/categories", {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
