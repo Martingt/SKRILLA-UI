@@ -7,6 +7,7 @@ import CategoryPieChart from "../components/CategoryPieChart";
 import TotalPerMonthBar from "../components/TotalPerMonthBar";
 import BudgetCategoryList from "../components/budget/BudgetCategoryList";
 import BudgetSummary from "../components/budget/BudgetSummary";
+import BudgetNavigator from "../components/budget/BudgetNavigator";
 import { connect } from "react-redux";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -17,6 +18,7 @@ import {
   fetchBudget,
   fetchBudgetSummary,
   putCategoryBudget,
+  fetchBudgetList
 } from "../controllers/BudgetController.tsx";
 import { fetchCategories } from "../controllers/CategoriesController.tsx";
 import SideBar from "../components/SideBar";
@@ -36,22 +38,10 @@ class BudgetView extends React.Component<any, any> {
 
   componentDidMount() {
     if (this.props.token !== null) {
-      this.fetchBudgetSummary();
+      this.fetchBudgetList();
+      this.fetchAndSetBudget();
     }
   }
-
-  fetchBudgetSummary = () => {
-    fetchBudgetSummary()
-      .then((result) => {
-        this.setState({
-          ...this.state,
-          budget: result.amount,
-          totalSpent: result.totalSpent,
-          budgetsByCategory: result.categoryItems,
-        });
-      })
-      .catch((error) => console.log("error", error));
-  };
 
   updateCategoryBudget = (categoryId, amount) => {
     let data = { category: categoryId, amount: parseFloat(amount) };
@@ -76,6 +66,27 @@ class BudgetView extends React.Component<any, any> {
     this.toggleNewBudgetForm();
   };
 
+  fetchAndSetBudget = (budgetId) => {
+    fetchBudgetSummary(budgetId)
+      .then((result) => {
+        this.setState({
+          ...this.state,
+          budget: result.amount,
+          totalSpent: result.totalSpent,
+          budgetsByCategory: result.categoryItems,
+        });
+      })
+      .catch((error) => console.log("error", error));
+  }
+
+  fetchBudgetList = () => {
+    fetchBudgetList()
+    .then((result)=> {
+      this.setSate({budgetList: result});
+    })
+    .catch((error) => console.log("error", error));
+  }
+
   render() {
     return (
       <div id="content">
@@ -84,6 +95,10 @@ class BudgetView extends React.Component<any, any> {
           <div className="mainContainerContent">
             <div className="budgetToolbar">
               <h1 className="containerTopBarTitle">Presupuesto</h1>
+              <BudgetNavigator budgets={ [
+                {id:1, startDate: {year:2020, month:10, day:4}, endDate: '10/06/2020'},
+                {id:2, startDate: {year:2020, month:5, day:4}, endDate: '10/09/2020'}
+              ]} onChange={this.fetchAndSetBudget}/>
               <div className="budgetToolbarContainer">
                 <div
                   className="createBudgetButton"

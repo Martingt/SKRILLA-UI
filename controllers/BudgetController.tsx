@@ -37,6 +37,24 @@ export async function fetchBudgetSummary() {
   return response.json();
 }
 
+export async function fetchBudgetList() {
+  let token = authService.getToken();
+
+  const response = await fetch("https://localhost:5001/budget/list", {
+    method: "GET",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+  });
+  return response.json();
+}
+
 export async function postBudget(data) {
   let token = authService.getToken();
 
