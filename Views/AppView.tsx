@@ -23,7 +23,6 @@ class AppView extends React.Component<any, any> {
 
   componentDidMount(){
     this.props.login(authService.getToken());
-    console.log(this.props.router);
   }
 
 

@@ -7,6 +7,7 @@ import SideBar from "../components/SideBar";
 import CategoriesList from "../components/CategoriesList";
 import CategoryPieChart from "../components/CategoryPieChart";
 import TotalPerMonthBar from "../components/TotalPerMonthBar";
+import BudgetPieChart from "../components/BudgetBar";
 import { connect } from "react-redux";
 import consumptions from "pages/consumptions";
 
@@ -24,7 +25,16 @@ class CategoryView extends React.Component<any, any> {
           <SideBar />
           <div className="mainContainerContent">
             <h1 className="containerTopBarTitle">Categorias</h1>
-
+            <div
+              style={{
+                display: "inline-block",
+                flex: 1,
+                justifyContent: "center",
+                fontSize: 10,
+              }}
+            >
+              <CategoriesList />
+            </div>
             <div className="dashboard">
               <div
                 style={{ display: "flex", flex: 1, justifyContent: "center" }}
@@ -37,17 +47,20 @@ class CategoryView extends React.Component<any, any> {
                 <TotalPerMonthBar />
               </div>
             </div>
-
-            <div
-              style={{
-                display: "inline-block",
-                flex: 1,
-                justifyContent: "center",
-                fontSize: 10,
-              }}
-            >
-              <CategoriesList />
+            <div className="dashboard">
+              <div
+                  style={{ display: "flex", flex: 1, justifyContent: "center" }}
+                >
+                  <div style={{height:300, width:300}}></div>
+              </div>
+              <div
+                  style={{ display: "flex", flex: 1, justifyContent: "center" }}
+                >
+                  <BudgetPieChart />
+              </div>
+            
             </div>
+            
           </div>
         </div>
       </div>
