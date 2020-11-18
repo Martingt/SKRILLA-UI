@@ -39,16 +39,16 @@ class BudgetView extends React.Component<any, any> {
 
   componentDidMount() {
     if (this.props.token !== null) {
-      this.initializeBudgetList();
+      this.initializeBudgetView();
     }
   }
 
   updateCategoryBudget = (categoryId, amount) => {
-    let data = { category: categoryId, amount: parseFloat(amount) };
+    let data = { budetId: this.state.budgetId, category: categoryId, amount: parseFloat(amount) };
 
     putCategoryBudget(data)
       .then((result) => {
-        this.fetchBudgetSummary();
+        this.initializeBudgetView();
       })
       .catch((error) => console.log("error", error));
   };
@@ -56,6 +56,7 @@ class BudgetView extends React.Component<any, any> {
   toggleNewBudgetForm = () => {
     this.setState({ newBudgetFormActive: !this.state.newBudgetFormActive });
   };
+
 
   handleNewBudgetTaskFinished = (id) => {
     fetchBudgetList()
@@ -103,11 +104,10 @@ class BudgetView extends React.Component<any, any> {
   }
 
   fetchAndSetBudget = (budgetId) => {
-    console.log(budgetId)
     fetchBudgetSummary(budgetId)
       .then((result) => {
         this.setState({
-          ...this.state,
+          budgetId: result.budgetId,
           budget: result.amount,
           totalSpent: result.totalSpent,
           budgetsByCategory: result.categoryItems,
@@ -116,7 +116,7 @@ class BudgetView extends React.Component<any, any> {
       .catch((error) => console.log("error", error));
   }
 
-  initializeBudgetList = () => {
+  initializeBudgetView = () => {
     fetchBudgetList()
     .then((result)=> {
       console.log(result);

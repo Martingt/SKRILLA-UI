@@ -99,6 +99,8 @@ class NewBudgetForm extends React.Component<any, any> {
       budgetItems: []
     };
 
+    this.setState({errorMessages:[]});
+
     postBudget(payload).then((res) => {
       console.log(res);
       if (res.result == "error") {
