@@ -28,6 +28,7 @@ class BudgetView extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
+      budgetId: null,
       budgetsByCategory: [],
       budget: 0,
       totalSpent: 0,
@@ -44,7 +45,7 @@ class BudgetView extends React.Component<any, any> {
   }
 
   updateCategoryBudget = (categoryId, amount) => {
-    let data = { budetId: this.state.budgetId, category: categoryId, amount: parseFloat(amount) };
+    let data = { budgetId: this.state.budgetId, category: categoryId, amount: parseFloat(amount) };
 
     putCategoryBudget(data)
       .then((result) => {
