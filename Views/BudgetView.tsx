@@ -31,6 +31,7 @@ class BudgetView extends React.Component<any, any> {
       budgetsByCategory: [],
       budget: 0,
       totalSpent: 0,
+      noBudgets: false,
       newBudgetFormActive: false,
       budgetList: [{startDate:{}, endDate: {}}]
     };
@@ -56,8 +57,14 @@ class BudgetView extends React.Component<any, any> {
     this.setState({ newBudgetFormActive: !this.state.newBudgetFormActive });
   };
 
-  handleNewBudgetTaskFinished = () => {
-    this.fetchBudgetSummary();
+  handleNewBudgetTaskFinished = (id) => {
+    fetchBudgetList()
+    .then((result)=> {
+      this.setState({budgetList: result.sort(budgetComparator), noBudgets: false});
+    })
+    .catch((error) => console.log("error", error));
+
+    this.fetchAndSetBudget(id);
     this.setState({ newBudgetFormActive: !this.state.newBudgetFormActive });
   };
 
@@ -112,7 +119,12 @@ class BudgetView extends React.Component<any, any> {
   initializeBudgetList = () => {
     fetchBudgetList()
     .then((result)=> {
-      this.setState({budgetList: result.sort(budgetComparator)});
+      console.log(result);
+      if (result.code == "no_content"){
+        this.setState({noBudgets: true})
+        return;
+      }
+      this.setState({budgetList: result.sort(budgetComparator), noBudgets: false});
       this.fetchAndSetBudget(this.getCurrentBudget().budgetId);
     })
     .catch((error) => console.log("error", error));
@@ -126,9 +138,9 @@ class BudgetView extends React.Component<any, any> {
           <div className="mainContainerContent">
             <div className="budgetToolbar">
               <h1 className="containerTopBarTitle">Presupuesto</h1>
-              <BudgetNavigator
+              {!(this.state.noBudgets)? <BudgetNavigator
                 budgets={this.state.budgetList}
-                onChange={this.fetchAndSetBudget}/>
+                onChange={this.fetchAndSetBudget}/> : null}
               <div className="budgetToolbarContainer">
                 <div
                   className="createBudgetButton"
@@ -138,17 +150,20 @@ class BudgetView extends React.Component<any, any> {
                 </div>
               </div>
             </div>
-            <div className="budgetSubtitle">Resumen</div>
-            <BudgetSummary
-              budget={this.state.budget}
-              spent={this.state.totalSpent}
-            />
-            <div className="budgetSubtitle">Presupuesto por categoria</div>
-            <BudgetCategoryList
-              className="budgetCategoryList"
-              budgetItems={this.state.budgetsByCategory}
-              updateCategoryBudget={this.updateCategoryBudget}
-            />
+            {(this.state.noBudgets)?
+              <div className="noBudgetsWarning">No tienes presupuestos aun.</div>:
+            <div><div className="budgetSubtitle">Resumen</div>
+              <BudgetSummary
+                budget={this.state.budget}
+                spent={this.state.totalSpent}
+              />
+              <div className="budgetSubtitle">Presupuesto por categoria</div>
+              <BudgetCategoryList
+                className="budgetCategoryList"
+                budgetItems={this.state.budgetsByCategory}
+                updateCategoryBudget={this.updateCategoryBudget}
+              /></div>
+          }
           </div>
         </div>
         <Modal

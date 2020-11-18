@@ -17,15 +17,9 @@ class NewBudgetForm extends React.Component<any, any> {
       errorMessages: [],
       startDate: getTodaysDate(),
       endDate: getTodaysDate(),
-      budget: 0,
-      budgetControl: { error: false, helperText: "" },
-      startDateControl: { error: false, helperText: "" },
-      endDateControl: { error: false, helperText: "" },
+      budget: 0
     };
   }
-  handleFormSubmit = (e) => {
-    e.preventDefault();
-  };
 
   onCancel = (e) => {
     this.props.onCancel();
@@ -38,80 +32,86 @@ class NewBudgetForm extends React.Component<any, any> {
   };
 
   formIsValid() {
-    var error = true;
+    var valid = true;
 
     let payload = {
+      status: "ok",
       startDate: this.state.startDate,
       endDate: this.state.endDate,
       budget: this.state.budget,
     };
 
     if (payload.budget == null || isNaN(payload.budget) || payload.budget < 0) {
-      this.setState({
-        budgetControl: {
-          error: true,
-          helperText: "Se debe especificar un presupuesto numerico positivo.",
-        },
-      });
-
-      error = false;
+      this.addErrorMessage("Se debe especificar un presupuesto numerico positivo.");
+      valid = false;
     } else {
-      this.setState({
-        budgetControl: {
-          error: false,
-          helperText: "Se debe especificar un presupuesto positivo.",
-        },
-      });
+      this.removeErrorMessage("Se debe especificar un presupuesto numerico positivo.");
     }
+
     if (payload.startDate == null) {
-      this.setState({
-        startDateControl: { error: true, helperText: "Fecha invalida." },
-      });
-
-      error = false;
+      his.addErrorMessage("Se debe especificar una fecha de comienzo.");
+      valid = false;
     } else {
-      this.setState({
-        startDateControl: { error: false, helperText: "Fecha invalida." },
-      });
+      this.removeErrorMessage("Se debe especificar una fecha de comienzo.");
     }
 
-    if (payload.endDate == null) {
-      this.setState({
-        endDateControl: { error: true, helperText: "Fecha invalida." },
-      });
-
-      error = false;
+    if (payload.startDate == null) {
+      this.addErrorMessage("Se debe especificar una fecha de finalizacion.");
+      valid = false;
     } else {
-      this.setState({
-        endDateControl: { error: false, helperText: "Fecha invalida." },
-      });
+      this.removeErrorMessage("Se debe especificar una fecha de finalizacion.");
     }
-    return error;
+    if(!valid) {
+      this.setState({status:"error"})
+    }
+    return valid;
+  }
+
+  addErrorMessage = (message) =>{
+    let index = this.state.errorMessages.indexOf(message);
+    let errors = this.state.errorMessages
+    if(index == -1){
+      errors.push(message);
+    }
+    this.setState({errorMessages: errors});
+  }
+
+  removeErrorMessage = (message) => {
+    let index = this.state.errorMessages.indexOf(message);
+    if(index != -1){
+      this.state.errorMessages.splice(index, 1);
+    }
+    this.setState({errorMessages: this.state.errorMessages});
   }
 
   onSubmit = (e) => {
     e.preventDefault();
-    var error = false;
-    let errorMessages = this.state.errorMessages;
-    let payload = {
-      startDate: this.state.startDate,
-      endDate: this.state.endDate,
-      amount: parseFloat(this.state.budget),
-    };
+
 
     if (!this.formIsValid()) {
       return;
     }
 
+    let payload = {
+      startDate: this.state.startDate,
+      endDate: this.state.endDate,
+      amount: parseFloat(this.state.budget),
+      budgetItems: []
+    };
+
     postBudget(payload).then((res) => {
       console.log(res);
       if (res.result == "error") {
         this.setState({ status: "error", errorMessages: res.messages });
+      } else if(res.code == "conflict"){
+        this.addErrorMessage(res.message);
+        this.setState({ status: "error"});
       } else {
-        this.props.onCreationOk();
+        this.props.onCreationOk(res.BudgetId);
       }
     });
   };
+
   render() {
     return (
       <div className="budgetFormContainer">
@@ -122,8 +122,6 @@ class NewBudgetForm extends React.Component<any, any> {
             name="startDate"
             label="Fecha de comienzo"
             type="date"
-            error={this.state.startDateControl.error}
-            helperText={this.state.startDateControl.helperText}
             value={this.state.startDate}
             onChange={this.handleChange}
             InputLabelProps={{ shrink: true }}
@@ -134,8 +132,6 @@ class NewBudgetForm extends React.Component<any, any> {
             name="endDate"
             label="Fecha de finalizacion"
             type="date"
-            error={this.state.endDateControl.error}
-            helperText={this.state.endDateControl.helperText}
             value={this.state.endDate}
             onChange={this.handleChange}
             InputLabelProps={{ shrink: true }}
@@ -144,8 +140,6 @@ class NewBudgetForm extends React.Component<any, any> {
           <TextField
             name="budget"
             label="Presupuesto"
-            error={this.state.budgetControl.error}
-            helperText={this.state.budgetControl.helperText}
             value={this.state.budget}
             onChange={this.handleChange}
             className="addConsumptionInput addConsumptionAmountField"
