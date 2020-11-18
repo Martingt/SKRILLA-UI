@@ -1,0 +1,30 @@
+.budgetNavigator {
+  display: flex;
+  padding: 10px;
+  align-items: center;
+}
+.navLeftDiv {
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  opacity:0.3;
+  cursor:pointer;
+}
+.navContent {
+  display:flex;
+  align-items: center;
+}
+.navRightDiv {
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  opacity:0.3;
+  cursor:pointer;
+}
+.navRightDiv:hover {
+  opacity: 1;
+}
+.navLeftDiv:hover {
+  opacity:1;
+
+}
