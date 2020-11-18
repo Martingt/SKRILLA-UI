@@ -41,7 +41,6 @@ export default class CategoryPieChart extends React.Component<any, any>  {
   }
   render(){
     const {hoveredCell} = this.state;
-    console.log(this.state.totalpermonth.length)
     if(this.state.totalpermonth.length > 0){
       return  <div className="content">
           <div className="titleChart">
