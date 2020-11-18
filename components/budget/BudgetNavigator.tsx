@@ -9,48 +9,44 @@ class BudgetNavigator extends React.Component<any, any>  {
   constructor(props) {
     super(props);
     this.state = {
-      currentlyShownBudget: 0,
-      budgets: [{id:null, startDate:{}, endDate:null}]
+      currentlyShownBudget: 0
     }
   }
 
   componentDidMount() {
-    var budgets = this.props.budgets;
-    console.log(budgets);
-    budgets = budgets.sort(budgetComparator);
-    console.log("hola")
-    console.log(budgets);
-    this.setState({budgets:budgets, currentShown: this.props.defaultBudget});
   }
+
 
   handleClickPrevious = () => {
     let index=this.state.currentlyShownBudget;
+    console.log(index);
     if (index> 0){
       this.setState({currentlyShownBudget: index-1});
-      this.props.onChange(this.state.budgets[index-1]);
+      this.props.onChange(this.props.budgets[index-1].budgetId);
     }
     return;
   }
 
   handleClickNext = () => {
     let index=this.state.currentlyShownBudget;
-    if (index+1 < this.state.budgets.length){
+    console.log(index);
+    if (index+1 < this.props.budgets.length){
       this.setState({currentlyShownBudget: index+1});
-      this.props.onChange(this.state.budgets[index+1]);
+      this.props.onChange(this.props.budgets[index+1].budgetId);
     }
     return;
   }
 
 
   render(){
-    let startDate = this.state.budgets[this.state.currentlyShownBudget].startDate;
-    let endDate = this.state.budgets[this.state.currentlyShownBudget].endDate;
+    let startDate = this.props.budgets[this.state.currentlyShownBudget].startDate;
+    let endDate = this.props.budgets[this.state.currentlyShownBudget].endDate;
 
     return <div className="budgetNavigator">
     <div className="navLeftDiv" onClick={this.handleClickPrevious}><BackArrow /></div>
     <div className="navContent" >
       {formatDate(startDate.year, startDate.month, startDate.day)}
-      -{endDate}
+      -{formatDate(endDate.year, endDate.month, endDate.day)}
     </div>
     <div className="navRightDiv" onClick={this.handleClickNext}><NextArrow /></div>
     </div>;
@@ -58,20 +54,7 @@ class BudgetNavigator extends React.Component<any, any>  {
 }
 export default BudgetNavigator;
 
-function budgetComparator(a,b){
-  let dateA = new Date(a.startDate.year, a.startDate.month, a.startDate.day, 0, 0,0,0);
-  let dateB = new Date(b.startDate.year, b.startDate.month, b.startDate.day, 0, 0,0,0);
-  if(dateA < dateB){
-    return -1;
-  }
-  else if (dateA > dateB){
-    return 1;
-  }
-  else {
-    return 0;
-  }
 
-}
 
 function formatDate(year, month, day) {
   var dd = String(day).padStart(2, "0");

@@ -15,7 +15,6 @@ import Fade from "@material-ui/core/Fade";
 import NewBudgetForm from "../components/budget/NewBudgetForm.tsx";
 import consumptions from "pages/consumptions";
 import {
-  fetchBudget,
   fetchBudgetSummary,
   putCategoryBudget,
   fetchBudgetList
@@ -33,13 +32,13 @@ class BudgetView extends React.Component<any, any> {
       budget: 0,
       totalSpent: 0,
       newBudgetFormActive: false,
+      budgetList: [{startDate:{}, endDate: {}}]
     };
   }
 
   componentDidMount() {
     if (this.props.token !== null) {
-      this.fetchBudgetList();
-      this.fetchAndSetBudget();
+      this.initializeBudgetList();
     }
   }
 
@@ -66,7 +65,38 @@ class BudgetView extends React.Component<any, any> {
     this.toggleNewBudgetForm();
   };
 
+  getCurrentBudget = () => {
+
+    var today = new Date();
+    var todayTime = today.getTime();
+    var i = 0;
+    var index = 0;
+    var aux = null;
+    var closeDate = new Date(this.state.budgetList[0].startDate.year,
+                    this.state.budgetList[0].startDate.month,
+                    this.state.budgetList[0].startDate.day, 0,0,0,0);
+    console.log(this.state.budgetList[0])
+
+    while(i < this.state.budgetList.length){
+      aux = new Date(this.state.budgetList[i].year,
+        this.state.budgetList[i].month,
+        this.state.budgetList[i].day, 0,0,0,0);
+
+      if(todayTime-aux.getTime() <= todayTime-closeDate.getTime() &&
+          todayTime-aux.getTime() >= 0){
+        closeDate = aux;
+        index = i;
+      }
+      console.log("ttime:" +todayTime);
+      console.log("ctime:" +closeDate.getTime());
+      i=i+1;
+    }
+
+    return this.state.budgetList[index];
+  }
+
   fetchAndSetBudget = (budgetId) => {
+    console.log(budgetId)
     fetchBudgetSummary(budgetId)
       .then((result) => {
         this.setState({
@@ -79,10 +109,11 @@ class BudgetView extends React.Component<any, any> {
       .catch((error) => console.log("error", error));
   }
 
-  fetchBudgetList = () => {
+  initializeBudgetList = () => {
     fetchBudgetList()
     .then((result)=> {
-      this.setSate({budgetList: result});
+      this.setState({budgetList: result.sort(budgetComparator)});
+      this.fetchAndSetBudget(this.getCurrentBudget().budgetId);
     })
     .catch((error) => console.log("error", error));
   }
@@ -95,10 +126,9 @@ class BudgetView extends React.Component<any, any> {
           <div className="mainContainerContent">
             <div className="budgetToolbar">
               <h1 className="containerTopBarTitle">Presupuesto</h1>
-              <BudgetNavigator budgets={ [
-                {id:1, startDate: {year:2020, month:10, day:4}, endDate: '10/06/2020'},
-                {id:2, startDate: {year:2020, month:5, day:4}, endDate: '10/09/2020'}
-              ]} onChange={this.fetchAndSetBudget}/>
+              <BudgetNavigator
+                budgets={this.state.budgetList}
+                onChange={this.fetchAndSetBudget}/>
               <div className="budgetToolbarContainer">
                 <div
                   className="createBudgetButton"
@@ -147,3 +177,18 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, null)(BudgetView);
+
+function budgetComparator(a,b){
+  let dateA = new Date(a.startDate.year, a.startDate.month, a.startDate.day, 0, 0,0,0);
+  let dateB = new Date(b.startDate.year, b.startDate.month, b.startDate.day, 0, 0,0,0);
+  if(dateA < dateB){
+    return -1;
+  }
+  else if (dateA > dateB){
+    return 1;
+  }
+  else {
+    return 0;
+  }
+
+}

@@ -19,10 +19,13 @@ export async function fetchBudget() {
   return response.json();
 }
 
-export async function fetchBudgetSummary() {
+export async function fetchBudgetSummary(budgetId) {
   let token = authService.getToken();
-
-  const response = await fetch("https://localhost:5001/budget/summary", {
+  let url = "https://localhost:5001/budget/summary";
+  if(budgetId !== null && budgetId !== undefined && !isNaN(budgetId)){
+    url = url + "/" + budgetId;
+  }
+  const response = await fetch(url, {
     method: "GET",
     mode: "cors",
     cache: "no-cache",
