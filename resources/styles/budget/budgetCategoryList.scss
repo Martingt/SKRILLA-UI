@@ -7,3 +7,26 @@
 .finishBudgetEditionOnTable{
   height:50%;
 }
+.confirmUpdateModal {
+  display:flex;
+  flex:1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.confirmUpdateModalContent{
+  padding: 25px;
+  border: 1px solid black;
+  background: white;
+  font-family: "Quicksand";
+  width: 40%;
+}
+.modalInnerParagraph{
+  padding:5px;
+}
+
+.modalOptions {
+  display:flex;
+  justify-content: space-between;
+  margin-top:20px;
+}

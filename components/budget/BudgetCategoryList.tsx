@@ -17,6 +17,9 @@ import DoneIcon from '@material-ui/icons/Done';
 import EditIcon from '@material-ui/icons/EditOutlined';
 import Button from '@material-ui/core/Button';
 import TextField from "@material-ui/core/TextField";
+import Modal from "@material-ui/core/Modal";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
 import '../../resources/styles/budget/budgetCategoryList.scss';
 
 export default class BudgetCategoryList extends React.Component<any, any>  {
@@ -27,7 +30,9 @@ export default class BudgetCategoryList extends React.Component<any, any>  {
       token: null,
       currentlyExpandedRow: null,
       rowCurrentlyInEdition: null,
-      budgetOnEditionValue:""
+      budgetOnEditionValue:"",
+      operationModalVisible: false,
+      operationData: {}
     }
   }
 
@@ -107,6 +112,19 @@ export default class BudgetCategoryList extends React.Component<any, any>  {
     this.setState({budgetOnEditionValue: e.target.value})
   }
 
+  handleUpdateCancelation = () => {
+    this.setState({operationModalVisible:false,
+      operationData:null,
+      rowCurrentlyInEdition:null,
+      budgetOnEditionValue:""});
+  }
+
+  handleUpdateRetry = () => {
+    this.setState({operationModalVisible:false,
+      operationData:null});
+  }
+
+
   calculateProportion(spent, budget){
     return (budget == -1)? "-": Math.round(spent/budget*100)+"%"
   }
@@ -115,15 +133,40 @@ export default class BudgetCategoryList extends React.Component<any, any>  {
     return (spent/budget > 1)? "red":"#05a025"
   }
 
+  forceBudgetUpdate = () => {
+      this.finishBudgetEditionOnTable(null, true);
+      this.setState({operationModalVisible:false,
+        operationData:null,
+        rowCurrentlyInEdition:null,
+        budgetOnEditionValue:""});
+    
+  }
 
-  finishBudgetEditionOnTable = (event) => {
-    event.preventDefault();
+  finishBudgetEditionOnTable = (event, forced) => {
+    if(event!=null){
+      event.preventDefault();
+    }
+    if(forced == null){
+      forced = false;
+    }
+
     let data = {id: this.state.rowCurrentlyInEdition,
       budget: this.state.budgetOnEditionValue}
 
-    this.setState({rowCurrentlyInEdition:null, budgetOnEditionValue:""},() =>{
-      this.props.updateCategoryBudget(data.id, data.budget);
-    })
+
+    this.props.updateCategoryBudget(data.id, data.budget, forced).then(result =>
+    {
+      console.log("hola");
+      console.log(result);
+
+      if(result == "success"){
+        this.setState({rowCurrentlyInEdition:null, budgetOnEditionValue:""});
+      }
+      else if (result == "budget_overflow") {
+        this.setState({operationModalVisible:true, operationData: data });
+      }
+    });
+
 
 
   }
@@ -185,7 +228,46 @@ export default class BudgetCategoryList extends React.Component<any, any>  {
                 )} )}
             </TableBody>
           </Table>
-        </TableContainer></div>);
+        </TableContainer>
+        <Modal
+          aria-labelledby="Presupuesto superado"
+          open={this.state.operationModalVisible}
+          onClose={this.handleUpdateCancelation}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{ timeout: 500 }}
+          className="confirmUpdateModal"
+        >
+          <Fade in={this.state.operationModalVisible}>
+            <div className="confirmUpdateModalContent">
+            <h2>Prespuesto total superado</h2>
+            <p className="modalInnerParagraph">Aumentar el presupuesto en el monto indicado para esta categoria implica superar el presupuesto total.</p>
+            <p className="modalInnerParagraph">Desea ingresar un monto nuevamente o actualizar el presupuesto total?</p>
+            <div className="modalOptions">
+            <Button
+              className="newBudgetButton"
+              color="primary"
+              variant="outlined"
+              onClick={this.handleUpdateRetry}
+              disableElevation
+              size="medium"
+            >
+              Ingresar nuevamente
+            </Button>
+            <Button
+              variant="outlined"
+              className="newBudgetButton"
+              color="primary"
+              onClick={this.forceBudgetUpdate}
+              size="medium"
+              disableElevation
+            >
+              Actualizar presupuesto
+            </Button>
+            </div>
+            </div>
+          </Fade>
+        </Modal></div>);
   }
 
 }

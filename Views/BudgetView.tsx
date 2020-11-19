@@ -27,6 +27,7 @@ const authService = new AuthService();
 class BudgetView extends React.Component<any, any> {
   constructor(props) {
     super(props);
+    this.updateCategoryBudget = this.updateCategoryBudget.bind(this);
     this.state = {
       budgetId: null,
       budgetsByCategory: [],
@@ -44,14 +45,26 @@ class BudgetView extends React.Component<any, any> {
     }
   }
 
-  updateCategoryBudget = (categoryId, amount) => {
-    let data = { budgetId: this.state.budgetId, category: categoryId, amount: parseFloat(amount) };
+  async updateCategoryBudget(categoryId, amount, force){
+    let data = {
+      budgetId: this.state.budgetId,
+      category: categoryId,
+      amount: parseFloat(amount),
+      forceRequest: force};
 
-    putCategoryBudget(data)
-      .then((result) => {
-        this.initializeBudgetView();
-      })
-      .catch((error) => console.log("error", error));
+    var status = await putCategoryBudget(data)
+          .then((result) => {
+              if(result.code == "success"){
+                  this.initializeBudgetView();
+                  return "success";
+              }
+              else if(result.code == "budget_overflow"){
+                  return "budget_overflow";
+              }
+          })
+          .catch((error) => console.log("error", error));
+      console.log(status);
+      return status;
   };
 
   toggleNewBudgetForm = () => {

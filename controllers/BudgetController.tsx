@@ -93,6 +93,6 @@ export async function putCategoryBudget(data) {
     referrerPolicy: "no-referrer",
     body: JSON.stringify(data),
   }).catch((error) => console.log("error", error));
-
+  
   return response.json();
 }
