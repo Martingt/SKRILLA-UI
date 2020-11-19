@@ -18,6 +18,23 @@ export async function fetchConsumptions(category){
 
   return fetch(fetchURL, requestOptions).then(response => response.json());
 }
+export async function fetchConsumptionsPeriod(initial_date, end_date){
+  var myHeaders = new Headers();
+  var fetchURL = "https://localhost:5001/consumptions/date";
+
+  if(initial_date != undefined && initial_date != "" && end_date != undefined && end_date != ""){
+      fetchURL += "?initial_date="+initial_date+"&end_date="+end_date;
+  }
+  myHeaders.append("Authorization", "Bearer " + authService.getToken());
+
+  let requestOptions: RequestInit = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+
+  return fetch(fetchURL, requestOptions).then(response => response.json());
+}
 
 export  async function postConsumption(data) {
     let token = authService.getToken();
