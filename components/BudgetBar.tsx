@@ -65,43 +65,7 @@ export default class BudgetPieChart extends React.Component<any, any>  {
   handleChange(event) {
       event.target.name == 'month'? this.setState({[event.target.name]: event.target.value}, ()=>this.fetchData())
       : event.target.name == 'year'? this.setState({[event.target.name]: event.target.value}, ()=>this.fetchData())
-      : this.checkboxChanges(event)
-  }
-  checkboxChanges(e){
-    var category = this.state.category;
-    for(const i in category){
-      if(category[i].name == e.target.value){
-        if(category[i].check == true){
-          category[i].check = false;
-          this.deletebudgetItems(e);
-        }
-        else{
-          category[i].check = true;
-          this.addbudgetItems(e);
-        }
-      }
-    }
-  }
-  deletebudgetItems(e){
-    var budgetItems = this.state.budgetItems
-    for(const i in budgetItems){
-      if (budgetItems[i].category.name == e.target.value){
-        this.state.disablecats.push({budgetItems: budgetItems[i],index: i})
-        budgetItems.splice(i,1);
-        this.setState({...this.state,budgetItems: budgetItems})
-      }
-    }
-  }
-  addbudgetItems(e){
-    var budgetItems = this.state.budgetItems
-    var disablecats = this.state.disablecats
-    for( const i in disablecats){
-      if(this.state.disablecats[i].budgetItems.category.name==e.target.value){
-        budgetItems.splice(disablecats[i].index,0,disablecats[i].budgetItems);
-        disablecats.splice(i,1);
-        this.setState({...this.state,budgetItems: budgetItems})
-      }
-    }
+      : ""
   }
   tooltipData(cell){
       for(const i in this.state.budgetItems){
@@ -138,7 +102,7 @@ export default class BudgetPieChart extends React.Component<any, any>  {
             <XYPlot 
                 xType="ordinal"
                 width={450}
-                height={350}
+                height={250}
                 margin={{left: 75, right: 20}}
                 stackBy="y">
             <VerticalGridLines />
@@ -157,7 +121,7 @@ export default class BudgetPieChart extends React.Component<any, any>  {
               <Hint 
                 value={buildValue(hoveredCell)}
                 align={{vertical: 'top', horizontal: 'left'}}>
-                <div style={{marginRight: 80, marginTop: -300, backgroundColor: 'black', opacity: 0.75, width: 100}}>
+                <div style={{marginRight: 80, marginTop: -250, backgroundColor: 'black', opacity: 0.75, width: 100}}>
                   <h3 style={{color: 'white',textAlign: 'center'}}>Avance</h3>
                   <p style={{color:'white', justifyContent: 'center', flex: 1, display:'flex'}}>{this.tooltipData(hoveredCell)}</p>
                 </div>

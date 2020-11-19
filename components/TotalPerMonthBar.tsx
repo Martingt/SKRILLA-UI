@@ -49,7 +49,7 @@ export default class CategoryPieChart extends React.Component<any, any>  {
           <div className="barChart">
           <XYPlot
               width={450}
-              height={350}
+              height={300}
               xType="ordinal"
               margin={{left: 75}}
               >
@@ -67,7 +67,7 @@ export default class CategoryPieChart extends React.Component<any, any>  {
               <Hint 
                 value={buildValue(hoveredCell)}
                 align={{vertical: 'top', horizontal: 'left'}}>
-                <div style={{marginRight: 80, marginTop: -300, backgroundColor: 'black', opacity: 0.75, width: 100}}>
+                <div style={{marginRight: 80, marginTop: -250, backgroundColor: 'black', opacity: 0.75, width: 100}}>
                   <h3 style={{color: 'white',textAlign: 'center'}}>Monto</h3>
                   <NumberFormat style={{color:'white', justifyContent: 'center', flex: 1, display:'flex'}} value={buildValue(hoveredCell).monto} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                 </div>

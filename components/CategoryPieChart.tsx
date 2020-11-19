@@ -120,9 +120,9 @@ export default class CategoryPieChart extends React.Component<any, any>  {
             <RadialChart
               data={this.createDataChart()}
               width={300}
-              height={300}
+              height={250}
               showLabels={true}
-              radius = {133}
+              radius = {120}
               
               />
           </div>

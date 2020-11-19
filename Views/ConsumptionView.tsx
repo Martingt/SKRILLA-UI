@@ -13,12 +13,16 @@ import DeleteConfirmation from "../components/DeleteConfirmation";
 import RegisterForm from "../components/RegisterForm";
 import TopBar from "../components/TopBar";
 import TextField from "@material-ui/core/TextField";
+import MenuItem from '@material-ui/core/MenuItem';
 import CategoriesList from "../components/CategoriesList";
 import {
   fetchConsumptions,
   deleteConsumption,
 } from "../controllers/ConsumptionsController.tsx";
-import { RadialChart } from "react-vis";
+import {
+  fetchCategories
+} from "../controllers/CategoriesController.tsx";
+import Select from '@material-ui/core/Select';
 import { connect } from "react-redux";
 import SideBar from "../components/SideBar";
 
@@ -30,6 +34,7 @@ class ConsumptionView extends React.Component<any, any> {
     this.state = {
       consumptions: [],
       consumptionItemTask: false,
+      categories: [],
       task: null,
     };
   }
@@ -41,6 +46,12 @@ class ConsumptionView extends React.Component<any, any> {
           this.setState({ ...this.state, consumptions: result });
         })
         .catch((error) => console.log("error", error));
+      fetchCategories()
+        .then((result) => {
+          this.setState({...this.state, categories: result});
+        })
+        .catch((error) => console.log("error", error));
+      
     }
   }
 
@@ -115,7 +126,6 @@ class ConsumptionView extends React.Component<any, any> {
         .catch((error) => console.log("error", error));
     }
   };
-
   render() {
     return (
       <div id="content">
@@ -125,13 +135,13 @@ class ConsumptionView extends React.Component<any, any> {
             <h1 className="containerTopBarTitle">Consumos</h1>
             <div className="containerToolbar">
               <div className="topBarFilters">
-                <TextField
-                  size="small"
-                  name="category"
-                  label="Busca por categoria"
-                  onChange={this.filterByCategory}
-                  className="categoryFilter"
-                />
+                <Select className="categoryFilter" inputProps={{name: "category"}} onChange={this.filterByCategory}>
+                  <MenuItem value={""}>Todas</MenuItem>
+                  {this.state.categories.length>0? 
+                   this.state.categories.map((category, key) => { return <MenuItem value={category.name}>{category.name}</MenuItem>}) 
+                  : <MenuItem value={""}>-</MenuItem>
+                  }
+                </Select>
               </div>
               <IconButton color="primary" onClick={this.handleAddConsumption}>
                 <AddButton />

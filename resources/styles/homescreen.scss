@@ -51,11 +51,15 @@
   align-items: center;
 }
 .dashboard {
-  margin-top: 25px;
   display: flex;
   flex: 1;
   justify-content: space-between;
+  margin-top: 10px;
 }
 .consumptionsCategoryList {
   padding:25px;
+}
+.categoryFilter{
+  width: 200px;
+  margin-left:15px;
 }

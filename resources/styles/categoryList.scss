@@ -1,8 +1,10 @@
 .categoriesList {
   display: flex;
+  align-items: center;
   flex: 1;
-  margin: 50px;
+  margin: 20px;
   flex-wrap: wrap;
+  
 }
 .title {
   margin-top: 80px;

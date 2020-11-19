@@ -60,7 +60,7 @@ export async function fetchBudgetList() {
 
 export async function postBudget(data) {
   let token = authService.getToken();
-
+  console.log(JSON.stringify(data))
   const response = await fetch("https://localhost:5001/budget", {
     method: "POST",
     mode: "cors",

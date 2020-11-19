@@ -27,6 +27,10 @@ class BudgetSummary extends React.Component<any, any>  {
         <div className="budgetSummaryItemLabel">Gasto actual total</div>
       </div>
       <div className="budgetSummaryItem">
+        <div className="budgetSummaryItemValue">$ {this.props.budget - this.props.spent}</div>
+        <div className="budgetSummaryItemLabel">Dinero disponible</div>
+      </div>
+      <div className="budgetSummaryItem">
         <div className="budgetSummaryItemValue porcentageValue"
         style={{color: p_style}}>{porcentage}%</div>
         <div className="budgetSummaryItemLabel">Porcentaje gastado</div>

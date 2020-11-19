@@ -38,10 +38,6 @@ export default class CategoriesList extends React.Component<any, any> {
 
     return (
       <div className="categoriesList">
-        <CategoryButton
-          operation={"add"}
-          triggerCategoriesList={this.refreshCategoriesList}
-        />
         {this.state.categories.map((category) => {
           i = i + 1;
           return (
@@ -70,6 +66,13 @@ export default class CategoriesList extends React.Component<any, any> {
             </div>
           );
         })}
+        <div style={{marginLeft: '10px'}}>
+          <CategoryButton
+            operation={"add"}
+            triggerCategoriesList={this.refreshCategoriesList}
+          />
+        </div>
+        
       </div>
     );
   }

@@ -25,16 +25,6 @@ class CategoryView extends React.Component<any, any> {
           <SideBar />
           <div className="mainContainerContent">
             <h1 className="containerTopBarTitle">Categorias</h1>
-            <div
-              style={{
-                display: "inline-block",
-                flex: 1,
-                justifyContent: "center",
-                fontSize: 10,
-              }}
-            >
-              <CategoriesList />
-            </div>
             <div className="dashboard">
               <div
                 style={{ display: "flex", flex: 1, justifyContent: "center" }}
@@ -51,7 +41,11 @@ class CategoryView extends React.Component<any, any> {
               <div
                   style={{ display: "flex", flex: 1, justifyContent: "center" }}
                 >
-                  <div style={{height:300, width:300}}></div>
+                <div style={{
+                display: "inline-block",
+                flex: 1,
+                justifyContent: "center",
+                fontSize: 10}}><CategoriesList /></div>
               </div>
               <div
                   style={{ display: "flex", flex: 1, justifyContent: "center" }}

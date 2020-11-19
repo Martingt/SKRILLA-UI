@@ -126,11 +126,11 @@ export default class BudgetCategoryList extends React.Component<any, any>  {
 
 
   calculateProportion(spent, budget){
-    return (budget == -1)? "-": Math.round(spent/budget*100)+"%"
+    return (budget == -1 || budget==0)? "-": Math.round(spent/budget*100)+"%"
   }
 
   getProportionColor(spent, budget){
-    return (spent/budget > 1)? "red":"#05a025"
+    return (spent/budget > 1 && budget!=0)? "red":"#05a025"
   }
 
   forceBudgetUpdate = () => {
