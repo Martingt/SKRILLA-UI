@@ -1,6 +1,6 @@
 import * as React from "react";
-import "./resources/styles/sign-in.scss";
-import "./resources/styles/homescreen.scss";
+import "Styles/sign-in.scss";
+import "Styles/homescreen.scss";
 import ConsumptionList from "../components/ConsumptionList";
 import IconButton from "@material-ui/core/IconButton";
 import AddButton from "@material-ui/icons/Add";

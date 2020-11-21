@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import ".././resources/styles/budget/BudgetSummary.scss";
+import "../Styles/budget/BudgetSummary.scss";
 
 class BudgetSummary extends React.Component<any, any> {
   render() {

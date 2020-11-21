@@ -1,5 +1,5 @@
 import * as React from "react";
-import "./resources/styles/styles.scss";
+import "Styles/styles.scss";
 import AuthService from "../utils/AuthService";
 import loginAction from "../redux/LoginAction";
 import { TextField } from "@material-ui/core";

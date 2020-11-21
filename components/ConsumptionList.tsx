@@ -14,7 +14,7 @@ import DeleteIcon from "@material-ui/icons/DeleteOutlined";
 import EditIcon from "@material-ui/icons/EditOutlined";
 import NumberFormat from "react-number-format";
 import { getCategoryIcon } from "../controllers/CategoriesController";
-import "./resources/styles/consumptionList.scss";
+import "Styles/consumptionList.scss";
 
 export default class ConsumptionList extends React.Component<any, any> {
   constructor(props) {

@@ -1,5 +1,5 @@
 import * as React from "react";
-import "./resources/styles/totalPerMonth.scss";
+import "Styles/totalPerMonth.scss";
 import {
   XYPlot,
   VerticalBarSeries,

@@ -1,6 +1,6 @@
 import * as React from "react";
-import "./resources/styles/sign-in.scss";
-import "./resources/styles/homescreen.scss";
+import "Styles/sign-in.scss";
+import "Styles/homescreen.scss";
 import SideBar from "../components/SideBar";
 import CategoriesList from "../components/CategoriesList";
 import CategoryPieChart from "../components/CategoryPieChart";

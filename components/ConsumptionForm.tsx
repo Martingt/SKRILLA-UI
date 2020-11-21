@@ -1,5 +1,5 @@
 import * as React from "react";
-import "./resources/styles/addConsumptionForm.scss";
+import "Styles/addConsumptionForm.scss";
 import { TextField, InputLabel, FormControl, Button } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import AddButton from "@material-ui/icons/Add";

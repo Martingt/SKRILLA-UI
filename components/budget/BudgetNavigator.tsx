@@ -1,5 +1,5 @@
 import * as React from "react";
-import ".././resources/styles/budget/budgetNavigator.scss";
+import "../Styles/budget/budgetNavigator.scss";
 import BackArrow from "@material-ui/icons/ArrowBackIosRounded";
 import NextArrow from "@material-ui/icons/ArrowForwardIosRounded";
 
