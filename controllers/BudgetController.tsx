@@ -1,4 +1,4 @@
-import AuthService from "../utils/AuthService.tsx";
+import AuthService from "../utils/AuthService";
 const authService = new AuthService();
 
 export async function fetchBudget() {
@@ -22,7 +22,7 @@ export async function fetchBudget() {
 export async function fetchBudgetSummary(budgetId) {
   let token = authService.getToken();
   let url = "https://localhost:5001/budget/summary";
-  if(budgetId !== null && budgetId !== undefined && !isNaN(budgetId)){
+  if (budgetId !== null && budgetId !== undefined && !isNaN(budgetId)) {
     url = url + "/" + budgetId;
   }
   const response = await fetch(url, {
@@ -60,7 +60,7 @@ export async function fetchBudgetList() {
 
 export async function postBudget(data) {
   let token = authService.getToken();
-  console.log(JSON.stringify(data))
+  console.log(JSON.stringify(data));
   const response = await fetch("https://localhost:5001/budget", {
     method: "POST",
     mode: "cors",
@@ -80,7 +80,7 @@ export async function postBudget(data) {
 export async function putCategoryBudget(data) {
   let token = authService.getToken();
   var fetchURL = "https://localhost:5001/budget/category";
-  const response = await fetch(fetchURL, {
+  const response: any = await fetch(fetchURL, {
     method: "PUT",
     mode: "cors",
     cache: "no-cache",
@@ -93,6 +93,6 @@ export async function putCategoryBudget(data) {
     referrerPolicy: "no-referrer",
     body: JSON.stringify(data),
   }).catch((error) => console.log("error", error));
-  
+
   return response.json();
 }

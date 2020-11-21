@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Select } from "@material-ui/core";
 import "../resources/styles/category.scss";
-import { fetchCategories } from "../controllers/CategoriesController.tsx";
+import { fetchCategories } from "../controllers/CategoriesController";
 import CategoryIcons from "../utils/CategoryIcons.js";
 
 export default class CategoryIconsList extends React.Component<any, any> {

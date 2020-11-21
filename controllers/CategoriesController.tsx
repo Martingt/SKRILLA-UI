@@ -39,7 +39,7 @@ export async function postDefaultCategories() {
   }
 }
 
-export async function fetchCategories(category) {
+export async function fetchCategories() {
   var myHeaders = new Headers();
   myHeaders.append("Authorization", "Bearer " + getAuthToken());
   let requestOptions: RequestInit = {
@@ -57,7 +57,7 @@ export async function fetchCategories(category) {
 export async function updateCategory(id, data) {
   let token = getAuthToken();
   var fetchURL = "https://localhost:5001/categories/" + id;
-  const response = await fetch(fetchURL, {
+  const response: any = await fetch(fetchURL, {
     method: "PUT",
     mode: "cors",
     cache: "no-cache",
@@ -77,7 +77,7 @@ export async function updateCategory(id, data) {
 export async function deleteCategory(id) {
   let token = getAuthToken();
   var fetchURL = "https://localhost:5001/categories/" + id;
-  const response = await fetch(fetchURL, {
+  const response: any = await fetch(fetchURL, {
     method: "DELETE",
     mode: "cors",
     cache: "no-cache",

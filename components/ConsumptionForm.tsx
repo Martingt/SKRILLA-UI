@@ -1,13 +1,6 @@
 import * as React from "react";
 import "../resources/styles/addConsumptionForm.scss";
-import {
-  TextField,
-  Select,
-  InputLabel,
-  FormControl,
-  Button,
-} from "@material-ui/core";
-import AuthService from "../utils/AuthService.tsx";
+import { TextField, InputLabel, FormControl, Button } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import AddButton from "@material-ui/icons/Add";
 import ClearButton from "@material-ui/icons/Clear";
@@ -17,7 +10,7 @@ import {
   postConsumption,
   fetchConsumption,
   updateConsumption,
-} from "../controllers/ConsumptionsController.tsx";
+} from "../controllers/ConsumptionsController";
 
 export default class ConsumptionForm extends React.Component<any, any> {
   constructor(props) {
@@ -138,8 +131,6 @@ export default class ConsumptionForm extends React.Component<any, any> {
 
   onSubmit = (e) => {
     e.preventDefault();
-    var error = false;
-    let errorMessages = this.state.errorMessages;
     let payload = {
       title: this.state.title,
       amount: parseFloat(this.state.amount),
@@ -173,7 +164,7 @@ export default class ConsumptionForm extends React.Component<any, any> {
     }
   };
 
-  onCancel = (e) => {
+  onCancel = () => {
     this.setState({
       title: "",
       amount: 0,
@@ -184,7 +175,7 @@ export default class ConsumptionForm extends React.Component<any, any> {
     if (this.props.onCancel !== null) this.props.onCancel();
   };
 
-  toggleNewCategory = (e) => {
+  toggleNewCategory = () => {
     this.setState({ newCategory: !this.state.newCategory });
   };
   render() {

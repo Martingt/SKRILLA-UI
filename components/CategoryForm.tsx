@@ -1,24 +1,12 @@
 import * as React from "react";
 import "../resources/styles/addConsumptionForm.scss";
-import {
-  TextField,
-  Select,
-  InputLabel,
-  FormControl,
-  Button,
-} from "@material-ui/core";
-import AuthService from "../utils/AuthService.tsx";
-import IconButton from "@material-ui/core/IconButton";
-import AddButton from "@material-ui/icons/Add";
-import ClearButton from "@material-ui/icons/Clear";
-import Categories from "../components/Categories";
+import { TextField, InputLabel, FormControl, Button } from "@material-ui/core";
 import CategoryIconsList from "../components/CategoryIconsList";
 import {
   postCategory,
   fetchCategories,
   updateCategory,
-  deleteCategory,
-} from "../controllers/CategoriesController.tsx";
+} from "../controllers/CategoriesController";
 
 export default class CategoryForm extends React.Component<any, any> {
   constructor(props) {
@@ -35,7 +23,7 @@ export default class CategoryForm extends React.Component<any, any> {
 
   componentDidMount() {
     if (this.props.task.operation === "edit") {
-      fetchCategories(this.props.task.categoryId)
+      fetchCategories()
         .then((result) => {
           this.setState({
             categoryName: result.name,
@@ -69,8 +57,6 @@ export default class CategoryForm extends React.Component<any, any> {
 
   onSubmit = (e) => {
     e.preventDefault();
-    var error = false;
-    let errorMessages = this.state.errorMessages;
 
     let payload = {
       name: this.state.categoryName,
@@ -102,7 +88,7 @@ export default class CategoryForm extends React.Component<any, any> {
     }
   };
 
-  onCancel = (e) => {
+  onCancel = () => {
     this.setState({ categoryName: "" });
     if (this.props.onCancel !== null) this.props.onCancel();
   };
@@ -111,7 +97,9 @@ export default class CategoryForm extends React.Component<any, any> {
     return (
       <div className="addContsumptionFormContainer">
         <h2 id="transition-modal-title" className="addConsumptionFormTitle">
-          {this.props.task.operation === "edit" ? "Editar Categoria" : "Crear Categoria"}
+          {this.props.task.operation === "edit"
+            ? "Editar Categoria"
+            : "Crear Categoria"}
         </h2>
         <form className="addContsumptionForm">
           <div className="addCategoryFormItem">
@@ -121,7 +109,11 @@ export default class CategoryForm extends React.Component<any, any> {
               className="addConsumptionField"
               InputProps={{ style: { fontSize: "0.9rem" } }}
               label="Nombre"
-              placeholder={this.props.task.operation === "edit" ? this.props.categoryName : ""}
+              placeholder={
+                this.props.task.operation === "edit"
+                  ? this.props.categoryName
+                  : ""
+              }
               value={this.state.categoryName}
               error={this.state.categoryNameControl.error}
               helperText={this.state.categoryNameControl.helperText}

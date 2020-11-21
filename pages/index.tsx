@@ -1,18 +1,10 @@
-
-import * as React from 'react'
-import '../resources/styles/sign-in.scss'
-import '../resources/styles/homescreen.scss'
-import AuthService from '../utils/AuthService.tsx'
-import RegisterForm from '../components/RegisterForm';
-import {createStore} from '@reduxjs/toolkit';
-import {Provider} from 'react-redux';
-import loginReducer from '../redux/LoginReducer.tsx';
-import AppView from '../Views/AppView.tsx';
-
+import * as React from "react";
+import "../resources/styles/sign-in.scss";
+import "../resources/styles/homescreen.scss";
+import AppView from "../Views/AppView";
 
 export default class IndexPage extends React.Component<any, any> {
-
-  constructor(props){
+  constructor(props) {
     super(props);
   }
 

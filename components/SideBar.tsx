@@ -1,6 +1,6 @@
 import * as React from "react";
 import "../resources/styles/topBar.scss";
-import { logoutAction } from "../redux/LoginAction.tsx";
+import { logoutAction } from "../redux/LoginAction";
 import { connect } from "react-redux";
 import Link from "next/link";
 import { ProSidebar, SidebarHeader, SidebarContent } from "react-pro-sidebar";
@@ -23,7 +23,11 @@ class SideBar extends React.Component<any, any> {
         <SidebarHeader>
           <div className="header">
             <div className="sidebarheader">Skrilla</div>
-            <img className="logoutIcon" src="/images/logout.png" onClick={() => this.logout()}></img>
+            <img
+              className="logoutIcon"
+              src="/images/logout.png"
+              onClick={() => this.logout()}
+            ></img>
           </div>
         </SidebarHeader>
         <SidebarContent>
@@ -41,7 +45,7 @@ class SideBar extends React.Component<any, any> {
     );
   }
 }
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = (dispatch) => ({
   logout: () => dispatch(logoutAction()),
 });
 

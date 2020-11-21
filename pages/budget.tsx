@@ -1,43 +1,40 @@
-
-import * as React from 'react'
-import '../resources/styles/sign-in.scss'
-import '../resources/styles/homescreen.scss'
-import AuthService from '../utils/AuthService.tsx'
-import BudgetView from '../Views/BudgetView.tsx';
-import { connect } from 'react-redux';
-import loginReducer from '../redux/LoginReducer.tsx';
-import loginAction from  '../redux/LoginAction.tsx';
-import {withRouter} from 'next/router';
-const authService = new AuthService()
+import * as React from "react";
+import "../resources/styles/sign-in.scss";
+import "../resources/styles/homescreen.scss";
+import AuthService from "../utils/AuthService";
+import BudgetView from "../Views/BudgetView";
+import { connect } from "react-redux";
+import loginAction from "../redux/LoginAction";
+import { withRouter } from "next/router";
+const authService = new AuthService();
 
 class BudgetPage extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
-      token:null,
-      viewPage: 1
+      token: null,
+      viewPage: 1,
     };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.login(authService.getToken());
-    if(authService.getToken() === null){
+    if (authService.getToken() === null) {
       this.props.router.push("/");
     }
   }
 
-  componentDidUpdate(){
-    if(authService.getToken() === null){
+  componentDidUpdate() {
+    if (authService.getToken() === null) {
       this.props.router.push("/");
     }
   }
 
   render() {
-
     let page = null;
 
-    if(this.props.token !== null){
-        page = <BudgetView   />
+    if (this.props.token !== null) {
+      page = <BudgetView />;
     }
 
     return page;
@@ -45,11 +42,14 @@ class BudgetPage extends React.Component<any, any> {
 }
 
 const mapStateToProps = (state) => ({
-  token: state.token
+  token: state.token,
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  login: (token) => dispatch(loginAction(token))
+const mapDispatchToProps = (dispatch) => ({
+  login: (token) => dispatch(loginAction(token)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(BudgetPage))
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(BudgetPage));
