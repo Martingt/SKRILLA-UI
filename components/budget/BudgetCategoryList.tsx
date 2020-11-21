@@ -17,7 +17,7 @@ import TextField from "@material-ui/core/TextField";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
-import "../../resources/styles/budget/budgetCategoryList.scss";
+import ".././resources/styles/budget/budgetCategoryList.scss";
 
 export default class BudgetCategoryList extends React.Component<any, any> {
   constructor(props) {

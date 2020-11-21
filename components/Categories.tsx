@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Select } from "@material-ui/core";
-import "../resources/styles/category.scss";
+import "./resources/styles/category.scss";
 import { fetchCategories } from "../controllers/CategoriesController";
 
 export default class Categories extends React.Component<any, any> {

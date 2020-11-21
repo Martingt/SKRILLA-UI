@@ -1,6 +1,6 @@
 import * as React from "react";
-import "../resources/styles/sign-in.scss";
-import "../resources/styles/homescreen.scss";
+import "./resources/styles/sign-in.scss";
+import "./resources/styles/homescreen.scss";
 import RegisterForm from "../components/RegisterForm";
 import LoginForm from "../components/LoginForm";
 

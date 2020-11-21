@@ -1,5 +1,5 @@
 import * as React from "react";
-import "../resources/styles/addConsumptionForm.scss";
+import "./resources/styles/addConsumptionForm.scss";
 import { Button } from "@material-ui/core";
 
 export default class DeleteConfirmation extends React.Component<any, any> {

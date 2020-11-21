@@ -1,5 +1,5 @@
 import * as React from "react";
-import "../resources/styles/pieChart.scss";
+import "./resources/styles/pieChart.scss";
 import {
   XYPlot,
   XAxis,

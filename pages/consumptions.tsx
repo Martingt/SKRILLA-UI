@@ -1,6 +1,6 @@
 import * as React from "react";
-import "../resources/styles/sign-in.scss";
-import "../resources/styles/homescreen.scss";
+import "./resources/styles/sign-in.scss";
+import "./resources/styles/homescreen.scss";
 import AuthService from "../utils/AuthService";
 import ConsumptionView from "../Views/ConsumptionView";
 import { connect } from "react-redux";

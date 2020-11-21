@@ -1,5 +1,5 @@
 import * as React from "react";
-import "../resources/styles/budget/budget.scss";
+import "./resources/styles/budget/budget.scss";
 import BudgetCategoryList from "../components/budget/BudgetCategoryList";
 import BudgetSummary from "../components/budget/BudgetSummary";
 import BudgetNavigator from "../components/budget/BudgetNavigator";
