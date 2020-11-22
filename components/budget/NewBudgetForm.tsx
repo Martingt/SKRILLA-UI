@@ -1,13 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import "../../resources/styles/budget/budgetForm.scss";
-import {
-  TextField,
-  Select,
-  InputLabel,
-  FormControl,
-  Button,
-} from "@material-ui/core";
+import { TextField, Button } from "@material-ui/core";
 import { postBudget } from "../../controllers/BudgetController";
 
 class NewBudgetForm extends React.Component<any, any> {
@@ -17,11 +11,11 @@ class NewBudgetForm extends React.Component<any, any> {
       errorMessages: [],
       startDate: getTodaysDate(),
       endDate: getTodaysDate(),
-      budget: 0
+      budget: 0,
     };
   }
 
-  onCancel = (e) => {
+  onCancel = () => {
     this.props.onCancel();
   };
 
@@ -30,6 +24,8 @@ class NewBudgetForm extends React.Component<any, any> {
     console.log(e.target.value);
     this.setState({ [e.target.name]: e.target.value });
   };
+
+  handleFormSubmit = () => {};
 
   formIsValid() {
     var valid = true;
@@ -42,14 +38,18 @@ class NewBudgetForm extends React.Component<any, any> {
     };
 
     if (payload.budget == null || isNaN(payload.budget) || payload.budget < 0) {
-      this.addErrorMessage("Se debe especificar un presupuesto numerico positivo.");
+      this.addErrorMessage(
+        "Se debe especificar un presupuesto numerico positivo."
+      );
       valid = false;
     } else {
-      this.removeErrorMessage("Se debe especificar un presupuesto numerico positivo.");
+      this.removeErrorMessage(
+        "Se debe especificar un presupuesto numerico positivo."
+      );
     }
 
     if (payload.startDate == null) {
-      his.addErrorMessage("Se debe especificar una fecha de comienzo.");
+      this.addErrorMessage("Se debe especificar una fecha de comienzo.");
       valid = false;
     } else {
       this.removeErrorMessage("Se debe especificar una fecha de comienzo.");
@@ -61,32 +61,31 @@ class NewBudgetForm extends React.Component<any, any> {
     } else {
       this.removeErrorMessage("Se debe especificar una fecha de finalizacion.");
     }
-    if(!valid) {
-      this.setState({status:"error"})
+    if (!valid) {
+      this.setState({ status: "error" });
     }
     return valid;
   }
 
-  addErrorMessage = (message) =>{
+  addErrorMessage = (message) => {
     let index = this.state.errorMessages.indexOf(message);
-    let errors = this.state.errorMessages
-    if(index == -1){
+    let errors = this.state.errorMessages;
+    if (index == -1) {
       errors.push(message);
     }
-    this.setState({errorMessages: errors});
-  }
+    this.setState({ errorMessages: errors });
+  };
 
   removeErrorMessage = (message) => {
     let index = this.state.errorMessages.indexOf(message);
-    if(index != -1){
+    if (index != -1) {
       this.state.errorMessages.splice(index, 1);
     }
-    this.setState({errorMessages: this.state.errorMessages});
-  }
+    this.setState({ errorMessages: this.state.errorMessages });
+  };
 
   onSubmit = (e) => {
     e.preventDefault();
-
 
     if (!this.formIsValid()) {
       return;
@@ -96,18 +95,18 @@ class NewBudgetForm extends React.Component<any, any> {
       startDate: this.state.startDate,
       endDate: this.state.endDate,
       amount: parseFloat(this.state.budget),
-      budgetItems: []
+      budgetItems: [],
     };
 
-    this.setState({errorMessages:[]});
+    this.setState({ errorMessages: [] });
 
     postBudget(payload).then((res) => {
       console.log(res);
       if (res.result == "error") {
         this.setState({ status: "error", errorMessages: res.messages });
-      } else if(res.code == "conflict"){
+      } else if (res.code == "conflict") {
         this.addErrorMessage(res.message);
-        this.setState({ status: "error"});
+        this.setState({ status: "error" });
       } else {
         this.props.onCreationOk(res.BudgetId);
       }

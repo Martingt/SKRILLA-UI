@@ -1,9 +1,9 @@
 import * as React from "react";
 import "../resources/styles/styles.scss";
-import AuthService from "../utils/AuthService.tsx";
+import AuthService from "../utils/AuthService";
 import { connect } from "react-redux";
 import { TextField } from "@material-ui/core";
-import loginAction from "../redux/LoginAction.tsx";
+import loginAction from "../redux/LoginAction";
 
 const auth = new AuthService();
 
@@ -83,7 +83,7 @@ class Register extends React.Component<any, any> {
   }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = (dispatch) => ({
   onLogin: (token) => dispatch(loginAction(token)),
 });
 

@@ -1,8 +1,8 @@
-import { configureStore } from '@reduxjs/toolkit'
-import LoginReducer from './LoginReducer.tsx'
+import { configureStore } from "@reduxjs/toolkit";
+import loginReducer from "./LoginReducer";
 
 export default configureStore({
   reducer: {
-    login: loginReducer
-  }
-})
+    login: loginReducer,
+  },
+});

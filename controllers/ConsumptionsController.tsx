@@ -1,143 +1,145 @@
-import AuthService  from '../utils/AuthService.tsx';
+import AuthService from "../utils/AuthService";
 var authService = new AuthService();
 
-export async function fetchConsumptions(category){
+export async function fetchConsumptions(category) {
   var myHeaders = new Headers();
   var fetchURL = "https://localhost:5001/consumptions";
 
-  if(category != undefined && category != ""){
-      fetchURL += "?category="+category;
+  if (category != undefined && category != "") {
+    fetchURL += "?category=" + category;
   }
   myHeaders.append("Authorization", "Bearer " + authService.getToken());
 
   let requestOptions: RequestInit = {
-    method: 'GET',
+    method: "GET",
     headers: myHeaders,
-    redirect: 'follow'
+    redirect: "follow",
   };
 
-  return fetch(fetchURL, requestOptions).then(response => response.json());
+  return fetch(fetchURL, requestOptions).then((response) => response.json());
 }
-export async function fetchConsumptionsPeriod(initial_date, end_date){
+export async function fetchConsumptionsPeriod(initial_date, end_date) {
   var myHeaders = new Headers();
   var fetchURL = "https://localhost:5001/consumptions/date";
 
-  if(initial_date != undefined && initial_date != "" && end_date != undefined && end_date != ""){
-      fetchURL += "?initial_date="+initial_date+"&end_date="+end_date;
+  if (
+    initial_date != undefined &&
+    initial_date != "" &&
+    end_date != undefined &&
+    end_date != ""
+  ) {
+    fetchURL += "?initial_date=" + initial_date + "&end_date=" + end_date;
   }
   myHeaders.append("Authorization", "Bearer " + authService.getToken());
 
   let requestOptions: RequestInit = {
-    method: 'GET',
+    method: "GET",
     headers: myHeaders,
-    redirect: 'follow'
+    redirect: "follow",
   };
 
-  return fetch(fetchURL, requestOptions).then(response => response.json());
+  return fetch(fetchURL, requestOptions).then((response) => response.json());
 }
 
-export  async function postConsumption(data) {
-    let token = authService.getToken();
+export async function postConsumption(data) {
+  let token = authService.getToken();
 
-    const response = await fetch("https://localhost:5001/consumptions", {
-      method: 'POST',
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-      },
-      redirect: 'follow',
-      referrerPolicy: 'no-referrer',
-      body: JSON.stringify(data)
-    });
-    return response.json();
+  const response = await fetch("https://localhost:5001/consumptions", {
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+    body: JSON.stringify(data),
+  });
+  return response.json();
 }
 
-export async function fetchConsumption(id){
+export async function fetchConsumption(id) {
   var myHeaders = new Headers();
-  var fetchURL = "https://localhost:5001/consumptions/"+id;
+  var fetchURL = "https://localhost:5001/consumptions/" + id;
 
   myHeaders.append("Authorization", "Bearer " + authService.getToken());
 
   let requestOptions: RequestInit = {
-    method: 'GET',
+    method: "GET",
     headers: myHeaders,
-    redirect: 'follow'
+    redirect: "follow",
   };
 
-  return fetch(fetchURL, requestOptions).then(response => response.json());
+  return fetch(fetchURL, requestOptions).then((response) => response.json());
 }
 
+export async function updateConsumption(id, data) {
+  let token = authService.getToken();
+  var fetchURL = "https://localhost:5001/consumptions/" + id;
+  const response: any = await fetch(fetchURL, {
+    method: "PUT",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+    body: JSON.stringify(data),
+  }).catch((error) => console.log("error", error));
 
-export  async function updateConsumption(id, data) {
-    let token = authService.getToken();
-    var fetchURL = "https://localhost:5001/consumptions/"+id;
-    const response = await fetch(fetchURL, {
-      method: 'PUT',
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-      },
-      redirect: 'follow',
-      referrerPolicy: 'no-referrer',
-      body: JSON.stringify(data)
-    })
-    .catch(error => console.log('error', error));
-
-    return response.json();
+  return response.json();
 }
 
-export  async function deleteConsumption(id) {
-    let token = authService.getToken();
-    var fetchURL = "https://localhost:5001/consumptions/"+id;
-    const response = await fetch(fetchURL, {
-      method: 'DELETE',
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-      },
-      redirect: 'follow',
-      referrerPolicy: 'no-referrer'
-    })
-    .catch(error => console.log('error', error));
+export async function deleteConsumption(id) {
+  let token = authService.getToken();
+  var fetchURL = "https://localhost:5001/consumptions/" + id;
+  const response = await fetch(fetchURL, {
+    method: "DELETE",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+  }).catch((error) => console.log("error", error));
 
-    return response;
+  return response;
 }
-export async function getConsumptionPerCategory(month, year){
-    var myHeaders = new Headers();
-    var fetchURL = "https://localhost:5001/conspercat";
-    month+=1;
-    if(month != '' && year != ''){
-      fetchURL += "?month="+month+"&year="+year;
-    }
-    myHeaders.append("Authorization", "Bearer " + authService.getToken());
-
-    let requestOptions: RequestInit = {
-      method: 'GET',
-      headers: myHeaders,
-      redirect: 'follow'
-    };
-    
-    return fetch(fetchURL, requestOptions).then(response => response.json())
-}
-export async function fetchTotalPerMonth(){
+export async function getConsumptionPerCategory(month, year) {
   var myHeaders = new Headers();
-    var fetchURL = "https://localhost:5001/consumptions/totalmonth";
+  var fetchURL = "https://localhost:5001/conspercat";
+  month += 1;
+  if (month != "" && year != "") {
+    fetchURL += "?month=" + month + "&year=" + year;
+  }
+  myHeaders.append("Authorization", "Bearer " + authService.getToken());
 
-    myHeaders.append("Authorization", "Bearer " + authService.getToken());
+  let requestOptions: RequestInit = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
 
-    let requestOptions: RequestInit = {
-      method: 'GET',
-      headers: myHeaders,
-      redirect: 'follow'
-    };
-    return fetch(fetchURL, requestOptions).then(response => response.json())
+  return fetch(fetchURL, requestOptions).then((response) => response.json());
+}
+export async function fetchTotalPerMonth() {
+  var myHeaders = new Headers();
+  var fetchURL = "https://localhost:5001/consumptions/totalmonth";
+
+  myHeaders.append("Authorization", "Bearer " + authService.getToken());
+
+  let requestOptions: RequestInit = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+  return fetch(fetchURL, requestOptions).then((response) => response.json());
 }

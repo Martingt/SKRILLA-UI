@@ -1,17 +1,12 @@
 import * as React from "react";
 import "../resources/styles/sign-in.scss";
 import "../resources/styles/homescreen.scss";
-import AuthService from "../utils/AuthService.tsx";
-import TopBar from "../components/TopBar";
 import SideBar from "../components/SideBar";
 import CategoriesList from "../components/CategoriesList";
 import CategoryPieChart from "../components/CategoryPieChart";
 import TotalPerMonthBar from "../components/TotalPerMonthBar";
 import BudgetPieChart from "../components/BudgetBar";
 import { connect } from "react-redux";
-import consumptions from "pages/consumptions";
-
-const authService = new AuthService();
 
 class CategoryView extends React.Component<any, any> {
   constructor(props) {
@@ -39,22 +34,25 @@ class CategoryView extends React.Component<any, any> {
             </div>
             <div className="dashboard">
               <div
-                  style={{ display: "flex", flex: 1, justifyContent: "center" }}
+                style={{ display: "flex", flex: 1, justifyContent: "center" }}
+              >
+                <div
+                  style={{
+                    display: "inline-block",
+                    flex: 1,
+                    justifyContent: "center",
+                    fontSize: 10,
+                  }}
                 >
-                <div style={{
-                display: "inline-block",
-                flex: 1,
-                justifyContent: "center",
-                fontSize: 10}}><CategoriesList /></div>
+                  <CategoriesList />
+                </div>
               </div>
               <div
-                  style={{ display: "flex", flex: 1, justifyContent: "center" }}
-                >
-                  <BudgetPieChart />
+                style={{ display: "flex", flex: 1, justifyContent: "center" }}
+              >
+                <BudgetPieChart />
               </div>
-            
             </div>
-            
           </div>
         </div>
       </div>

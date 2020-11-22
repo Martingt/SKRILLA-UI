@@ -1,10 +1,10 @@
 import * as React from "react";
 import "../resources/styles/CategoryList.scss";
-import { fetchCategories } from "../controllers/CategoriesController.tsx";
+import { fetchCategories } from "../controllers/CategoriesController";
 import CategoryButton from "../components/CategoryButton";
 import CategoryIcons from "../utils/CategoryIcons.js";
 import { getCategoryIcon } from "../controllers/CategoriesController";
-import { postDefaultCategories } from "../controllers/CategoriesController.tsx";
+import { postDefaultCategories } from "../controllers/CategoriesController";
 
 export default class CategoriesList extends React.Component<any, any> {
   constructor(props) {
@@ -13,7 +13,7 @@ export default class CategoriesList extends React.Component<any, any> {
   }
 
   componentDidMount() {
-    postDefaultCategories().then(this.refreshCategoriesList());
+    postDefaultCategories().then(() => this.refreshCategoriesList());
   }
 
   addColor(category) {
@@ -66,13 +66,12 @@ export default class CategoriesList extends React.Component<any, any> {
             </div>
           );
         })}
-        <div style={{marginLeft: '10px'}}>
+        <div style={{ marginLeft: "10px" }}>
           <CategoryButton
             operation={"add"}
             triggerCategoriesList={this.refreshCategoriesList}
           />
         </div>
-        
       </div>
     );
   }
