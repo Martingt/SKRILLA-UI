@@ -4,7 +4,7 @@ const authService = new AuthService();
 export async function fetchBudget() {
   let token = authService.getToken();
 
-  const response = await fetch("https://localhost:5001/budget", {
+  const response = await fetch("https://skrilla-backend.herokuapp.com/budget", {
     method: "GET",
     mode: "cors",
     cache: "no-cache",
@@ -21,7 +21,7 @@ export async function fetchBudget() {
 
 export async function fetchBudgetSummary(budgetId) {
   let token = authService.getToken();
-  let url = "https://localhost:5001/budget/summary";
+  let url = "https://skrilla-backend.herokuapp.com/budget/summary";
   if (budgetId !== null && budgetId !== undefined && !isNaN(budgetId)) {
     url = url + "/" + budgetId;
   }
@@ -43,25 +43,28 @@ export async function fetchBudgetSummary(budgetId) {
 export async function fetchBudgetList() {
   let token = authService.getToken();
 
-  const response = await fetch("https://localhost:5001/budget/list", {
-    method: "GET",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
-  });
+  const response = await fetch(
+    "https://skrilla-backend.herokuapp.com/budget/list",
+    {
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+    }
+  );
   return response.json();
 }
 
 export async function postBudget(data) {
   let token = authService.getToken();
   console.log(JSON.stringify(data));
-  const response = await fetch("https://localhost:5001/budget", {
+  const response = await fetch("https://skrilla-backend.herokuapp.com/budget", {
     method: "POST",
     mode: "cors",
     cache: "no-cache",
@@ -79,7 +82,7 @@ export async function postBudget(data) {
 
 export async function putCategoryBudget(data) {
   let token = authService.getToken();
-  var fetchURL = "https://localhost:5001/budget/category";
+  var fetchURL = "https://skrilla-backend.herokuapp.com/budget/category";
   const response: any = await fetch(fetchURL, {
     method: "PUT",
     mode: "cors",

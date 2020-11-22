@@ -3,7 +3,7 @@ var authService = new AuthService();
 
 export async function fetchConsumptions(category) {
   var myHeaders = new Headers();
-  var fetchURL = "https://localhost:5001/consumptions";
+  var fetchURL = "https://skrilla-backend.herokuapp.com/consumptions";
 
   if (category != undefined && category != "") {
     fetchURL += "?category=" + category;
@@ -20,7 +20,7 @@ export async function fetchConsumptions(category) {
 }
 export async function fetchConsumptionsPeriod(initial_date, end_date) {
   var myHeaders = new Headers();
-  var fetchURL = "https://localhost:5001/consumptions/date";
+  var fetchURL = "https://skrilla-backend.herokuapp.com/consumptions/date";
 
   if (
     initial_date != undefined &&
@@ -44,25 +44,28 @@ export async function fetchConsumptionsPeriod(initial_date, end_date) {
 export async function postConsumption(data) {
   let token = authService.getToken();
 
-  const response = await fetch("https://localhost:5001/consumptions", {
-    method: "POST",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
-    body: JSON.stringify(data),
-  });
+  const response = await fetch(
+    "https://skrilla-backend.herokuapp.com/consumptions",
+    {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+      body: JSON.stringify(data),
+    }
+  );
   return response.json();
 }
 
 export async function fetchConsumption(id) {
   var myHeaders = new Headers();
-  var fetchURL = "https://localhost:5001/consumptions/" + id;
+  var fetchURL = "https://skrilla-backend.herokuapp.com/consumptions/" + id;
 
   myHeaders.append("Authorization", "Bearer " + authService.getToken());
 
@@ -77,7 +80,7 @@ export async function fetchConsumption(id) {
 
 export async function updateConsumption(id, data) {
   let token = authService.getToken();
-  var fetchURL = "https://localhost:5001/consumptions/" + id;
+  var fetchURL = "https://skrilla-backend.herokuapp.com/consumptions/" + id;
   const response: any = await fetch(fetchURL, {
     method: "PUT",
     mode: "cors",
@@ -97,7 +100,7 @@ export async function updateConsumption(id, data) {
 
 export async function deleteConsumption(id) {
   let token = authService.getToken();
-  var fetchURL = "https://localhost:5001/consumptions/" + id;
+  var fetchURL = "https://skrilla-backend.herokuapp.com/consumptions/" + id;
   const response = await fetch(fetchURL, {
     method: "DELETE",
     mode: "cors",
@@ -115,7 +118,7 @@ export async function deleteConsumption(id) {
 }
 export async function getConsumptionPerCategory(month, year) {
   var myHeaders = new Headers();
-  var fetchURL = "https://localhost:5001/conspercat";
+  var fetchURL = "https://skrilla-backend.herokuapp.com/conspercat";
   month += 1;
   if (month != "" && year != "") {
     fetchURL += "?month=" + month + "&year=" + year;
@@ -132,7 +135,8 @@ export async function getConsumptionPerCategory(month, year) {
 }
 export async function fetchTotalPerMonth() {
   var myHeaders = new Headers();
-  var fetchURL = "https://localhost:5001/consumptions/totalmonth";
+  var fetchURL =
+    "https://skrilla-backend.herokuapp.com/consumptions/totalmonth";
 
   myHeaders.append("Authorization", "Bearer " + authService.getToken());
 

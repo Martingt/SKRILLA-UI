@@ -27,7 +27,10 @@ export default class AuthService {
     };
 
     return (
-      this.fetch("https://localhost:6001/connect/token", requestOptions)
+      this.fetch(
+        "https://skrilla-auth-server.herokuapp.com/connect/token",
+        requestOptions
+      )
         /*.then(result => this.setToken(result.access_token))*/
         .then((result) => {
           this.setToken(result["access_token"]);
@@ -55,7 +58,10 @@ export default class AuthService {
       redirect: "follow",
     };
 
-    return this.fetch("https://localhost:6001/Auth/Register", requestOptions)
+    return this.fetch(
+      "https://skrilla-auth-server.herokuapp.com/Auth/Register",
+      requestOptions
+    )
       .then((res) => {
         console.log(res);
         return this.login(email, password);

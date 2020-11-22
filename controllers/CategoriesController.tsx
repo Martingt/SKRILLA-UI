@@ -4,26 +4,29 @@ import CategoryIcons from "../utils/CategoryIcons.js";
 export async function postCategory(data) {
   let token = getAuthToken();
 
-  const response = await fetch("https://localhost:5001/categories", {
-    method: "POST",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
-    body: JSON.stringify(data),
-  });
+  const response = await fetch(
+    "https://skrilla-backend.herokuapp.com/categories",
+    {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+      body: JSON.stringify(data),
+    }
+  );
   return response.json();
 }
 
 export async function postDefaultCategories() {
   let token = getAuthToken();
   for (let index = 0; index < defaultCategories.length; ++index) {
-    fetch("https://localhost:5001/categories", {
+    fetch("https://skrilla-backend.herokuapp.com/categories", {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
@@ -49,14 +52,14 @@ export async function fetchCategories() {
   };
 
   return fetch(
-    "https://localhost:5001/categories",
+    "https://skrilla-backend.herokuapp.com/categories",
     requestOptions
   ).then((response) => response.json());
 }
 
 export async function updateCategory(id, data) {
   let token = getAuthToken();
-  var fetchURL = "https://localhost:5001/categories/" + id;
+  var fetchURL = "https://skrilla-backend.herokuapp.com/categories/" + id;
   const response: any = await fetch(fetchURL, {
     method: "PUT",
     mode: "cors",
@@ -76,7 +79,7 @@ export async function updateCategory(id, data) {
 
 export async function deleteCategory(id) {
   let token = getAuthToken();
-  var fetchURL = "https://localhost:5001/categories/" + id;
+  var fetchURL = "https://skrilla-backend.herokuapp.com/categories/" + id;
   const response: any = await fetch(fetchURL, {
     method: "DELETE",
     mode: "cors",
