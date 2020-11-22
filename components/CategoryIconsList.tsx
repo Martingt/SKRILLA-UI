@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Select } from "@material-ui/core";
-import "Styles/category.scss";
+import "@/resources/category.scss";
 import { fetchCategories } from "../controllers/CategoriesController";
 import CategoryIcons from "../utils/CategoryIcons.js";
 

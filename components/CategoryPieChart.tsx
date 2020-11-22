@@ -1,5 +1,5 @@
 import * as React from "react";
-import "Styles/pieChart.scss";
+import "@/resources/pieChart.scss";
 import { getConsumptionPerCategory } from "../controllers/ConsumptionsController";
 import { RadialChart } from "react-vis";
 import Select from "@material-ui/core/Select";

@@ -1,5 +1,5 @@
 import * as React from "react";
-import "Styles/CategoryList.scss";
+import "@/resources/CategoryList.scss";
 import { fetchCategories } from "../controllers/CategoriesController";
 import CategoryButton from "../components/CategoryButton";
 import CategoryIcons from "../utils/CategoryIcons.js";

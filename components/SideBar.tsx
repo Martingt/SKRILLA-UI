@@ -1,5 +1,5 @@
 import * as React from "react";
-import "Styles/topBar.scss";
+import "@/resources/topBar.scss";
 import { logoutAction } from "../redux/LoginAction";
 import { connect } from "react-redux";
 import Link from "next/link";

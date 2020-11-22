@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import "../Styles/budget/budgetForm.scss";
+import "../@/resources/budget/budgetForm.scss";
 import { TextField, Button } from "@material-ui/core";
 import { postBudget } from "../../controllers/BudgetController";
 
