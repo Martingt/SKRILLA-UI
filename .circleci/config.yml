@@ -1,7 +1,30 @@
 version: 2.1
+
 orbs:
-  heroku: circleci/heroku@0.0.10
-workflows:
-  heroku_deploy:
-    jobs:
-      - heroku/deploy-via-git
+  windows: circleci/windows@2.2.0
+
+jobs:
+  test:
+    description: Setup and run application tests
+    executor:
+      name: windows/default
+    steps:
+      - checkout
+      - run:
+          name: "Print Working Directory"
+          command: pwd
+  build:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          command: npm run-script build
+      - run: |
+          docker info
+          docker build -t srkillaui -f skrilla-ui/Dockerfile .
+      - run: |
+          docker login --username=$HEROKU_USERNAME --password=$HEROKU_API_KEY registry.heroku.com
+          docker tag skrillaui registry.heroku.com/$HEROKU_APP_NAME/web
+          docker push registry.heroku.com/$HEROKU_APP_NAME/web
+          curl https://cli-assets.heroku.com/install.sh | sh
+          heroku container:release web -a $HEROKU_APP_NAME
