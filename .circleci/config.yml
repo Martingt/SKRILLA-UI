@@ -19,10 +19,11 @@ jobs:
       - checkout
       - run: |
           ls
+          npm audit fix
           npm install
           npm run-script build
           docker info
-          docker build -t srkillaui .
+          docker build -t skrillaui .
       - run: |
           docker login --username=$HEROKU_USERNAME --password=$HEROKU_API_KEY registry.heroku.com
           docker tag skrillaui registry.heroku.com/$HEROKU_APP_NAME/web
