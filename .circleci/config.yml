@@ -20,7 +20,7 @@ jobs:
       - run: |
           ls
           npm audit fix
-          npm install
+          npm install --no-optional
           npm run-script build
           docker info
           docker build -t skrillaui .
