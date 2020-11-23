@@ -17,8 +17,9 @@ jobs:
     machine: true
     steps:
       - checkout
-      - run:
-          command: npm run-script build
+      - run: |
+          cd skrilla-ui
+          npm run-script build
       - run: |
           docker info
           docker build -t srkillaui -f skrilla-ui/Dockerfile .
