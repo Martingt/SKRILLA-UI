@@ -5,14 +5,13 @@ WORKDIR /app
 
 # Installing dependencies
 # COPY package*.json ./
-
+# RUN npm install
 
 # Copying source files
 COPY . .
 
 # # Building app
-RUN npm install
-RUN npm run-script build
+# RUN npm run-script build
 
 # Running the app
 CMD [ "npm", "start" ]
