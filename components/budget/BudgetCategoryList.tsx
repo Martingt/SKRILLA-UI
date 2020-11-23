@@ -93,7 +93,7 @@ export default class BudgetCategoryList extends React.Component<any, any> {
             className="finishBudgetEditionOnTable"
             aria-label="expand row"
             size="small"
-            onClick={() => this.finishBudgetEditionOnTable(null, true)}
+            onClick={() => this.finishBudgetEditionOnTable(null, false)}
           >
             <DoneIcon />
           </IconButton>
