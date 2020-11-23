@@ -18,8 +18,6 @@ jobs:
     steps:
       - checkout
       - run: |
-          ls
-          npm audit fix
           npm install --no-optional
           npm run-script build
           docker info
