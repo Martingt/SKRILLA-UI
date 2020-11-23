@@ -18,7 +18,7 @@ jobs:
     steps:
       - checkout
       - run: |
-          cd skrilla-ui
+          ls
           npm install
           npm run-script build
           docker info
