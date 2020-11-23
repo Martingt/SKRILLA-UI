@@ -18,7 +18,7 @@ jobs:
     steps:
       - checkout
       - run: |
-          npm install --no-optional
+          npm install
           npm run-script build
           docker info
           docker build -t skrillaui .
